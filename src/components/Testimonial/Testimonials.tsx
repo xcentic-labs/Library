@@ -13,14 +13,14 @@ const Testimonial = () => {
                         <FiUser size={12} /><span className="text-xs -translate-y-[1px]  font-semibold">Customers</span>
                     </p>
                 </div>
-                <h1 className="text-5xl/tight font-ubuntu text-center font-bold capitalize mb-4">See what Student Says</h1>
-                <p className="text-sm text-center text-black/50 mb-10">Here's what some of our student say about our Library.</p>
-                <div className="grid grid-cols-3 grid-rows-2 gap-10">
+                <h1 className="text-3xl md:text-5xl/tight font-ubuntu text-center font-bold capitalize mb-4">See what Student Says</h1>
+                <p className="text-xs md:text-sm text-center text-black/50 mb-10">{`Here's what some of our student say about our Library.`}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-10">
                     {
                         testimonial.map((item , index) => (
                             <div key={index} className="w-full -h-[200px]  rounded-2xl shadow-reviwcard p-5 flex flex-col justify-between  gap-3 mb-4">
                                 <p className=" font-sans  text-sm text-justify text-black/50">
-                                    <span className=" font-bold text-2xl text-black">❛❛</span><br /> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur consectetur exercitationem officiis ea enim vero. Molestias delectus, libero, ratione quaerat quam
+                                    <span className=" font-bold text-2xl text-black">❛❛</span><br /> {`Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur consectetur exercitationem officiis ea enim vero. Molestias delectus, libero, ratione quaerat quam`}
                                 </p>
                                 <div className="flex gap-4 items-center">
                                     <Image src={person} alt="" className="rounded-full h-10 w-10 overflow-hidden" width={50} height={50} />

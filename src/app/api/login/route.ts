@@ -29,14 +29,14 @@ export async function POST(req : NextRequest) {
         if(!isMatched) return NextResponse.json({"error" : "Password Not Matched"} , {status  :403});
 
         const token = generateToken( user.name , user.phonNumber , user.role);
-        return NextResponse.json({"message" : "Logged in Sucessfully" , token , name : user.name , role : user.role , phoneNumber : user.phon },{status : 200});
+        return NextResponse.json({"message" : "Logged in Sucessfully" , token , name : user.name , role : user.role , phoneNumber : user.phonNumber },{status : 200});
     } catch (error) {
         console.log(error);
         return NextResponse.json({"error" : "Internal Server error"} , {status : 500});   
     }
 }
 
-export async function GET(req : NextRequest , res : NextResponse) {
+export async function GET() {
     try {
         const result =  await prisma.user.findMany()
         console.log(result);

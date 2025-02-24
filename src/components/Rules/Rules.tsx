@@ -38,10 +38,10 @@ const Rules: React.FC = () => {
     };
 
     return (
-        <div className="w-full h-fit bg-secondary">
-            <section className="w-full h-fit py-10 flex justify-center items-center bg-white rounded-tr-[20%]" id="rules">
-                <div className="w-[50%] h-full  flex flex-col justify-start items-start p-20 ">
-                    <h1 className="text-5xl/snug font-semibold font-ubuntu mb-6 relative">
+        <div className="w-full h-fit bg-white md:bg-secondary">
+            <section className="w-full h-fit py-5 sm:py-10 flex lg:flex-row lg:gap-0  gap-12 flex-col justify-center   items-center bg-white rounded-tr-[20%]" id="rules">
+                <div className="lg:w-[50%] md:h-full h-[50%] w-full  flex flex-col justify-start items-start p-5 sm:p-10 lg:p-20 ">
+                    <h1 className=" text-3xl md:text-5xl/snug font-semibold font-ubuntu mb-6 relative sm:text-left text-center">
                         Our Library <span className="text-greenleast">Rules</span>
                         <span className="w-1/2 h-[5px] bg-greenleast absolute -bottom-2 right-0"></span>
                     </h1>
@@ -62,10 +62,10 @@ const Rules: React.FC = () => {
                         </div>
                     ))}
                 </div>
-                <div className="w-[50%] h-full  flex justify-center items-end">
-                    <div className="w-[90%] h-[90%] flex justify-start items-end">
-                        <Image src={lib1} className="w-[270px] z-30 rounded-3xl translate-x-24 translate-y-10 " alt="library1"></Image>
-                        <Image src={lib2} className="w-[280px] z-20 rounded-3xl" alt="library2"></Image>
+                <div className="lg:w-[50%] md:h-full h-[50%] w-full flex justify-center lg:items-end items-center">
+                    <div className="lg:w-[90%] lg:h-[90%] w-full h-full flex  lg:justify-end justify-center lg:items-end items-end lg:p-0">
+                        <Image src={lib2} className="lg:w-[280px] md:w-[250px] w-[180px] z-30 rounded-3xl" alt="library2"></Image>
+                        <Image src={lib1} className="lg:w-[270px] md:w-[230px] w-[180px] z-30 rounded-3xl -translate-x-12 translate-y-10" alt="library1"></Image>
                     </div>
                 </div>
             </section>

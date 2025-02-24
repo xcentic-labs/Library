@@ -32,7 +32,7 @@ export default function Header() {
                                 <Link href="/#rules" onClick={toggelMenu}>Rules</Link>
                             </li>
                             <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
-                                <Link href="/#rules" onClick={toggelMenu}>Login</Link>
+                                <Link href="/login" onClick={toggelMenu}>Login</Link>
                             </li>
                         </ul>
                     </div>

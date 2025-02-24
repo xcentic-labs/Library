@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 
-const KEY = process.env.JWT_KEY
+const KEY : string = process.env.JWT_KEY!
 
 export const generateToken = (name : string , phoneNumber : string , role :string)=>{
     return jwt.sign({

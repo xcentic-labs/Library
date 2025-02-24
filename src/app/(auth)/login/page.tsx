@@ -47,10 +47,9 @@ export default function Login(){
         >
           Login
         </button>
-        <p className="mb-6 w-full text-center text-greenleast font-semibold cursor-pointer hover:text-greenleastshade">Don't have account? <Link href="/signup" className="hover:underline duration-300">Sign up</Link></p>
+        <p className="mb-6 w-full text-center text-greenleast font-semibold cursor-pointer hover:text-greenleastshade">{`Don't have account?`} <Link href="/signup" className="hover:underline duration-300">Sign up</Link></p>
       </div>
     </div>
   </section>
   )
 }
-

@@ -1,5 +1,4 @@
 import Image from "next/image"
-import student from '@/assets/student.png'
 import { LuGlassWater } from "react-icons/lu";
 import { FaRegNewspaper , FaPlugCircleCheck } from "react-icons/fa6";
 import { MdNetworkWifi  } from "react-icons/md";
@@ -19,44 +18,44 @@ const faclits = [
     {
         title : "News Paper",
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-        icon: <FaRegNewspaper className="text-3xl text-greenleast" />
+        icon: <FaRegNewspaper className="sm:text-3xl text-2xl text-greenleast" />
     },
     {
         title : "Cafeteria",
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-        icon: <IoFastFood className="text-3xl text-greenleast" />
+        icon: <IoFastFood className="sm:text-3xl text-2xl text-greenleast" />
     },
     {
         title : "High Speed Wi-fi",
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-        icon: <MdNetworkWifi className="text-3xl text-greenleast" />
+        icon: <MdNetworkWifi className="sm:text-3xl text-2xl text-greenleast" />
     },
     {
         title : "24 Hrs CCTV",
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-        icon: <GiCctvCamera className="text-3xl text-greenleast" />
+        icon: <GiCctvCamera className="sm:text-3xl text-2xl text-greenleast" />
     },
     {
         title : "Seprate Cabin With Charging Point",
         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-        icon: <FaPlugCircleCheck className="text-3xl text-greenleast" />
+        icon: <FaPlugCircleCheck className="sm:text-3xl text-2xl text-greenleast" />
     },
 
 ]
 
 export default function Faclits() {
     return (
-        <section className="w-full h-fit py-10 flex justify-center items-center bg-secondary rounded-tr-[20%] rounded-bl-[20%]" id="faclits">
-            <div className="w-[50%] h-full  flex justify-center items-end">
-                <div className="w-[90%] h-[90%] flex justify-end items-end">
-                    <Image src={lib2} className="w-[280px] z-30 rounded-3xl" alt="library2"></Image>
-                    <Image src={lib1} className="w-[270px] z-30 rounded-3xl -translate-x-12 translate-y-10" alt="library1"></Image>
+        <section className="w-full h-fit py-5 sm:py-10 flex lg:flex-row flex-col lg:gap-0  gap-12 justify-center items-center bg-white md:bg-secondary rounded-tr-[20%] rounded-bl-[20%]" id="faclits">
+            <div className="lg:w-[50%] md:h-full h-[50%] w-full flex justify-center lg:items-end items-center">
+                <div className="lg:w-[90%] lg:h-[90%] w-full h-full flex lg:justify-end justify-center lg:items-end items-end lg:p-0">
+                    <Image src={lib2} className="lg:w-[280px] md:w-[250px] w-[180px] z-30 rounded-3xl" alt="library2"></Image>
+                    <Image src={lib1} className="lg:w-[270px] md:w-[230px] w-[180px] z-30 rounded-3xl -translate-x-12 translate-y-10" alt="library1"></Image>
                 </div>
             </div>
-            <div className="w-[50%] h-full  flex flex-col justify-start items-start p-20 ">
-                <h1 className="text-5xl/snug font-semibold font-ubuntu mb-6 relative">
+            <div className="lg:w-[50%] md:h-full h-[50%] w-full  flex flex-col justify-start items-start p-5 sm:p-10 lg:p-20 ">
+                <h1 className="lg:text-5xl/snug md:text-4xl/snug font-semibold font-ubuntu mb-6 relative  text-3xl/snug">
                     Faclits We <span className="text-greenleast">Offer</span>
-                    <span className="w-[40%] h-[5px] bg-greenleast absolute bottom-0 right-0"></span>
+                    <span className="w-[40%] h-[3px] md:h-[5px] bg-greenleast absolute bottom-0 right-0"></span>
                 </h1>
                 {
                     faclits.map((fac, index) => (
@@ -66,7 +65,7 @@ export default function Faclits() {
                             </div>
                             <div>
                                 <h1 className="font-bold mb-1">{fac.title}</h1>
-                                <p className="font-ubuntu font-light text-black/80">{fac.desc}</p>
+                                <p className="font-ubuntu  font-light text-black/80">{fac.desc}</p>
                             </div>
                         </div>
                     ))
