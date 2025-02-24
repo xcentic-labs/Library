@@ -1,7 +1,8 @@
-import { FaPhoneAlt, FaUnlock , FaUser } from "react-icons/fa";
+import { FaPhoneAlt, FaUnlock , FaUser,  } from "react-icons/fa";
 import img from '@/assets/lib2.jpg'
 import Image from "next/image";
 import Link from "next/link";
+import { MdEmail } from "react-icons/md";
 export default function Signup(){
   
   return (
@@ -15,6 +16,17 @@ export default function Signup(){
       <div className='w-full max-w-[500px] p-5'>
         <h1 className="text-3xl font-bold mb-2 font-ubuntu">Sign up</h1>
         <p className="text-xl font-semibold mb-6 font-ubuntu">Welcome To Path Crystal</p>
+
+        <label className="mb-2 mx-1 font-medium block">Email</label>
+        <div className='flex items-center gap-3 border border-gray-500 rounded-2xl px-3 mb-6'>
+          <MdEmail size={20} />
+          <input 
+            type="email" 
+            name='email' 
+            className='h-12 outline-none rounded-2xl w-full' 
+            placeholder='Email' 
+          />
+        </div>
 
         <label className="mb-2 mx-1 font-medium block">Phone Number</label>
         <div className='flex justify-between gap-3 items-center border border-gray-500 rounded-2xl px-3 mb-4'>
