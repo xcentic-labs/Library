@@ -63,7 +63,7 @@ const Rules: React.FC = () => {
                     ))}
                 </div>
                 <div className="lg:w-[50%] md:h-full h-[50%] w-full flex justify-center lg:items-end items-center">
-                    <div className="lg:w-[90%] lg:h-[90%] w-full h-full flex  lg:justify-end justify-center lg:items-end items-end lg:p-0">
+                    <div className="lg:w-[90%] lg:h-[90%] w-full h-full flex  lg:justify-end justify-center lg:items-end items-end lg:p-0 sm:pl-0 pl-8">
                         <Image src={lib2} className="lg:w-[280px] md:w-[250px] w-[180px] z-30 rounded-3xl" alt="library2"></Image>
                         <Image src={lib1} className="lg:w-[270px] md:w-[230px] w-[180px] z-30 rounded-3xl -translate-x-12 translate-y-10" alt="library1"></Image>
                     </div>

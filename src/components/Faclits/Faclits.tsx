@@ -47,19 +47,19 @@ export default function Faclits() {
     return (
         <section className="w-full h-fit py-5 sm:py-10 flex lg:flex-row flex-col lg:gap-0  gap-12 justify-center items-center bg-white md:bg-secondary rounded-tr-[20%] rounded-bl-[20%]" id="faclits">
             <div className="lg:w-[50%] md:h-full h-[50%] w-full flex justify-center lg:items-end items-center">
-                <div className="lg:w-[90%] lg:h-[90%] w-full h-full flex lg:justify-end justify-center lg:items-end items-end lg:p-0">
+                <div className="lg:w-[90%] lg:h-[90%] w-full h-full flex lg:justify-end justify-center lg:items-end items-end lg:p-0 sm:pl-0 pl-8">
                     <Image src={lib2} className="lg:w-[280px] md:w-[250px] w-[180px] z-30 rounded-3xl" alt="library2"></Image>
                     <Image src={lib1} className="lg:w-[270px] md:w-[230px] w-[180px] z-30 rounded-3xl -translate-x-12 translate-y-10" alt="library1"></Image>
                 </div>
             </div>
-            <div className="lg:w-[50%] md:h-full h-[50%] w-full  flex flex-col justify-start items-start p-5 sm:p-10 lg:p-20 ">
+            <div className="lg:w-[50%] md:h-full h-[50%] w-full  flex flex-col justify-start items-start p-4 sm:p-10 lg:p-20 ">
                 <h1 className="lg:text-5xl/snug md:text-4xl/snug font-semibold font-ubuntu mb-6 relative  text-3xl/snug">
                     Faclits We <span className="text-greenleast">Offer</span>
                     <span className="w-[40%] h-[3px] md:h-[5px] bg-greenleast absolute bottom-0 right-0"></span>
                 </h1>
                 {
                     faclits.map((fac, index) => (
-                        <div key={index} className="flex items-center justify-between gap-4 mb-6">
+                        <div key={index} className="flex items-center justify-between gap-4 mb-4 sm:mb-6">
                             <div>
                                 {fac.icon}
                             </div>
