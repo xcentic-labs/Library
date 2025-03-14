@@ -29,13 +29,30 @@ model User {
   seat          Seat[]
 }
 
+model Layout {
+  id            Int @id @default(autoincrement())
+  layoutName    String @unique
+  layoutCols    Int
+  layoutRows    Int
+  pricePerMonth Int
+  pricePerWeek  Int
+  boxesAt       String? @db.VarChar(500)
+  seats         Seat[] 
+}
+
 model Seat {
   id            Int   @id @default(autoincrement())
-  seatNumber    Int   @unique
   userId        Int?
   bookedBy      User?  @relation(fields: [userId] , references: [id])
+
   isLocker      Boolean 
+  seatNumber    Int   @unique
+  index         Int?
+
   isBooked      Boolean @default(false)
   bookingStartDate DateTime @default(now())
   bookingEndDate   DateTime @default(now())
+
+  layoutId        Int?      // Foreign key to Layout
+  layout          Layout?   @relation(fields: [layoutId], references: [id]) 
 }

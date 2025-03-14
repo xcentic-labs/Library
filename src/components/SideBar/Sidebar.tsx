@@ -3,34 +3,35 @@ import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
 import { MdDashboard, MdEdit, MdOutlineDrafts } from "react-icons/md";
 import { FaUsers, FaUserCheck } from "react-icons/fa";
 import { AiOutlineLayout } from "react-icons/ai";
+import Link from 'next/link';
 
 const menuItems = [
     {
         title: "Dashboard",
         items: [
-            { name: "Dashboard", icon: <MdDashboard /> }
+            { name: "Dashboard", icon: <MdDashboard /> , route : '/dashboard', }
         ]
     },
     {
         title: "Layout",
         items: [
-            { name: "Create Layout", icon: <AiOutlineLayout /> },
-            { name: "Edit Layout", icon: <MdEdit /> },
-            { name: "Draft Layout", icon: <MdOutlineDrafts /> }
+            { name: "Create Layout", icon: <MdEdit /> , route : '/addlayout', },
+            { name: "Layouts", icon: <AiOutlineLayout />  , route : '/layouts', },
+            { name: "Draft Layout", icon: <MdOutlineDrafts />  ,  route : '/layout', }
         ]
     },
     {
         title: "Manage User",
         items: [
-            { name: "Total User", icon: <FaUsers /> },
-            { name: "Subscribed User", icon: <FaUserCheck /> }
+            { name: "Total User", icon: <FaUsers /> ,  route : '/dashboard',  },
+            { name: "Subscribed User", icon: <FaUserCheck /> ,  route : '/dashboard',  }
         ]
     },
     {
         title: "Settings",
         items: [
-            { name: "General Setting", icon: <IoSettingsOutline /> },
-            { name: "Logout", icon: <IoLogOutOutline /> }
+            { name: "General Setting", icon: <IoSettingsOutline /> ,  route : '/dashboard',  },
+            { name: "Logout", icon: <IoLogOutOutline /> ,  route : '/dashboard',  }
         ]
     }
 ];
@@ -47,10 +48,10 @@ export default function SideBar() {
                         <ul className="flex flex-col gap-2">
                             {section.items.map((item, i) => (
                                 <li key={i}>
-                                    <div className="flex p-3 group hover:bg-white duration-300 rounded-lg rounded-r-none ml-2 cursor-pointer items-center gap-3">
+                                    <Link href={item.route} className="flex p-3 group hover:bg-white duration-300 rounded-lg rounded-r-none ml-2 cursor-pointer items-center gap-3">
                                         <span className="text-xl text-white group-hover:text-black">{item.icon}</span>
                                         <h2 className="text-white/90 text-sm font-semibold group-hover:text-black">{item.name}</h2>
-                                    </div>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>

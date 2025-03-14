@@ -14,6 +14,8 @@ export interface auth {
 export interface seatbody{
     seatNumber : number,
     isLocker : boolean
+    index : number,
+    layoutId : number
 }
 
 
@@ -29,4 +31,21 @@ export interface authInfo{
         phoneNumber : string,
         role : string
     }
+}
+
+export interface layoutDetails{
+    layoutName :string,
+    pricePerMonth : number,
+    pricePerWeek  :number
+    layoutCols? :number,
+    layoutRows? :number,
+    boxesAt? : string
+}
+
+export interface newArray {
+    index : number,
+    isSeat : boolean,
+    isBox : boolean,
+    isLocker : boolean,
+    seatNumber : string | undefined
 }

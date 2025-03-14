@@ -1,27 +1,22 @@
 import { bookseat, seatbody } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-const prisma = new PrismaClient();
+import prisma from "@/lib/prismaClient";
 
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
 
-        const { seatNumber, isLocker } = body as seatbody
+        if (!body) return NextResponse.json({ "error": "Seats Data is required" }, { status: 400 });
 
-        if (!seatNumber || !isLocker) return NextResponse.json({ "error": "Seat NUmber and Locker Status required" }, { status: 400 });
-
-        const result = await prisma.seat.create({
-            data: {
-                seatNumber: seatNumber,
-                isLocker: isLocker
-            }
-        })
+        const result = await prisma.seat.createMany({
+            data: body
+        });
 
         if (!result) return NextResponse.json({ "error": "Unable to add Seat" }, { status: 500 })
-        return NextResponse.json({ "error": `Seat Number ${result.seatNumber} added Sucessfully` });
+        return NextResponse.json({ "error": `Seat Number added Sucessfully` } , {status : 201});
     } catch (error: unknown) {
+        console.log(error)
         if (error instanceof PrismaClientKnownRequestError) {
             if (error.code == 'P2002') return NextResponse.json({ "error": "Seat already added" }, { status: 400, statusText: 'Conflict' });
         }
@@ -46,14 +41,10 @@ export async function GET() {
 
 export async function PATCH( req : NextRequest) {
     try {
-
         const body = await req.json();
         const {userId , seatNumber } = body as bookseat;
 
         if(!userId || !seatNumber) return NextResponse.json({"error" : "All fields are required"} , {status : 400});
-
-        
-
     } catch (error) {
         console.log(error);
         return NextResponse.json({ "error": "Unable to update seat " }, { status: 500 })

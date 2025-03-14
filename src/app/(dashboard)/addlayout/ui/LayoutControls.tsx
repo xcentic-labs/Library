@@ -2,7 +2,8 @@ import seat from '../../../../assets/desk-chair.svg'
 import Image from 'next/image';
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { AiOutlineStop } from "react-icons/ai";
-
+import React from 'react';
+import { layoutDetails } from '@/types/types';
 interface LayoutControlsProps{
     handleApplyLayout : (e: React.FormEvent<HTMLFormElement>)=> void
     handleChnageSize : ( size: string)=> void,
@@ -10,9 +11,11 @@ interface LayoutControlsProps{
     selectedComponent : string
     setSelectedComponent : ( value : string) => void,
     setScale : ( value : number) => void
+    handleDetailsChange : (e : React.ChangeEvent<HTMLInputElement>) => void,
+    layoutDetails : layoutDetails
 }
 
-export const LayoutControls = ({ handleChnageSize , layoutSize , handleApplyLayout, setSelectedComponent , selectedComponent , setScale} : LayoutControlsProps) => {
+export const LayoutControls = ({ handleChnageSize , layoutSize , handleApplyLayout, setSelectedComponent , selectedComponent , setScale , handleDetailsChange , layoutDetails} : LayoutControlsProps) => {
     return (
         <div className="py-2 flex-1">
             <h1 className="font-bold mb-4">Layout Type</h1>
@@ -66,13 +69,13 @@ export const LayoutControls = ({ handleChnageSize , layoutSize , handleApplyLayo
                 <h1 className="mb-4 font-bold">Layout Details</h1>
                 <div className="">
                     <label htmlFor="layoutname" className="font-medium">Layout Name*</label>
-                    <input type="text" name="layoutname" className="h-10 p-2 w-full rounded-lg  border-2 border-greenleast mb-4" />
+                    <input type="text" name="layoutName" className="h-10 p-2 w-full rounded-lg  border-2 border-greenleast mb-4" value={layoutDetails.layoutName} onChange={handleDetailsChange} />
 
                     <label htmlFor="layoutname" className="font-medium">Seat Price (Per month)</label>
-                    <input type="text" name="layoutname" className="h-10 p-2 w-full rounded-lg  border-2 border-greenleast mb-4" />
+                    <input type="text" name="pricePerMonth" className="h-10 p-2 w-full rounded-lg  border-2 border-greenleast mb-4"  value={layoutDetails.pricePerMonth} onChange={handleDetailsChange}/>
 
                     <label htmlFor="layoutname" className="font-medium">Seat Price (Per week)</label>
-                    <input type="text" name="layoutname" className="h-10 p-2 w-full rounded-lg  border-2 border-greenleast" />
+                    <input type="text" name="pricePerWeek" className="h-10 p-2 w-full rounded-lg  border-2 border-greenleast" value={layoutDetails.pricePerWeek}  onChange={handleDetailsChange}/>
                 </div>
             </div>
         </div>

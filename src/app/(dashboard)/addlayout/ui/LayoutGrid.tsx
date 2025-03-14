@@ -7,7 +7,7 @@ interface LayoutGridProps {
     handleSeatPickUp: (index: number) => void;
 }
 
-export const LayoutGrid = ({ array, layout, scale, handleSeatPickUp }  : LayoutGridProps) => {
+export const LayoutGrid = ({ array, layout, scale, handleSeatPickUp }: LayoutGridProps) => {
     return (
         <div className={`w-fit h-fit gap-1 bg-white/80 p-2  grid `} style={{
             gridTemplateColumns: `repeat(${layout.cols}, 1fr)`,
@@ -21,7 +21,7 @@ export const LayoutGrid = ({ array, layout, scale, handleSeatPickUp }  : LayoutG
                             item.isSeat ?
                                 (
                                     <div className=" relative">
-                                        {/* <p className="absolute text-greenleast text-xs">{item?.seatNumber}</p> */}
+                                        <p className="absolute text-greenleast text-xs">{index}</p>
                                         <Image src={seat} className="w-12 h-12 cursor-pointer" alt="seat" />
                                     </div>
                                 )

@@ -17,9 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 const ubuntu = Ubuntu({
-  variable : "--font-ubuntu",
+  variable: "--font-ubuntu",
   subsets: ['latin'],
-  weight: ['400' , '700'],
+  weight: ['400', '700'],
 })
 
 export const metadata: Metadata = {
@@ -38,17 +38,17 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${ubuntu.className} antialiased`}
       >
         <ToastContainer />
-          <header className="w-full h-fit ">
-            <Navbar />
-          </header>
-          <section className="flex w-full h-[90vh] justify-between items-center">
-            <aside className="w-[20%]">
-              <SideBar />
-            </aside>
-            <div className="w-[80%] h-full bg-slate-100">
-                {children}
-            </div>
-          </section>
+        <header className="w-full h-fit ">
+          <Navbar />
+        </header>
+        <section className="flex w-full h-[90vh] justify-between items-center">
+          <aside className="w-[20%]">
+            <SideBar />
+          </aside>
+          <div className="w-[80%] h-full bg-slate-100">
+            {children}
+          </div>
+        </section>
       </body>
     </html>
   );
