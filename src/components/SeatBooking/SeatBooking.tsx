@@ -11,17 +11,17 @@ export default function SeatBooking() {
                     <h1 className=" text-3xl md:text-5xl font-ubuntu text-center font-bold capitalize" id="seatbooking">Book Your Seat Now <br /> <span className="text-greenleast text-2xl md:text-4xl relative">just at @499 <span className="w-full h-[5px] bg-greenleast absolute -bottom-2 right-0"></span></span></h1>
                 </div>
                 <div className="w-full h-fit  flex lg:flex-row flex-col-reverse justify-center items-start">
-                    <div className="lg:w-[50%] h-[50%] lg:h-full  flex flex-col justify-start items-start p-5 md:p-20">
+                    <div className="lg:w-[50%] h-[50%] lg:h-full  flex flex-col justify-start items-start p-1 md:p-20">
                         <h1 className="text-2xl md:text-3xl/snug font-semibold font-ubuntu mb-6">
-                            Be The part of <span className="text-greenleast">Path Crystal</span>
+                            Be The part of <span className="text-greenleast">Path Catalyst</span>
                         </h1>
                         <p className="text-justify mb-6 text-black/50 font-ubuntu"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit a porro fugit enim iste omnis. Laborum, minima! Praesentium asperiores dignissimos odit quo neque, optio porro, deleniti odio ullam ut, blanditiis dolorem. Eveniet esse deleniti totam nihil provident commodi. Quia, earum.</p>
                         <div className="grid grid-cols-2 gap-5 mb-6">
                             <div className="bg-white rounded-lg  shadow-featurecard p-4 flex sm:flex-row flex-col items-start sm:items-center sm:gap-0 gap-2">
                                 <FaBook className="text-greenleast text-2xl sm:text-4xl mr-4" />
-                                <div>
+                                <div >
                                     <h3 className="text-lg font-semibold">Knowledge Access</h3>
-                                    <p className="text-sm text-gray-600">Vast collection of books and resources.</p>
+                                    <p className="text-sm text-gray-600 w-full">Vast collection of books and resources.</p>
                                 </div>
                             </div>
                             <div className="bg-white rounded-lg  shadow-featurecard p-4 flex sm:flex-row flex-col items-start sm:items-center sm:gap-0 gap-2">

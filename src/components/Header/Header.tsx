@@ -1,13 +1,15 @@
 "use client"
+import { useIsLoogedIn } from "@/hooks/login";
 import Link from "next/link"
 import { useState } from "react";
 import { IoMenu } from "react-icons/io5";
 
 
 export default function Header() {
-    const [isMenuOpen , setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { status, name, phoneNumber, role } = useIsLoogedIn();
 
-    const toggelMenu = ()=>{
+    const toggelMenu = () => {
         setIsMenuOpen(!isMenuOpen)
     }
     return (
@@ -21,7 +23,7 @@ export default function Header() {
                 <nav className="md:w-[85%] w-[70%] h-full flex items-center justify-end">
                     <div className="md:hidden flex relative ">
                         <IoMenu size={24} onClick={toggelMenu} />
-                        <ul className={`absolute top-[100%] right-0 bg-white p-6 py-3 space-y-3 text-xl border-[3px] border-greenleast rounded-lg font-ubuntu flex-col ${isMenuOpen ? 'flex' : 'hidden'}`}>
+                        <ul className={`absolute view top-[100%] right-0 bg-white p-6 py-3 space-y-3 text-xl border-[3px] border-greenleast rounded-lg font-ubuntu flex-col ${isMenuOpen ? 'flex' : 'hidden'}`}>
                             <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
                                 <Link href='/' scroll={true} onClick={toggelMenu}>Home</Link>
                             </li>
@@ -31,9 +33,16 @@ export default function Header() {
                             <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
                                 <Link href="/#rules" onClick={toggelMenu}>Rules</Link>
                             </li>
-                            <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
-                                <Link href="/login" onClick={toggelMenu}>Login</Link>
-                            </li>
+                            {
+                                status ?
+                                    <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
+                                        <Link href="/dashboard" onClick={toggelMenu}>DashBoard</Link>
+                                    </li>
+                                    :
+                                    <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
+                                        <Link href="/login" onClick={toggelMenu}>Login</Link>
+                                    </li>
+                            }
                         </ul>
                     </div>
                     <ul className="w-full h-full md:flex hidden items-center gap-10 justify-end">
@@ -46,9 +55,16 @@ export default function Header() {
                         <li className="font-bold text-white hover:text-greenleast duration-300 cursor-pointer">
                             <Link href="/#rules">Rules</Link>
                         </li>
-                        <li className="bg-greenleast text-white px-5 py-2 rounded-lg font-bold cursor-pointer hover:bg-white hover:text-greenleast duration-300">
-                            <Link href='/login'>Get Started</Link>
-                        </li>
+                        {
+                            status ?
+                                <Link href={'/dashboard'} className="bg-greenleast text-white px-5 py-2 rounded-lg font-bold cursor-pointer hover:bg-white hover:text-greenleast duration-300">
+                                    DashBoard
+                                </Link>
+                                :
+                                <Link href={'/login'} className="bg-greenleast text-white px-5 py-2 rounded-lg font-bold cursor-pointer hover:bg-white hover:text-greenleast duration-300">
+                                    Get Started
+                                </Link>
+                        }
                     </ul>
                 </nav>
             </div>

@@ -1,3 +1,4 @@
+
 export interface User {
     name : string,
     phoneNumber : string,
@@ -13,4 +14,19 @@ export interface auth {
 export interface seatbody{
     seatNumber : number,
     isLocker : boolean
+}
+
+
+export interface bookseat{
+    userId : number,
+    seatNumber  : number,
+}
+
+export interface authInfo{
+    authStatus : boolean,
+    authInfo : {
+        name : string,
+        phoneNumber : string,
+        role : string
+    }
 }

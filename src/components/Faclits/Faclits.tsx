@@ -65,7 +65,7 @@ export default function Faclits() {
                             </div>
                             <div>
                                 <h1 className="font-bold mb-1">{fac.title}</h1>
-                                <p className="font-ubuntu  font-light text-black/80">{fac.desc}</p>
+                                <p className="font-ubuntu md:text-md text-sm font-light text-black/80">{fac.desc}</p>
                             </div>
                         </div>
                     ))

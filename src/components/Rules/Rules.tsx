@@ -48,7 +48,7 @@ const Rules: React.FC = () => {
                     {libraryRules.map((rule, index) => (
                         <div key={index} className="border-b border-gray-300 py-4">
                             <button
-                                className="w-full text-left text-md font-medium flex justify-between items-center"
+                                className="w-full text-left text-sm font-bold sm:text-md flex justify-between items-center"
                                 onClick={() => toggleFAQ(index)}
                             >
                                 {rule.rule}
@@ -57,7 +57,7 @@ const Rules: React.FC = () => {
                             <div
                                 className={`transition-all overflow-hidden ${openIndex === index ? "max-h-40 opacity-100 py-2" : "max-h-0 opacity-0"}`}
                             >
-                                <p className="text-gray-700 text-lg">{rule.description}</p>
+                                <p className="text-gray-700 text-md sm:text-lg">{rule.description}</p>
                             </div>
                         </div>
                     ))}

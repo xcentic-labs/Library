@@ -1,4 +1,4 @@
-import { seatbody } from "@/types/types";
+import { bookseat, seatbody } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
@@ -44,8 +44,15 @@ export async function GET() {
 }
 
 
-export async function PATCH() {
+export async function PATCH( req : NextRequest) {
     try {
+
+        const body = await req.json();
+        const {userId , seatNumber } = body as bookseat;
+
+        if(!userId || !seatNumber) return NextResponse.json({"error" : "All fields are required"} , {status : 400});
+
+        
 
     } catch (error) {
         console.log(error);

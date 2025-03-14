@@ -7,3 +7,20 @@ html{
     scroll-behavior: smooth;
     scrollbar-width: 20px;
 }
+
+.view {
+    animation: open 0.3s forwards;
+}
+
+@keyframes open {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.scrolbar::-webkit-scrollbar{
+    display: none;
+}

@@ -6,7 +6,7 @@ import { GrLocation } from "react-icons/gr";
 const Footer = () => {
   return (
     <footer className="w-full bg-greenleast  h-fit p-5">
-      <div className="text-white/90 py-8 max-w-7xl mx-auto">
+      <div className="text-white/90  sm:py-8 max-w-7xl mx-auto">
         <div className="max-w-screen-xl mx-auto grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-4 mb-10">
         <div className='w-full h-full flex justify-start  items-center mb-10 col-span-2 mr-0 md:mr-28'>
           {/* <Image src={img} alt="img" className='w-64 ml-10' /> */}
@@ -23,7 +23,7 @@ const Footer = () => {
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-4">Contacts</h3>
-            <ul className="flex flex-col gap-2 text-sm text-white/90 font-semibold space-y-2">
+            <ul className="flex flex-col gap-2 text-xs sm:text-sm text-white/90 font-semibold space-y-2">
               <li className="duration-300 cursor-pointer  hover:text-white/80 flex items-center justify-start gap-2"> <LuPhone size={18} /> +91 6203821043</li>
               <li className="duration-300 cursor-pointer  hover:text-white/80 flex items-center justify-start gap-2"> <MdOutlineMailOutline size={18} /> anissh946@gmail.com</li>
               <li className="duration-300 cursor-pointer  hover:text-white/80 flex items-center justify-start gap-2"> <GrLocation size={18} />Ganga Vihar, Gokalpur, Delhi</li>
@@ -34,8 +34,8 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className='border-t-2 max-w-7xl mx-auto border-gray-200  pt-2 flex justify-between items-center'>
-        <p className=' text-white text-sm'>©2024 Path Catalst All rights Reserved</p>
+      <div className='border-t-2 max-w-7xl mx-auto border-gray-200  pt-2 flex justify-between md:flex-row flex-col items-center'>
+        <p className=' text-white text-sm sm:flex hidden'>©2024 Path Catalst All rights Reserved</p>
         <p className="text-white text-sm">Developed By <a href="https://xcentic.in" className=" tracking-[2px] font-semibold hover:underline hover:text-white/80 duration-300 cursor-pointer">XCENTIC</a></p>
       </div>
     </footer>
