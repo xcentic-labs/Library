@@ -34,6 +34,7 @@ export interface authInfo{
 }
 
 export interface layoutDetails{
+    id? : number
     layoutName :string,
     pricePerMonth : number,
     pricePerWeek  :number

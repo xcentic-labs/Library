@@ -14,12 +14,9 @@ export async function POST(req: NextRequest) {
         });
 
         if (!result) return NextResponse.json({ "error": "Unable to add Seat" }, { status: 500 })
-        return NextResponse.json({ "error": `Seat Number added Sucessfully` } , {status : 201});
+        return NextResponse.json({ "error": `Seat  added Sucessfully` } , {status : 201});
     } catch (error: unknown) {
         console.log(error)
-        if (error instanceof PrismaClientKnownRequestError) {
-            if (error.code == 'P2002') return NextResponse.json({ "error": "Seat already added" }, { status: 400, statusText: 'Conflict' });
-        }
         return NextResponse.json({ "error": "Unable to add Seat Internal server error" }, { status: 500 })
     }
 }

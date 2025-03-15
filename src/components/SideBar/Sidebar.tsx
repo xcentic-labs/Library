@@ -17,14 +17,14 @@ const menuItems = [
         items: [
             { name: "Create Layout", icon: <MdEdit /> , route : '/addlayout', },
             { name: "Layouts", icon: <AiOutlineLayout />  , route : '/layouts', },
-            { name: "Draft Layout", icon: <MdOutlineDrafts />  ,  route : '/layout', }
+            // { name: "Draft Layout", icon: <MdOutlineDrafts />  ,  route : '/layout', }
         ]
     },
     {
         title: "Manage User",
         items: [
-            { name: "Total User", icon: <FaUsers /> ,  route : '/dashboard',  },
-            { name: "Subscribed User", icon: <FaUserCheck /> ,  route : '/dashboard',  }
+            { name: "Total User", icon: <FaUsers /> ,  route : '/users/all',  },
+            { name: "Subscribed User", icon: <FaUserCheck /> ,  route : '/users/suscribeduser',  }
         ]
     },
     {

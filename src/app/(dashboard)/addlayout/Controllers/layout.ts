@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { layoutDetails, newArray } from "@/types/types";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 
 export const useLayout = () => {
+    const redirect = useRouter()
     const [step, setStep] = useState<number>(1);
     const [layoutId, setLayoutId] = useState<number>(0);
     const [selectedComponent, setSelectedComponent] = useState('none');
@@ -209,14 +211,12 @@ export const useLayout = () => {
             }
         })
 
-        console.log(data);
-
         try {
             const res = await axios.post('/api/seat', JSON.stringify(data))
 
             if (res.status == 201) {
                 toast.success("Seats Added sucessfully");
-
+                redirect.push('/layouts');
             } else {
                 toast.error(res.data.error);
             }

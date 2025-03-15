@@ -1,11 +1,9 @@
 "use client"
-
 import React from "react";
-import { useLayout } from "./LayoutControllers/layout";
+import { useLayout } from "./Controllers/layout";
 import { LayoutGrid } from "./ui/LayoutGrid";
 import { LayoutControls } from "./ui/LayoutControls";
 import SeatDetails from "./ui/SeatDetails";
-
 
 export default function Layout() {
 
@@ -47,11 +45,12 @@ export default function Layout() {
                 <div className="flex w-full justify-between items-center py-2 gap-4">
                     {
                         step == 1 ?
-                            <button className="bg-greenleast w-1/2 text-white px-5 py-2 rounded-lg font-bold cursor-pointer" onClick={handleSaveDraft}>Save Draft</button>
+                            // <button className="bg-greenleast w-1/2 text-white px-5 py-2 rounded-lg font-bold cursor-pointer" onClick={handleSaveDraft}>Save Draft</button>
+                            ""
                             :
                             ""
                     }
-                    <button className="bg-greenleast w-1/2 text-white px-5 py-2 rounded-lg font-bold cursor-pointer" onClick={step == 1 ? handelNextStep : handleAddseats}>
+                    <button className="bg-greenleast w-full text-white px-5 py-2 rounded-lg font-bold cursor-pointer" onClick={step == 1 ? handelNextStep : handleAddseats}>
                         {
                             step == 1 ? "Next" : "Submit"
                         }

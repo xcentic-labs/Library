@@ -6,7 +6,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        const { layoutName, layoutRows, layoutCols, pricePerMonth, pricePerWeek , boxesAt } = body as layoutDetails;
+        const { layoutName, layoutRows, layoutCols, pricePerMonth, pricePerWeek, boxesAt } = body as layoutDetails;
 
         if (!layoutName || !layoutRows || !layoutCols || !pricePerMonth || !pricePerWeek || !boxesAt) return NextResponse.json({ "error": "All Fields Are Required" }, { status: 400 });
 
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
         });
 
         if (!layout) return NextResponse.json({ "error": "Somting went wrong" }, { status: 500 });
-        return NextResponse.json({ "message": "Layout Created Sucessfully" , layout : layout }, { status: 201 });
+        return NextResponse.json({ "message": "Layout Created Sucessfully", layout: layout }, { status: 201 });
 
     } catch (error: unknown) {
         console.log(error)
@@ -34,6 +34,18 @@ export async function POST(req: NextRequest) {
     }
 }
 
-export function GET(){
-    return NextResponse.json({"message" : "Har Har Mahadev from layout"} , {status : 200});
+export async function GET() {
+    try {
+        const layout = await prisma.layout.findMany({});
+
+        if (!layout) return NextResponse.json({ "error": "Unable to get Layout" }, { status: 500 });
+
+        return NextResponse.json(layout, { status: 200 });
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ "error": "Unable to get Layouts Internal server error" }, { status: 500 })
+    }
 }
+
+
+
