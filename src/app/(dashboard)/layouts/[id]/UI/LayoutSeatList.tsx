@@ -57,9 +57,9 @@ export default function LayoutSeatList({ data , formatDate }: LayoutSeatListProp
 
                                         <td className="py-3 px-6">
                                             <span
-                                                className={`px-4 py-[5px] rounded-lg text-xs font-semibold text-white ${item.isbooked ? "bg-green-500" : "bg-red-500"}`}
+                                                className={`px-4 py-[5px] rounded-lg text-xs font-semibold text-white ${item.isBooked ? "bg-green-500" : "bg-red-500"}`}
                                             >
-                                                {item.isbooked ? "Yes" : "No"}
+                                                {item.isBooked ? "Yes" : "No"}
                                             </span>
                                         </td>
 

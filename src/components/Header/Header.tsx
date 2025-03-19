@@ -57,7 +57,7 @@ export default function Header() {
                         </li>
                         {
                             status ?
-                                <Link href={'/dashboard'} className="bg-greenleast text-white px-5 py-2 rounded-lg font-bold cursor-pointer hover:bg-white hover:text-greenleast duration-300">
+                                <Link href={role == 'Admin' ? '/admindashboard' : '/studentdashboard'} className="bg-greenleast text-white px-5 py-2 rounded-lg font-bold cursor-pointer hover:bg-white hover:text-greenleast duration-300">
                                     DashBoard
                                 </Link>
                                 :

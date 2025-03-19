@@ -39,11 +39,36 @@ export async function GET() {
 export async function PATCH( req : NextRequest) {
     try {
         const body = await req.json();
-        const {userId , seatNumber } = body as bookseat;
+        console.log(body)
+        const { userId , seatNumber , layoutId , timePeriod } = body as bookseat;
 
-        if(!userId || !seatNumber) return NextResponse.json({"error" : "All fields are required"} , {status : 400});
+        if(!userId || !seatNumber || !layoutId || !timePeriod) return NextResponse.json({"error" : "All fields are required"} , {status : 400});
+
+        const currentDate = new Date();
+        const endDate = new Date();
+        endDate.setMonth(currentDate.getMonth() + timePeriod);
+
+        
+        const result = await prisma.seat.updateMany({
+            where : {
+                    AND : [
+                        { seatNumber: seatNumber},
+                        { layoutId : layoutId }
+                    ]
+            },
+            data : {
+                bookingStartDate : currentDate,
+                bookingEndDate : endDate,
+                userId : userId,
+                isBooked : true
+            }
+        });
+
+        if(!result) return NextResponse.json({ "error": "Unable to Book seat"  }, { status: 500 });
+        return NextResponse.json({"message" : "Seat Booked Sucessfully" , data : result});
+                
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ "error": "Unable to update seat " }, { status: 500 })
+        return NextResponse.json({ "error": "Unable to Book seat Internal Server Error" }, { status: 500 })
     }
 }

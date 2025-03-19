@@ -42,6 +42,7 @@ export async function POST(req : NextRequest) {
         return NextResponse.json({"message" : "Logged in Sucessfully" , auth : {
             authstatus : true,
             authInfo : {
+                id : user.id,
                 name : user.name,
                 phoneNumber : user.phonNumber,
                 role : user.role,

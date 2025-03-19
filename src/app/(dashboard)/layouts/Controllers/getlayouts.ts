@@ -8,7 +8,8 @@ import { useRouter } from "next/navigation";
 export function getLayouts() {
     const [data, setData] = useState<Array<layoutDetails>>([]);
     const [isloading, setIsLoading] = useState(false);
-    const redirect = useRouter()
+    const redirect = useRouter();
+    
     const fetchLayout = async () => {
         setIsLoading(true);
         try {

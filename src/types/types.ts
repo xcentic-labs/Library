@@ -17,7 +17,7 @@ export interface seatbody{
     isLocker : boolean
     index : number,
     layoutId : number,
-    isbooked? : boolean,
+    isBooked? : boolean,
     bookingEndDate? : Date,
     bookingStartDate? : Date,
     userId? : number | undefined |null 
@@ -27,6 +27,8 @@ export interface seatbody{
 export interface bookseat{
     userId : number,
     seatNumber  : number,
+    layoutId : number,
+    timePeriod : number
 }
 
 export interface authInfo {
@@ -35,6 +37,7 @@ export interface authInfo {
       name: string;
       phoneNumber: string;
       role: string;
+      id? : number
     };
 }
   
@@ -67,4 +70,5 @@ export interface newArray {
     isBox : boolean,
     isLocker : boolean,
     seatNumber : string | number
+    isBooked? : boolean
 }

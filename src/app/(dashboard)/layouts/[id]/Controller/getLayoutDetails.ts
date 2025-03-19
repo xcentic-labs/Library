@@ -35,7 +35,7 @@ export function getLayoutDetails() {
         fetchLayoutDetails()
     },[]);
 
-    const generatearray = () =>{
+    const generatearray = (data : layoutdata  ) =>{
         let array : newArray[] = !data ? [] : new Array(data?.layoutCols * data?.layoutRows).fill({
             id : null ,
             index : null,
@@ -52,7 +52,8 @@ export function getLayoutDetails() {
                 isSeat : true,
                 isBox : false,
                 isLocker : true,
-                seatNumber : item.seatNumber
+                seatNumber : item.seatNumber,
+                isBooked : item.isBooked
             };
         });
 
@@ -62,8 +63,7 @@ export function getLayoutDetails() {
             ...item, 
             isBox: boxarray.includes(index), 
         }));
-        
-        console.log(array);
+    
         return array;
     }
 

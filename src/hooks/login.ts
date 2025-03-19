@@ -5,6 +5,7 @@ export const useIsLoogedIn = ()=>{
     const auth : authInfo  = JSON.parse(storeData) || {
         authStatus : false,
         authInfo : {
+            id : null,
             name : null,
             phoneNumber : null,
             role : null
@@ -23,6 +24,7 @@ export const useIsLoogedIn = ()=>{
         status : true,
         name : auth.authInfo.name,
         phoneNumber : auth.authInfo.phoneNumber,
-        role : auth.authInfo.role
+        role : auth.authInfo.role,
+        id : auth.authInfo.id
     }
 }

@@ -40,6 +40,22 @@ export async function GET(req : NextRequest,{ params }: { params: { id: string }
 
         if(!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
 
+        const currentDate = new Date();
+
+        await prisma.seat.updateMany({
+            where : {
+                bookingEndDate : {
+                    lt : currentDate
+                }
+            },
+            data :{
+                isBooked : false,
+                userId : null,
+                bookingEndDate : currentDate,
+                bookingStartDate : currentDate
+            }
+        })
+
         const result = await prisma.layout.findUnique({
             where : {
                 id :(+id)
@@ -47,7 +63,7 @@ export async function GET(req : NextRequest,{ params }: { params: { id: string }
             include : {
                 seats : true
             }
-        })
+        });
 
         if(!result) return  NextResponse.json({ "error": "Unable to Get Layout Details" }, { status: 500 });
         return NextResponse.json({
