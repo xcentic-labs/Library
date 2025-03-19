@@ -1,9 +1,12 @@
-import type { Metadata } from "next";
+"use client"
 import { Geist, Geist_Mono, Ubuntu } from "next/font/google";
 import "../globals.css";
 import SideBar from "@/components/SideBar/Sidebar";
 import Navbar from "@/components/AdminNavBar/NavBar";
 import { ToastContainer } from "react-toastify";
+import { useEffect, useState } from "react";
+import { useIsLoogedIn } from "@/hooks/login";
+import { useRouter } from "next/navigation";
 
 
 const geistSans = Geist({
@@ -22,30 +25,42 @@ const ubuntu = Ubuntu({
   weight: ['400', '700'],
 })
 
-export const metadata: Metadata = {
-  title: "Libary",
-  description: "Book your libary seat now",
-};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const redirect = useRouter()
+  const isloggedIn = useIsLoogedIn()
+  const [isOpen , setIsOpen] = useState(false);
+
+  useEffect(()=>{
+    console.log(isloggedIn)
+    if(!isloggedIn.status){
+      redirect.push('/')
+    }
+  },[])
   return (
     <html lang="en">
+       <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" />
+       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${ubuntu.className} antialiased`}
       >
         <ToastContainer />
         <header className="w-full h-fit ">
-          <Navbar />
+            <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
         </header>
-        <section className="flex w-full h-[90vh] justify-between items-center">
-          <aside className="w-[20%]">
-            <SideBar />
+        <section className="flex w-full h-[90vh] justify-between items-center relative">
+          <div className={`absolute top-0 left-0  lg:w-[20%] md:w-[30%] w-[60%] lg:hidden block duration-300 ${isOpen ?  'translate-x-[0%]' : '-translate-x-[100%]'}`}>
+              <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
+          </div>
+          <aside className="w-[20%] lg:block hidden">
+            <SideBar isOpen={isOpen} setIsOpen={setIsOpen}/>
           </aside>
-          <div className="w-[80%] h-full bg-slate-100">
+          <div className="lg:w-[80%] h-full bg-slate-100 w-full">
             {children}
           </div>
         </section>

@@ -43,11 +43,12 @@ export default function Login(){
 
         const obj = {
           authStatus : true,
-          authInfo : res.data.auth.authInfo
+          authInfo : res.data.auth.authInfo,
+          authPermission : res.data.auth.authPermission
         };
 
         localStorage.setItem('auth' , JSON.stringify(obj));
-        redirect.push('/dashboard');
+        res.data.auth.authInfo.role == 'Admin' ? redirect.push('/admindashboard') : redirect.push('/studentdashboard');
         setData({
           phoneNumber : "",
           password : ""

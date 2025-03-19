@@ -19,7 +19,7 @@ export const LayoutControls = ({ handleChnageSize , layoutSize , handleApplyLayo
     return (
         <div className="py-2 flex-1">
             <h1 className="font-bold mb-4">Layout Type</h1>
-            <div className="w-full h-fit flex gap-2 overflow-hidden mb-4">
+            <div className="w-full h-fit flex gap-2 overflow-hidden mb-4 overflow-x-scroll scrollbar">
                 <div className="border-[2px] border-greenleast rounded-lg hover:cursor-pointer" onClick={() => handleChnageSize('large')}>
                     <p className={`p-1 px-3 text-sm  ${layoutSize == 'large' ? 'text-white bg-greenleast font-bold' : 'font-medium'}`}>Large</p>
                 </div>
@@ -47,13 +47,13 @@ export const LayoutControls = ({ handleChnageSize , layoutSize , handleApplyLayo
 
             <div className="mb-6">
                 <h1 className="mb-4 font-bold">Components</h1>
-                <div className="flex gap-5">
+                <div className="flex gap-5 overflow-x-scroll scrollbar">
                     <Image src={seat} className={`w-16 h-16 text-greenleast cursor-pointer rounded-lg ${selectedComponent == "seat" ? "border-2 border-greenleast scale-90" : ""}`} alt="seat" onClick={() => setSelectedComponent('seat')} />
-                    <div className={`w-16 h-16 rounded-md cursor-pointer ${selectedComponent == "box" ? "bg-greenleast scale-90" : "bg-black"}`} onClick={() => setSelectedComponent('box')}></div>
-                    <div className={`w-16 h-16 rounded-md cursor-pointer border-2 border-black flex items-center justify-center ${selectedComponent == "delete" ? "border-2 border-greenleast scale-90" : ""}`} onClick={() => setSelectedComponent('delete')}>
+                    <div className={`min-w-16 h-16 rounded-md cursor-pointer ${selectedComponent == "box" ? "bg-greenleast scale-90" : "bg-black"}`} onClick={() => setSelectedComponent('box')}></div>
+                    <div className={`min-w-16 h-16 rounded-md cursor-pointer border-2 border-black flex items-center justify-center ${selectedComponent == "delete" ? "border-2 border-greenleast scale-90" : ""}`} onClick={() => setSelectedComponent('delete')}>
                         <MdOutlineDeleteOutline className={`text-3xl ${selectedComponent == "delete" ? 'text-greenleast' : ""}`} />
                     </div>
-                    <div className={`w-16 h-16 rounded-md cursor-pointer border-2 border-black flex items-center justify-center ${selectedComponent == "none" ? "border-2 border-greenleast scale-90" : ""}`} onClick={() => setSelectedComponent('none')}>
+                    <div className={`min-w-16 h-16 rounded-md cursor-pointer border-2 border-black flex items-center justify-center ${selectedComponent == "none" ? "border-2 border-greenleast scale-90" : ""}`} onClick={() => setSelectedComponent('none')}>
                         <AiOutlineStop className={`text-3xl ${selectedComponent == "none" ? 'text-greenleast' : ""}`} />
                     </div>
                 </div>

@@ -7,8 +7,9 @@ export default function Layouts() {
     const { data, isloading , handleDeleteLayout , redirect } = getLayouts()
 
     return (
-        <section className="w-full h-full p-10">
-            <div className="rounded-xl overflow-x-scroll scrolbar border border-gray-300 shadow-md bg-white">
+        <section className="w-full h-full md:p-10 p-5">
+            <h1 className="text-xl font-medium mb-6 text-gray-700 capitalize"><span className="text-gray-500 cursor-pointer" onClick={() => redirect.push('/dashboard')}>Dashboard</span> / Layout</h1>
+            <div className="rounded-xl overflow-x-scroll scrollbar border border-gray-300 shadow-md bg-white">
                 <table className="min-w-full text-sm text-gray-700">
                     <thead className="bg-greenleast text-white text-base font-semibold">
                         <tr>
@@ -45,7 +46,7 @@ export default function Layouts() {
                                     :
                                     (
                                         data.map((item, index) => (
-                                            <tr key={index} className=" text-center font-medium text-md">
+                                            <tr key={index} className={`text-center font-medium text-md border-b-slate-200 border-b-2 ${index%2 ? 'bg-gray-100' : ""}`}>
                                                 <td className="py-3 px-6">{index + 1}</td>
                                                 <td className="py-3 px-6 capitalize">{(item.layoutName)}</td>
                                                 <td className="py-3 px-6">{item.id}</td>

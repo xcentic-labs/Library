@@ -1,7 +1,7 @@
 import prisma from "@/lib/prismaClient";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest , NextResponse } from "next/server";
 
-export async function DELETE({ params }: { params: { id: string } }) {
+export async function DELETE( res: NextRequest ,{ params }: { params: { id: string } }) {
     try {
         const { id } = params;
 
@@ -34,9 +34,26 @@ export async function DELETE({ params }: { params: { id: string } }) {
 }
 
 
-export async function GET({ params }: { params: { id: string } }) {
+export async function GET(req : NextRequest,{ params }: { params: { id: string } }) {
     try {
         const { id } = params;
+
+        if(!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
+
+        const result = await prisma.layout.findUnique({
+            where : {
+                id :(+id)
+            },
+            include : {
+                seats : true
+            }
+        })
+
+        if(!result) return  NextResponse.json({ "error": "Unable to Get Layout Details" }, { status: 500 });
+        return NextResponse.json({
+            "message" : "Data Fetched Sucessfully",
+            data : result
+        } , {status : 200});
 
     } catch (error) {
         console.log(error);

@@ -1,7 +1,7 @@
-export default function DashBoard(){
+export default function AdminDashBoard(){
     return(
         <section className="w-full h-full">
-            <h1>Dashboard</h1>
+            <h1>Admin Dashboard</h1>
         </section>
     )
 }

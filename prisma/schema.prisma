@@ -43,7 +43,7 @@ model Layout {
 model Seat {
   id            Int   @id @default(autoincrement())
   userId        Int?
-  bookedBy      User?  @relation(fields: [userId] , references: [id])
+  bookedBy      User? @relation(fields: [userId] , references: [id])
 
   isLocker      Boolean 
   seatNumber    Int 
@@ -53,6 +53,25 @@ model Seat {
   bookingStartDate DateTime @default(now())
   bookingEndDate   DateTime @default(now())
 
-  layoutId        Int?      // Foreign key to Layout
-  layout          Layout?   @relation(fields: [layoutId], references: [id]) 
+  layoutId        Int?    // Foreign key to Layout
+  layout          Layout? @relation(fields: [layoutId], references: [id]) 
+}
+
+
+model menu {
+  id              Int     @id @default(autoincrement())
+  title           String
+  permitTo        String
+  priority        String
+  item            item[]
+}
+
+model item {
+  id               Int    @id @default(autoincrement())
+  name             String
+  icon             String
+  route            String
+
+  parentId         Int?   // Foreign key to Layout
+  parent           menu?  @relation(fields: [parentId ] , references: [id])
 }

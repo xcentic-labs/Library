@@ -29,34 +29,39 @@ export default function Layout() {
     } = useLayout()
 
     return (
-        <section className="w-full h-full flex justify-between items-center">
-            <div className="w-[65%] h-full  p-20 overflow-scroll scrolbar">
-                <LayoutGrid array={array} scale={scale} layout={layout} handleSeatPickUp={handleSeatPickUp} />
-            </div>
-            <div className="w-[35%] h-full flex flex-col bg-white p-4 overflow-y-scroll scrolbar">
+        <>
+        <section className="w-full h-full justify-center items-center lg:hidden flex">
+            <h1 className="text-xl font-bold">Min width of screen required is 1024px</h1>
+        </section>
+            <section className="w-full h-full justify-between items-center lg:flex hidden">
+                <div className="w-[65%] h-full p-20 overflow-scroll scrollbar">
+                    <LayoutGrid array={array} scale={scale} layout={layout} handleSeatPickUp={handleSeatPickUp} />
+                </div>
+                <div className="w-[35%] h-full flex flex-col bg-white p-4 overflow-y-scroll scrollbar">
 
-                {
-                    step == 1 ?
-                        <LayoutControls handleChnageSize={handleChnageSize} layoutSize={layoutSize} selectedComponent={selectedComponent} setSelectedComponent={setSelectedComponent} setScale={setScale} handleApplyLayout={handleApplyLayout} handleDetailsChange={handleDetailsChange} layoutDetails={layoutDetails} />
-                        :
-                        <SeatDetails array={newarray} handleUpdateSeatDetails={handleUpdateSeatDetails} />
-                }
-
-                <div className="flex w-full justify-between items-center py-2 gap-4">
                     {
                         step == 1 ?
-                            // <button className="bg-greenleast w-1/2 text-white px-5 py-2 rounded-lg font-bold cursor-pointer" onClick={handleSaveDraft}>Save Draft</button>
-                            ""
+                            <LayoutControls handleChnageSize={handleChnageSize} layoutSize={layoutSize} selectedComponent={selectedComponent} setSelectedComponent={setSelectedComponent} setScale={setScale} handleApplyLayout={handleApplyLayout} handleDetailsChange={handleDetailsChange} layoutDetails={layoutDetails} />
                             :
-                            ""
+                            <SeatDetails array={newarray} handleUpdateSeatDetails={handleUpdateSeatDetails} />
                     }
-                    <button className="bg-greenleast w-full text-white px-5 py-2 rounded-lg font-bold cursor-pointer" onClick={step == 1 ? handelNextStep : handleAddseats}>
+
+                    <div className="flex w-full justify-between items-center py-2 gap-4">
                         {
-                            step == 1 ? "Next" : "Submit"
+                            step == 1 ?
+                                // <button className="bg-greenleast w-1/2 text-white px-5 py-2 rounded-lg font-bold cursor-pointer" onClick={handleSaveDraft}>Save Draft</button>
+                                ""
+                                :
+                                ""
                         }
-                    </button>
+                        <button className="bg-greenleast w-full text-white px-5 py-2 rounded-lg font-bold cursor-pointer" onClick={step == 1 ? handelNextStep : handleAddseats}>
+                            {
+                                step == 1 ? "Next" : "Submit"
+                            }
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </>
     )
 }

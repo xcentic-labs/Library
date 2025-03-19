@@ -12,10 +12,15 @@ export interface auth {
 }
 
 export interface seatbody{
-    seatNumber : number,
+    id? : number,
+    seatNumber : string | number,
     isLocker : boolean
     index : number,
-    layoutId : number
+    layoutId : number,
+    isbooked? : boolean,
+    bookingEndDate? : Date,
+    bookingStartDate? : Date,
+    userId? : number | undefined |null 
 }
 
 
@@ -24,14 +29,15 @@ export interface bookseat{
     seatNumber  : number,
 }
 
-export interface authInfo{
-    authStatus : boolean,
-    authInfo : {
-        name : string,
-        phoneNumber : string,
-        role : string
-    }
+export interface authInfo {
+    authStatus: boolean;
+    authInfo: {
+      name: string;
+      phoneNumber: string;
+      role: string;
+    };
 }
+  
 
 export interface layoutDetails{
     id? : number
@@ -43,10 +49,22 @@ export interface layoutDetails{
     boxesAt? : string
 }
 
+export interface layoutdata{
+    id : number
+    layoutName :string,
+    pricePerMonth : number,
+    pricePerWeek  :number
+    layoutCols :number,
+    layoutRows :number,
+    boxesAt : string
+    seats : seatbody[]
+}
+
 export interface newArray {
+    id? :number
     index : number,
     isSeat : boolean,
     isBox : boolean,
     isLocker : boolean,
-    seatNumber : string | undefined
+    seatNumber : string | number
 }

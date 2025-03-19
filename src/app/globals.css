@@ -21,6 +21,6 @@ html{
     }
 }
 
-.scrolbar::-webkit-scrollbar{
+.scrollbar::-webkit-scrollbar{
     display: none;
 }

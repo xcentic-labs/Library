@@ -26,16 +26,27 @@ export async function POST(req : NextRequest) {
 
         if(!isMatched) return NextResponse.json({"error" : "Password Not Matched"} , {status  :403});
 
+        const authPermission = await prisma.menu.findMany({
+            where : {
+                permitTo : user.role                
+            },
+            include : {
+                item : true
+            }
+        })
+
         const cookie = await cookies()
         const token = generateToken( user.name , user.phonNumber , user.role);
-        cookie.set('authtoken' , token)
+        cookie.set('authtoken' , token);
+
         return NextResponse.json({"message" : "Logged in Sucessfully" , auth : {
             authstatus : true,
             authInfo : {
                 name : user.name,
                 phoneNumber : user.phonNumber,
-                role : user.role
-            }
+                role : user.role,
+            },
+            authPermission : authPermission
         } },{status : 200});
     } catch (error) {
         console.log(error);
