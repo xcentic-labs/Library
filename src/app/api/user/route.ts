@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
         const result = await prisma.user.create({
             data: {
                 name: name,
-                phonNumber: phoneNumber,
+                phoneNumber: phoneNumber,
                 email: email,
                 password: hasedpassword,
             }
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
 
         if (!result) return NextResponse.json({ "error": "Somting went wrong" }, { status: 500 });
         return NextResponse.json({ "message": "User Created Sucessfully" }, { status: 200 });
-    } catch (error :  unknown) {
+    } catch (error: unknown) {
         console.log(error)
         if (error instanceof PrismaClientKnownRequestError) {
             if (error.code == 'P2002') return NextResponse.json({ "error": "User already exist ,Login to continue" }, { status: 400, statusText: 'Conflict' });
@@ -34,13 +34,42 @@ export async function POST(req: NextRequest) {
     }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
     try {
-        const result =  await prisma.user.findMany()
-        console.log(result);
-        return NextResponse.json(result , {status : 200});
+        const type = req.nextUrl?.searchParams?.get('type')
+
+        let result = null
+
+        if (type == 'all') {
+            result = await prisma.user.findMany({
+                select: {
+                    seat: true,
+                    id: true,
+                    phoneNumber: true,
+                    email: true,
+                    name: true
+                },
+            })
+        } else {
+            result = await prisma.user.findMany({
+                where: {
+                    seat : {
+                        some : {}
+                    }
+                },
+                select: {
+                    seat: true,
+                    id: true,
+                    phoneNumber: true,
+                    email: true,
+                    name: true
+                },
+            })
+        }
+
+        return NextResponse.json(result, { status: 200 });
     } catch (error) {
         console.log(error);
-        return NextResponse.json({"error" : "Internal server server error"} , {status : 500})
+        return NextResponse.json({ "error": "Internal server server error" }, { status: 500 })
     }
 }

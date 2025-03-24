@@ -5,7 +5,7 @@ import { useParams , useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { layoutdata, newArray } from "@/types/types";
-import { stringify } from "querystring";
+import { useIsLoogedIn } from "@/hooks/login";
 
 
 export function getLayoutDetails() {
@@ -13,7 +13,15 @@ export function getLayoutDetails() {
     const params = useParams()
     const [data, setData] = useState<layoutdata | undefined>();
     const [isloading, setIsLoading] = useState(false);
+    const {role} = useIsLoogedIn();
 
+    // redirect if not admin
+    useEffect(()=>{
+        if(role != 'Admin'){
+            redirect.push('/')
+        }
+    },[]);
+    
     const fetchLayoutDetails = async () => {
         try {
             const res = await axios.get(`/api/layout/${params.id}`);
@@ -67,8 +75,7 @@ export function getLayoutDetails() {
         return array;
     }
 
-    const formatDate = (date?: string | Date) =>
-        date ? new Date(date).toLocaleDateString() : "N/A";
+    const formatDate = (date?: string | Date) => date ? new Date(date).toLocaleDateString() : "N/A";
 
 
     return {

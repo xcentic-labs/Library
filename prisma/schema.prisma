@@ -21,7 +21,7 @@ enum Role {
 model User {
   id            Int       @id @default(autoincrement())
   name          String    @db.VarChar(100)
-  phonNumber    String    @unique @db.VarChar(10)
+  phoneNumber    String    @unique @db.VarChar(10)
   email         String 
   password      String
   role          Role      @default(User)
@@ -34,17 +34,23 @@ model Layout {
   layoutName    String @unique
   layoutCols    Int
   layoutRows    Int
-  pricePerMonth Int
-  pricePerWeek  Int
   boxesAt       String? @db.VarChar(500)
   seats         Seat[] 
+  Fee    MonthlyFee[]
+}
+
+model MonthlyFee {
+  id            Int @id @default(autoincrement())
+  month         Int
+  fee           Int
+  layoutId      Int? 
+  layout        Layout? @relation(fields: [layoutId], references: [id]) 
 }
 
 model Seat {
   id            Int   @id @default(autoincrement())
   userId        Int?
   bookedBy      User? @relation(fields: [userId] , references: [id])
-
   isLocker      Boolean 
   seatNumber    Int 
   index         Int?
@@ -71,7 +77,6 @@ model item {
   name             String
   icon             String
   route            String
-
   parentId         Int?   // Foreign key to Layout
   parent           menu?  @relation(fields: [parentId ] , references: [id])
 }

@@ -6,9 +6,10 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        const { layoutName, layoutRows, layoutCols, pricePerMonth, pricePerWeek, boxesAt } = body as layoutDetails;
+        const { layoutName, layoutRows, layoutCols,  boxesAt , MonthlyFee} = body as layoutDetails;
 
-        if (!layoutName || !layoutRows || !layoutCols || !pricePerMonth || !pricePerWeek || !boxesAt) return NextResponse.json({ "error": "All Fields Are Required" }, { status: 400 });
+        if (!layoutName || !layoutRows || !layoutCols || !boxesAt || !MonthlyFee) return NextResponse.json({ "error": "All Fields Are Required" }, { status: 400 });
+
 
 
         const layout = await prisma.layout.create({
@@ -16,12 +17,35 @@ export async function POST(req: NextRequest) {
                 layoutName,
                 layoutRows,
                 layoutCols,
-                pricePerMonth,
-                pricePerWeek,
                 boxesAt
             }
         });
 
+        const newdataarray = MonthlyFee.map((item)=>{
+            return { 
+                month : +(item.month),
+                fee : +(item.fee),
+                layoutId : layout.id
+            }
+        })
+
+        console.log(newdataarray);
+
+
+        const fee = await prisma.monthlyFee.createMany({
+            data : newdataarray
+        })
+
+        if(!fee){
+            // deleting layout
+            await prisma.layout.delete({
+                where : {
+                    id : layout.id
+                }
+            })
+
+            return NextResponse.json({ "error": "Unable to add Fee of layout" }, { status: 500});
+        }
         if (!layout) return NextResponse.json({ "error": "Somting went wrong" }, { status: 500 });
         return NextResponse.json({ "message": "Layout Created Sucessfully", layout: layout }, { status: 201 });
 

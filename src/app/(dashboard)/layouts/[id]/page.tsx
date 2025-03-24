@@ -26,7 +26,7 @@ export default function LayoutDetails() {
                     <>
                         <h1 className="text-xl w-full text-center bg-greenleast  text-white font-bold capitalize rounded-t-2xl py-2">Layout Design</h1>
                         <div className="w-full sm:h-full h-[30rem]  p-20 overflow-scroll scrollbar border-[4px] border-greenleast rounded-b-2xl mb-7 z-10">
-                            <LayoutGrid rows={data.layoutCols} cols={data.layoutRows} array={generatearray(data)} />
+                            <LayoutGrid cols={data.layoutCols} rows={data.layoutRows} array={generatearray(data)} scale="100%" />
                         </div>
                         <div className="w-full h-fit">
                             <LayoutSeatList data={data.seats.sort((a: seatbody, b: seatbody) => {

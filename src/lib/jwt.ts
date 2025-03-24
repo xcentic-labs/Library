@@ -10,6 +10,7 @@ export const generateToken = (name : string , phoneNumber : string , role :strin
     } , KEY , { expiresIn : '7d' });
 }
 
-export const verifyToken = (token : string)=>{
+export const verifyToken = (token : string | undefined)=>{
+    if(!token) return ""
     return jwt.verify(token , KEY)
 }

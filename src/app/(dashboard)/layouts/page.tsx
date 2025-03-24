@@ -4,7 +4,7 @@ import { getLayouts } from "./Controllers/getlayouts"
 import { FaEye } from "react-icons/fa"
 import { MdDelete } from "react-icons/md";
 export default function Layouts() {
-    const { data, isloading , handleDeleteLayout , redirect } = getLayouts()
+    const { data, isloading, handleDeleteLayout, redirect } = getLayouts()
 
     return (
         <section className="w-full h-full md:p-10 p-5">
@@ -17,7 +17,7 @@ export default function Layouts() {
                             <th className="py-3 px-6">Layout Name</th>
                             <th className="py-3 px-6">Layout Id</th>
                             <th className="py-3 px-6">Monthly fee</th>
-                            <th className="py-3 px-6">Weekly Fee</th>
+                            {/* <th className="py-3 px-6">Weekly Fee</th> */}
                             <th className="py-3 px-6">Action</th>
                         </tr>
                     </thead>
@@ -46,23 +46,23 @@ export default function Layouts() {
                                     :
                                     (
                                         data.map((item, index) => (
-                                            <tr key={index} className={`text-center font-medium text-md border-b-slate-200 border-b-2 ${index%2 ? 'bg-gray-100' : ""}`}>
+                                            <tr key={index} className={`text-center font-medium text-md border-b-slate-200 border-b-2 ${index % 2 ? 'bg-gray-100' : ""}`}>
                                                 <td className="py-3 px-6">{index + 1}</td>
                                                 <td className="py-3 px-6 capitalize">{(item.layoutName)}</td>
                                                 <td className="py-3 px-6">{item.id}</td>
-                                                <td className="py-3 px-6">{item.pricePerMonth}</td>
-                                                <td className="py-3 px-6">{item.pricePerWeek}</td>
+                                                <td className="py-3 px-6">{'N/A'}</td>
+
                                                 <td className="py-3 px-6 flex items-center justify-center gap-2">
                                                     <button
                                                         className="bg-greenleast hover:bg-greenleastshade cursor-pointer p-2 rounded-md transition duration-200 shadow-md"
-                                                        onClick={()=> redirect.push(`/layouts/${item.id}`) }
-                                                        >
+                                                        onClick={() => redirect.push(`/layouts/${item.id}`)}
+                                                    >
                                                         <FaEye className="text-white text-md" />
                                                     </button>
                                                     <button
                                                         className="bg-red-600 hover:bg-red-500 cursor-pointer p-2 rounded-md transition duration-200 shadow-md"
-                                                        onClick={()=> handleDeleteLayout(item.id)}
-                                                        >
+                                                        onClick={() => handleDeleteLayout(item.id)}
+                                                    >
                                                         <MdDelete className="text-white text-md" />
                                                     </button>
                                                 </td>

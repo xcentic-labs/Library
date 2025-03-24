@@ -18,14 +18,16 @@ export default function Layout() {
         handleSeatPickUp,
         handleChnageSize,
         handleApplyLayout,
-        handleSaveDraft,
+        // handleSaveDraft,
         handleDetailsChange,
         layoutDetails,
         handelNextStep,
         step,
         newarray,
         handleUpdateSeatDetails,
-        handleAddseats
+        handleAddseats,
+        handleAddInput,
+        months
     } = useLayout()
 
     return (
@@ -41,7 +43,7 @@ export default function Layout() {
 
                     {
                         step == 1 ?
-                            <LayoutControls handleChnageSize={handleChnageSize} layoutSize={layoutSize} selectedComponent={selectedComponent} setSelectedComponent={setSelectedComponent} setScale={setScale} handleApplyLayout={handleApplyLayout} handleDetailsChange={handleDetailsChange} layoutDetails={layoutDetails} />
+                            <LayoutControls handleChnageSize={handleChnageSize} layoutSize={layoutSize} selectedComponent={selectedComponent} setSelectedComponent={setSelectedComponent} setScale={setScale} handleApplyLayout={handleApplyLayout} handleDetailsChange={handleDetailsChange} layoutDetails={layoutDetails} handleAddInput={handleAddInput} months={months} />
                             :
                             <SeatDetails array={newarray} handleUpdateSeatDetails={handleUpdateSeatDetails} />
                     }

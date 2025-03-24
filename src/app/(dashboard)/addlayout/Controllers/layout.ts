@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { layoutDetails, newArray } from "@/types/types";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useIsLoogedIn } from "@/hooks/login";
 
 
 export const useLayout = () => {
     const redirect = useRouter()
+    const [months, setMonths] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
     const [step, setStep] = useState<number>(1);
     const [layoutId, setLayoutId] = useState<number>(0);
     const [selectedComponent, setSelectedComponent] = useState('none');
@@ -24,12 +26,23 @@ export const useLayout = () => {
 
     const [layoutDetails, setLayoutDetails] = useState<layoutDetails>({
         layoutName: "",
-        pricePerMonth: 0,
-        pricePerWeek: 0
+        MonthlyFee: [
+            {
+                month: 0,
+                fee: 0
+            }
+        ]
     })
 
     const [newarray, setNewArray] = useState<Array<newArray>>([])
+    const {role} = useIsLoogedIn()
 
+    useEffect(()=>{
+        if(role != 'Admin'){
+            redirect.push('/')
+        }
+    },[])
+    
     const handleChnageSize = (size: string) => {
         switch (size) {
             case 'large':
@@ -60,6 +73,8 @@ export const useLayout = () => {
         });
     }
 
+
+    // chnage layout 
     const handleLayoutChange = (col: number, row: number) => {
         setArray(new Array((col) * (row)).fill({
             isSeat: false,
@@ -71,6 +86,8 @@ export const useLayout = () => {
         });
     }
 
+
+    // creating a coustum layout
     const handleApplyLayout = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
@@ -84,49 +101,83 @@ export const useLayout = () => {
     }
 
 
-    const handleDetailsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLayoutDetails((prevDetails) => {
-            const { name, value } = e.target
+    // add the input files for monthy fee
+    const handleAddInput = () => {
+        if (layoutDetails.MonthlyFee.length == 12) return toast.error("Can't add More then 12 Months")
+        const arr = layoutDetails.MonthlyFee
+        arr.push({
+            month: 0,
+            fee: 0
+        })
+
+        // saving to layout details
+        setLayoutDetails((prev) => {
             return {
-                ...prevDetails,
-                [name]: value
+                ...prev,
+                MonthlyFee: arr
             }
-        });
+        })
     }
 
-    const handleSaveDraft = () => {
-        if (!layoutDetails.layoutName) return toast.error("Layout name is Required");
-        if (!layoutDetails.pricePerMonth || layoutDetails.pricePerMonth == 0) return toast.error("Price Pre Month is Required");
-        if (!layoutDetails.pricePerWeek || layoutDetails.pricePerWeek == 0) return toast.error("Price Pre week is Required");
 
-        const draftLayout = {
-            layoutName: layoutDetails.layoutName,
-            layoutDetails: layoutDetails,
-            layout: layout,
-            array: array
+    const handleDetailsChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, index: number | string) => {
+        if (typeof (index) == 'string') {
+            setLayoutDetails((prev) => {
+                return {
+                    ...prev,
+                    layoutName: e.target.value
+                }
+            })
+        } else {
+            const arr = layoutDetails.MonthlyFee;
+            const { name, value } = e.target
+
+            name == 'month' || name == 'fee' ? arr[index][name] = value : ""
+
+            console.log(name, value)
+            // saving to layout details
+            setLayoutDetails((prev) => {
+                return {
+                    ...prev,
+                    MonthlyFee: arr
+                }
+            })
         }
-
-        const prev: any = localStorage.getItem('Draft-layout');
-        const arr = JSON.parse(prev) || [];
-
-        arr.push(draftLayout);
-
-        localStorage.setItem(`Draft-layout`, JSON.stringify(arr));
-        setLayoutDetails({
-            layoutName: "",
-            pricePerMonth: 0,
-            pricePerWeek: 0
-        });
-        setStep(1);
-        handleChnageSize('small')
-
-        return toast.success(`${layoutDetails.layoutName} Saved`)
     }
+
+    useEffect(() => {
+        console.log(layoutDetails)
+    }, [layoutDetails])
+
+    // const handleSaveDraft = () => {
+    //     if (!layoutDetails.layoutName) return toast.error("Layout name is Required");
+    //     if (!layoutDetails.pricePerMonth || layoutDetails.pricePerMonth == 0) return toast.error("Price Pre Month is Required");
+
+    //     const draftLayout = {
+    //         layoutName: layoutDetails.layoutName,
+    //         layoutDetails: layoutDetails,
+    //         layout: layout,
+    //         array: array
+    //     }
+
+    //     const prev: any = localStorage.getItem('Draft-layout');
+    //     const arr = JSON.parse(prev) || [];
+
+    //     arr.push(draftLayout);
+
+    //     localStorage.setItem(`Draft-layout`, JSON.stringify(arr));
+    //     setLayoutDetails({
+    //         layoutName: "",
+    //         pricePerMonth: 0,
+    //     });
+    //     setStep(1);
+    //     handleChnageSize('small')
+
+    //     return toast.success(`${layoutDetails.layoutName} Saved`)
+    // }
 
     const handelNextStep = async () => {
         if (!layoutDetails.layoutName) return toast.error("Layout name is Required");
-        if (!layoutDetails.pricePerMonth || layoutDetails.pricePerMonth == 0) return toast.error("Price Pre Month is Required");
-        if (!layoutDetails.pricePerWeek || layoutDetails.pricePerWeek == 0) return toast.error("Price Pre week is Required");
 
         const arr = array.map((item, index) => {
             if (item.isSeat || item.isBox) {
@@ -161,9 +212,8 @@ export const useLayout = () => {
             layoutName: layoutDetails.layoutName,
             layoutCols: layout.cols,
             layoutRows: layout.rows,
-            pricePerMonth: (+layoutDetails.pricePerMonth),
-            pricePerWeek: (+layoutDetails.pricePerWeek),
-            boxesAt: JSON.stringify(boxarray)
+            boxesAt: JSON.stringify(boxarray),
+            MonthlyFee: layoutDetails.MonthlyFee
         }
 
         try {
@@ -237,7 +287,7 @@ export const useLayout = () => {
         handleSeatPickUp,
         handleChnageSize,
         handleApplyLayout,
-        handleSaveDraft,
+        // handleSaveDraft,
         layoutDetails,
         setLayoutDetails,
         handleDetailsChange,
@@ -245,6 +295,8 @@ export const useLayout = () => {
         step,
         newarray,
         handleUpdateSeatDetails,
-        handleAddseats
+        handleAddseats,
+        handleAddInput,
+        months
     }
 }

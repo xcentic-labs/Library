@@ -14,7 +14,7 @@ export async function POST(req : NextRequest) {
 
         const user = await prisma.user.findUnique({
             where : {
-                phonNumber : phoneNumber,
+                phoneNumber : phoneNumber,
             }
         });
 
@@ -36,7 +36,7 @@ export async function POST(req : NextRequest) {
         })
 
         const cookie = await cookies()
-        const token = generateToken( user.name , user.phonNumber , user.role);
+        const token = generateToken( user.name , user.phoneNumber , user.role);
         cookie.set('authtoken' , token);
 
         return NextResponse.json({"message" : "Logged in Sucessfully" , auth : {
@@ -44,7 +44,7 @@ export async function POST(req : NextRequest) {
             authInfo : {
                 id : user.id,
                 name : user.name,
-                phoneNumber : user.phonNumber,
+                phoneNumber : user.phoneNumber,
                 role : user.role,
             },
             authPermission : authPermission

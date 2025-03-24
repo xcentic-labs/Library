@@ -9,14 +9,19 @@ export async function DELETE( res: NextRequest ,{ params }: { params: { id: stri
             return NextResponse.json({ error: "ID is required" }, { status: 400 });
         }
 
-
         const deletresult = await prisma.seat.deleteMany({
             where: {
                 layoutId: (+id)
             }
         })
 
-        if (!deletresult) NextResponse.json({ "error": "Unable to Delete The seats of Layout" }, { status: 500 });
+        const deletfee = await prisma.monthlyFee.deleteMany({
+            where: {
+                layoutId: (+id)
+            }
+        })
+
+        if (!deletresult || !deletfee) NextResponse.json({ "error": "Unable to Delete The seats of Layout" }, { status: 500 });
 
         const result = await prisma.layout.delete({
             where: {
@@ -61,7 +66,8 @@ export async function GET(req : NextRequest,{ params }: { params: { id: string }
                 id :(+id)
             },
             include : {
-                seats : true
+                seats : true,
+                Fee : true
             }
         });
 

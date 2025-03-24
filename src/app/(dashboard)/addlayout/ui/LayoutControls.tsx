@@ -4,18 +4,20 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import { AiOutlineStop } from "react-icons/ai";
 import React from 'react';
 import { layoutDetails } from '@/types/types';
-interface LayoutControlsProps{
-    handleApplyLayout : (e: React.FormEvent<HTMLFormElement>)=> void
-    handleChnageSize : ( size: string)=> void,
-    layoutSize  : string ,
-    selectedComponent : string
-    setSelectedComponent : ( value : string) => void,
-    setScale : ( value : number) => void
-    handleDetailsChange : (e : React.ChangeEvent<HTMLInputElement>) => void,
-    layoutDetails : layoutDetails
+interface LayoutControlsProps {
+    handleApplyLayout: (e: React.FormEvent<HTMLFormElement>) => void
+    handleChnageSize: (size: string) => void,
+    layoutSize: string,
+    selectedComponent: string
+    setSelectedComponent: (value: string) => void,
+    setScale: (value: number) => void
+    handleDetailsChange: (e: React.ChangeEvent<HTMLInputElement  |HTMLSelectElement> , index : number | string) => void,
+    layoutDetails: layoutDetails,
+    handleAddInput: () => void
+    months : number[]
 }
 
-export const LayoutControls = ({ handleChnageSize , layoutSize , handleApplyLayout, setSelectedComponent , selectedComponent , setScale , handleDetailsChange , layoutDetails} : LayoutControlsProps) => {
+export const LayoutControls = ({ handleChnageSize, layoutSize, handleApplyLayout, setSelectedComponent, selectedComponent, setScale, handleDetailsChange, layoutDetails, handleAddInput , months }: LayoutControlsProps) => {
     return (
         <div className="py-2 flex-1">
             <h1 className="font-bold mb-4">Layout Type</h1>
@@ -69,13 +71,25 @@ export const LayoutControls = ({ handleChnageSize , layoutSize , handleApplyLayo
                 <h1 className="mb-4 font-bold">Layout Details</h1>
                 <div className="">
                     <label htmlFor="layoutname" className="font-medium">Layout Name*</label>
-                    <input type="text" name="layoutName" className="h-10 p-2 w-full rounded-lg  border-2 border-greenleast mb-4" value={layoutDetails.layoutName} onChange={handleDetailsChange} />
+                    <input type="text" name="layoutName" className="h-10 p-2 w-full rounded-lg  border-2 border-greenleast mb-4" value={layoutDetails.layoutName} onChange={(e)=> handleDetailsChange(e , 'layoutName')} />
 
-                    <label htmlFor="layoutname" className="font-medium">Seat Price (Per month)</label>
-                    <input type="text" name="pricePerMonth" className="h-10 p-2 w-full rounded-lg  border-2 border-greenleast mb-4"  value={layoutDetails.pricePerMonth} onChange={handleDetailsChange}/>
-
-                    <label htmlFor="layoutname" className="font-medium">Seat Price (Per week)</label>
-                    <input type="text" name="pricePerWeek" className="h-10 p-2 w-full rounded-lg  border-2 border-greenleast" value={layoutDetails.pricePerWeek}  onChange={handleDetailsChange}/>
+                    <label htmlFor="layoutname" className="font-medium">Seat Price Details</label>
+                    {
+                        layoutDetails.MonthlyFee.map((month, monthindex) => (
+                            <div key={monthindex} className='flex gap-4'>
+                                <select name="month" id="" className="h-10 p-2 w-[48%] rounded-lg  border-2 border-greenleast mb-4" onChange={(e)=> handleDetailsChange(e , monthindex)} >
+                                    <option value="0">Select Months</option>
+                                    {
+                                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((months, index) => (
+                                            <option key={index} value={months}>{months}</option>
+                                        ))
+                                    }
+                                </select>
+                                <input type="number" name="fee" className="h-10 p-2 w-[48%] rounded-lg  border-2 border-greenleast mb-4" placeholder='Enter Amount'  onChange={(e)=> handleDetailsChange(e , monthindex)}/>
+                            </div>
+                        ))
+                    }
+                    <button className="bg-greenleast w-full text-white px-5 py-2 rounded-lg font-bold cursor-pointer" onClick={handleAddInput}> Add Months </button>
                 </div>
             </div>
         </div>

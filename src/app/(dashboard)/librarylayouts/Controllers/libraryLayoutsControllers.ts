@@ -6,9 +6,17 @@ import { toast } from "react-toastify";
 import { layoutdata, newArray } from "@/types/types";
 import { useIsLoogedIn } from "@/hooks/login";
 
+
+
 interface layoutName {
     id: number,
     layoutName: string
+}
+
+declare global {
+    interface Window {
+        Razorpay: any;
+    }
 }
 
 export const libraryLayoutsController = () => {
@@ -19,7 +27,7 @@ export const libraryLayoutsController = () => {
     const [seatNumber, setSeatNumber] = useState<string>()
     const [total, setTotal] = useState(0)
     const redirect = useRouter();
-    const { id } = useIsLoogedIn();
+    const { id, name, phoneNumber } = useIsLoogedIn();
 
 
     const fetchLayoutNames = async () => {
@@ -87,6 +95,14 @@ export const libraryLayoutsController = () => {
     }
 
 
+    const handleChnageAmount = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setTimePeriod(e.target.value);
+        const month  = data?.Fee.filter((item)=>{
+            return item.month === +(e.target.value)
+        })
+        !month ? "" : setTotal(month[0].fee)
+    }
+
     const handleChnageLayout = (e: React.ChangeEvent<HTMLSelectElement>) => {
         console.log(e.target.value);
         if (+(e.target.value) == 0 || e.target.value == undefined) {
@@ -99,31 +115,85 @@ export const libraryLayoutsController = () => {
         fetchLayoutDetails(+(e.target.value));
     }
 
+
+
     const handleBookSeat = async () => {
 
         if (!seatNumber || seatNumber == '0') return toast.error("Selaect Seat Number");
         if (!timePeriod || timePeriod == '0') return toast.error("Selaect Time Period");
+        const totalAmount = total * 100;
 
-        console.log(seatNumber)
-        const obj = {
-            userId: id,
-            seatNumber: +(seatNumber),
-            timePeriod: +(timePeriod),
-            layoutId: data?.id
+        const orderId = await createOrder(totalAmount);
+
+        if (!orderId) return toast.error("Unable to create Order");
+
+        const options = {
+            key: process.env.key_id,
+            amount: total,
+            currency: 'INR',
+            name: name,
+            description: `Seat Numbaer : ${seatNumber} for ${timePeriod} Months`,
+            order_id: orderId,
+            handler: async function bookseat(response: any) {
+                try {
+                    const obj = {
+                        userId: id,
+                        seatNumber: +(seatNumber),
+                        timePeriod: +(timePeriod),
+                        layoutId: data?.id,
+                        razorpayOrderId : response.razorpay_order_id,
+                        razorpayPaymentId : response.razorpay_payment_id,
+                        razorpaySignature : response.razorpay_signature,
+
+                    }
+                    const res = await axios.patch('/api/seat', JSON.stringify(obj));
+
+                    if (res.status == 200) {
+                        toast.success(res.data.message);
+                        redirect.push('/studentdashboard')
+                    } else {
+                        toast.error(res.data.error)
+                    }
+                } catch (error: any) {
+                    toast.error(error.response.data.error)
+                }
+            },
+            prefill: {
+                name: name,
+                phoneNumber: phoneNumber
+            },
+            theme: {
+                color: '#1c3f3a',
+            },
         }
 
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.on('payment.failed', function (response: any) {
+            alert(response.error.description);
+        });
+        paymentObject.open();
+    }
+
+
+    const createOrder = async (amount: string | number) => {
         try {
-            const response = await axios.patch('/api/seat', JSON.stringify(obj));
+            const body = {
+                amount: amount,
+                currency: 'INR'
+            }
+            const response = await axios.post('/api/payment/createorder', JSON.stringify(body));
 
             if (response.status == 200) {
+                toast.success("Order Created Sucessfully");
                 console.log(response.data);
-                toast.success(response.data.message);
-                redirect.push('/studentdashboard')
-            } else {
-                toast.error(response.data.error)
+                return response.data.orderId
+            }
+            else {
+                return ""
             }
         } catch (error: any) {
-            toast.error(error.response.data.error)
+            console.log(error);
+            return ""
         }
     }
 
@@ -142,7 +212,9 @@ export const libraryLayoutsController = () => {
         setSeatNumber,
         handleBookSeat,
         seatNumber,
-        timePeriod
+        timePeriod,
+        total,
+        handleChnageAmount
     }
 }
 
