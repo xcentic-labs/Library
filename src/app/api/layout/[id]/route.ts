@@ -1,6 +1,8 @@
 import prisma from "@/lib/prismaClient";
 import { NextRequest , NextResponse } from "next/server";
 
+
+// admin specfic
 export async function DELETE( res: NextRequest ,{ params }: { params: { id: string } }) {
     try {
         const { id } = params;

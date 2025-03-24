@@ -19,64 +19,81 @@ enum Role {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  name          String    @db.VarChar(100)
-  phoneNumber    String    @unique @db.VarChar(10)
-  email         String 
-  password      String
-  role          Role      @default(User)
-  createrAt     DateTime  @default(now())
-  seat          Seat[]
+  id          Int                 @id @default(autoincrement())
+  name        String              @db.VarChar(100)
+  phoneNumber String              @unique @db.VarChar(10)
+  email       String
+  password    String
+  role        Role                @default(User)
+  createrAt   DateTime            @default(now())
+  seat        Seat[]
+  session     counsellingsession[]
 }
 
 model Layout {
-  id            Int @id @default(autoincrement())
-  layoutName    String @unique
-  layoutCols    Int
-  layoutRows    Int
-  boxesAt       String? @db.VarChar(500)
-  seats         Seat[] 
-  Fee    MonthlyFee[]
+  id         Int          @id @default(autoincrement())
+  layoutName String       @unique
+  layoutCols Int
+  layoutRows Int
+  boxesAt    String?      @db.VarChar(500)
+  seats      Seat[]
+  Fee        MonthlyFee[]
 }
 
 model MonthlyFee {
-  id            Int @id @default(autoincrement())
-  month         Int
-  fee           Int
-  layoutId      Int? 
-  layout        Layout? @relation(fields: [layoutId], references: [id]) 
+  id       Int     @id @default(autoincrement())
+  month    Int
+  fee      Int
+  layoutId Int?
+  layout   Layout? @relation(fields: [layoutId], references: [id])
 }
 
 model Seat {
-  id            Int   @id @default(autoincrement())
-  userId        Int?
-  bookedBy      User? @relation(fields: [userId] , references: [id])
-  isLocker      Boolean 
-  seatNumber    Int 
-  index         Int?
-
-  isBooked      Boolean @default(false)
+  id               Int      @id @default(autoincrement())
+  userId           Int?
+  bookedBy         User?    @relation(fields: [userId], references: [id])
+  isLocker         Boolean
+  seatNumber       Int
+  index            Int?
+  isBooked         Boolean  @default(false)
   bookingStartDate DateTime @default(now())
   bookingEndDate   DateTime @default(now())
-
-  layoutId        Int?    // Foreign key to Layout
-  layout          Layout? @relation(fields: [layoutId], references: [id]) 
+  layoutId         Int? // Foreign key to Layout
+  layout           Layout?  @relation(fields: [layoutId], references: [id])
 }
 
+model counselling {
+  id       Int    @id @default(autoincrement())
+  name     String
+  price    Int
+  benefits String
+
+  counsellingsession counsellingsession[]
+}
+
+model counsellingsession {
+  id           Int         @id @default(autoincrement())
+  status       Boolean     
+  counsellingId Int
+  counselling   counselling? @relation(fields: [counsellingId], references: [id])
+  userId       Int?
+  bookedBy     User?       @relation(fields: [userId], references: [id])
+  createrAt    DateTime    @default(now())
+}
 
 model menu {
-  id              Int     @id @default(autoincrement())
-  title           String
-  permitTo        String
-  priority        String
-  item            item[]
+  id       Int    @id @default(autoincrement())
+  title    String
+  permitTo String
+  priority String
+  item     item[]
 }
 
 model item {
-  id               Int    @id @default(autoincrement())
-  name             String
-  icon             String
-  route            String
-  parentId         Int?   // Foreign key to Layout
-  parent           menu?  @relation(fields: [parentId ] , references: [id])
+  id       Int    @id @default(autoincrement())
+  name     String
+  icon     String
+  route    String
+  parentId Int? // Foreign key to Layout
+  parent   menu?  @relation(fields: [parentId], references: [id])
 }

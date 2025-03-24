@@ -80,7 +80,7 @@ export async function PATCH(req: NextRequest) {
 }
 
 
-const generatedSignature = (razorpayOrderId: string, razorpayPaymentId: string) => {
+export const generatedSignature = (razorpayOrderId: string, razorpayPaymentId: string) => {
     const keySecret = process.env.key_secret;
     if (!keySecret) {
         throw new Error(

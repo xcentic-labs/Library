@@ -35,13 +35,7 @@ export const useLayout = () => {
     })
 
     const [newarray, setNewArray] = useState<Array<newArray>>([])
-    const {role} = useIsLoogedIn()
 
-    useEffect(()=>{
-        if(role != 'Admin'){
-            redirect.push('/')
-        }
-    },[])
     
     const handleChnageSize = (size: string) => {
         switch (size) {

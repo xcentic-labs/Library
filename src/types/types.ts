@@ -89,3 +89,25 @@ export interface newArray {
     seatNumber: string | number
     isBooked?: boolean
 }
+
+
+export interface counselling{
+    id? : number,
+    name : string,
+    price : number,
+    benefits : string
+}
+
+export interface session{
+    id: number,
+    status: boolean,
+    counsellingId: number,
+    userId: number,
+    createrAt: Date
+    counselling: counselling,
+    bookedBy : {
+        email : string,
+        phoneNumber : string,
+        name : string
+    }
+}

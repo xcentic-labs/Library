@@ -14,5 +14,7 @@ export const admindashboard = ()=>{
         }
     })
 
-    return 
+    return {
+        data
+    }
 }
