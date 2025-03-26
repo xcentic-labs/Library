@@ -1,14 +1,14 @@
 "use client"
-import { useIsLoogedIn } from "@/hooks/login"
+import { useIsLoggedIn } from "@/hooks/login"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export const admindashboard = ()=>{
     const redirect = useRouter()
-    const {role} = useIsLoogedIn();
     const [data , setData] = useState()
 
     useEffect(()=>{
+        const {role} = useIsLoggedIn();
         if(role != 'Admin'){
             redirect.push('/')
         }

@@ -4,11 +4,19 @@ import { NextRequest , NextResponse } from "next/server";
 
 export async function DELETE( res: NextRequest ,{ params }: { params: { id: string } }) {
     try {
-        const { id } = params;
+        const { id } = params
 
         if (!id) {
             return NextResponse.json({ error: "ID is required" }, { status: 400 });
         }
+
+        const sessionDeleteion = await prisma.counsellingsession.deleteMany({
+            where : {
+                counsellingId : (+id)
+            }
+        })
+
+        if(!sessionDeleteion) return NextResponse.json({"error" : "Unable to Delete the Sessions Related to The counselling"}, {status  :500});
 
         const result = await prisma.counselling.delete({
             where : {

@@ -8,11 +8,11 @@ import { auth } from "@/types/types";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useIsLoogedIn } from "@/hooks/login";
+import { useIsLoggedIn } from "@/hooks/login";
 
 export default function Login(){
   const redirect = useRouter();
-  const {status} = useIsLoogedIn();
+  const {status} = useIsLoggedIn();
 
 
   // route to home is user is Looged in "Handling Fallback"
@@ -65,8 +65,8 @@ export default function Login(){
 
 
   const handleChange = (e : React.ChangeEvent<HTMLInputElement>)=>{
-    let name = e.target.name;
-    let value = e.target.value
+    const name = e.target.name;
+    const value = e.target.value
 
     setData((prev)=>{
       return {

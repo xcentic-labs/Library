@@ -9,7 +9,7 @@ import { User } from "@/types/types";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useIsLoogedIn } from "@/hooks/login";
+import { useIsLoggedIn } from "@/hooks/login";
 
 export default function Signup() {
   const redirect = useRouter();
@@ -19,7 +19,7 @@ export default function Signup() {
     email: "",
     password: ""
   });
-  const {status} = useIsLoogedIn();
+  const {status} = useIsLoggedIn();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(()=>{
@@ -56,8 +56,8 @@ export default function Signup() {
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let name = e.target.name;
-    let value = e.target.value
+    const name = e.target.name;
+    const value = e.target.value
 
     setData((prev) => {
       return {

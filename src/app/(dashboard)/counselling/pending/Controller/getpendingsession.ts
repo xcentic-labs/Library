@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { useIsLoogedIn } from "@/hooks/login";
+import { useIsLoggedIn } from "@/hooks/login";
 import { session } from "@/types/types";
 
 
@@ -11,7 +11,7 @@ export default function getPendingSession() {
     const [data, setData] = useState<Array<session>>();
     const [isloading, setIsLoading] = useState<boolean>(false);
     const redirect = useRouter();
-    const { role } = useIsLoogedIn();
+    const { role } = useIsLoggedIn();
 
     // redirect if not admin
     useEffect(()=>{

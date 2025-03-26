@@ -3,13 +3,15 @@ import axios from "axios"
 import { counselling } from "@/types/types"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify/unstyled"
-import { useIsLoogedIn } from "@/hooks/login"
+import { useIsLoggedIn } from "@/hooks/login"
 import { useRouter } from "next/navigation"
 
 const counsellingBooking = () => {
     const [data, setData] = useState<Array<counselling>>()
-    const { role, phoneNumber , id , name } = useIsLoogedIn()
+    const { role, phoneNumber , id , name } = useIsLoggedIn()
     const redirect = useRouter();
+
+    
 
     const fetchcounselling = async () => {
         try {

@@ -1,9 +1,13 @@
+"use client"
 import Image from "next/image"
 import student from '@/assets/student2.jpg'
 import { FaBook, FaUsers, FaLaptop, FaChalkboardTeacher } from "react-icons/fa";
+import { useIsLoggedIn } from "@/hooks/login";
+import Link from "next/link";
 
 
 export default function SeatBooking() {
+    const {status } = useIsLoggedIn()
     return (
         <section className="w-full  bg-secondary">
             <div className="w-full h-fit bg-white md:rounded-bl-[20%] p-5 md:py-10">
@@ -46,7 +50,9 @@ export default function SeatBooking() {
                                 </div>
                             </div>
                         </div>
+                        <Link href={status ? '/librarylayouts' : '/login'}>
                         <button className=" bg-greenleast text-white px-7 py-2 rounded-xl font-bold cursor-pointer">Book Your Seat</button>
+                        </Link>
                     </div>
                     <div className="lg:w-[50%] h-[50%] lg:h-full  flex justify-center items-center ">
                         <div className="lg:w-[90%] w-full h-full lg:h-[90%] flex justify-start items-center">

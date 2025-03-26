@@ -27,7 +27,7 @@ const CounsellingList = ({ data , handleDeletecounselling }: counsellingListProp
                             ?
                             <tr className="w-full h-14" >
                                 <th className="w-full h-full" colSpan={6}>
-                                    <h1>No Layout Found</h1>
+                                    <h1>No Counselling Found</h1>
                                 </th>
                             </tr>
                             :

@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import { layoutDetails, newArray } from "@/types/types";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useIsLoogedIn } from "@/hooks/login";
 
 
 export const useLayout = () => {

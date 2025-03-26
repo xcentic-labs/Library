@@ -53,6 +53,7 @@ model Seat {
   userId           Int?
   bookedBy         User?    @relation(fields: [userId], references: [id])
   isLocker         Boolean
+  isBlocked        Boolean  @default(false)
   seatNumber       Int
   index            Int?
   isBooked         Boolean  @default(false)

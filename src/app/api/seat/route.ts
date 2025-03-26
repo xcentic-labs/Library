@@ -1,6 +1,5 @@
-import { bookseat, seatbody } from "@/types/types";
+import { bookseat } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import prisma from "@/lib/prismaClient";
 import crypto from "crypto";
 
@@ -71,7 +70,7 @@ export async function PATCH(req: NextRequest) {
         });
 
         if (!result) return NextResponse.json({ "error": "Unable to Book seat" }, { status: 500 });
-        return NextResponse.json({ "message": "Seat Booked Sucessfully", data: result });
+        return NextResponse.json({ "message": "Seat Booked Sucessfully", data: result } , {status : 200});
 
     } catch (error) {
         console.log(error);

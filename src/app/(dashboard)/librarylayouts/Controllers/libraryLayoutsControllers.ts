@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { layoutdata, newArray } from "@/types/types";
-import { useIsLoogedIn } from "@/hooks/login";
+import { useIsLoggedIn } from "@/hooks/login";
 
 
 
@@ -27,7 +27,7 @@ export const libraryLayoutsController = () => {
     const [seatNumber, setSeatNumber] = useState<string>()
     const [total, setTotal] = useState(0)
     const redirect = useRouter();
-    const { id, name, phoneNumber } = useIsLoogedIn();
+    const { id, name, phoneNumber } = useIsLoggedIn();
 
 
     const fetchLayoutNames = async () => {
@@ -62,7 +62,8 @@ export const libraryLayoutsController = () => {
                 isBox: false,
                 isLocker: true,
                 seatNumber: item.seatNumber,
-                isBooked: item.isBooked
+                isBooked: item.isBooked,
+                isBlocked : item.isBlocked,
             };
         });
 

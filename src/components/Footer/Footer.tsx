@@ -1,6 +1,7 @@
 import { LuPhone } from "react-icons/lu";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { GrLocation } from "react-icons/gr";
+import Link from "next/link";
 
 
 const Footer = () => {
@@ -14,11 +15,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Pages</h3>
             <ul className="flex flex-col gap-2 text-sm space-y-2">
-              <li className="duration-300 cursor-pointer  hover:text-white/80">Home</li>
-              <li className="duration-300 cursor-pointer  hover:text-white/80">Book your Seat</li>
-              <li className="duration-300 cursor-pointer  hover:text-white/80">Faclits We Offer</li>
-              <li className="duration-300 cursor-pointer  hover:text-white/80">Our Library Rules</li>
-              <li className="duration-300 cursor-pointer  hover:text-white/80">Testimonials</li>
+              <Link href={'/'}><li className="duration-300 cursor-pointer  hover:text-white/80">Home</li></Link>
+              <Link href={'/#seatbooking'}><li className="duration-300 cursor-pointer  hover:text-white/80">Book your Seat</li></Link>
+              <Link href={'/#faclits'}><li className="duration-300 cursor-pointer  hover:text-white/80">Faclits We Offer</li></Link>
+              <Link href={'/#rules'}><li className="duration-300 cursor-pointer  hover:text-white/80">Our Library Rules</li></Link>
+              <Link href={'/#testimonials'}><li className="duration-300 cursor-pointer  hover:text-white/80">Testimonials</li></Link>
             </ul>
           </div>
           <div>

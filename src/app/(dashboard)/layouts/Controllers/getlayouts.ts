@@ -4,13 +4,13 @@ import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { layoutDetails } from "@/types/types"
 import { useRouter } from "next/navigation";
-import { useIsLoogedIn } from "@/hooks/login"
+import { useIsLoggedIn } from "@/hooks/login"
 
 export function getLayouts() {
     const [data, setData] = useState<Array<layoutDetails>>([]);
     const [isloading, setIsLoading] = useState(false);
     const redirect = useRouter();
-    const {role} = useIsLoogedIn()
+    const {role} = useIsLoggedIn()
 
     useEffect(()=>{
         if(role != 'Admin'){

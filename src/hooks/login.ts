@@ -1,38 +1,52 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { authInfo } from "@/types/types";
 
-export const useIsLoogedIn = () => {
-    const storeData: any = (localStorage.getItem('auth')) || JSON.stringify({
-        authStatus: false,
-        authInfo: {
-            id: null,
-            name: null,
-            phoneNumber: null,
-            role: null
-        }
+export const useIsLoggedIn = () => {
+    const [authStatus, setAuthStatus] = useState({
+        status: false,
+        name: null,
+        phoneNumber: null,
+        role: null,
+        id: null,
     });
-    const auth: authInfo = JSON.parse(storeData) || {
-        authStatus: false,
-        authInfo: {
-            id: null,
-            name: null,
-            phoneNumber: null,
-            role: null
-        }
-    };
 
-    if (!auth.authInfo.name || !auth.authInfo.phoneNumber || !auth.authInfo.role) {
-        localStorage.removeItem('auth');
-        return {
-            status: false,
-            ...auth
-        }
-    }
+    useEffect(() => {
+        if (typeof window === "undefined") return;
 
-    return {
-        status: true,
-        name: auth.authInfo.name,
-        phoneNumber: auth.authInfo.phoneNumber,
-        role: auth.authInfo.role,
-        id: auth.authInfo.id
-    }
-}
+        const storedData = localStorage.getItem("auth");
+        const defaultAuth = {
+            authStatus: false,
+            authInfo: {
+                id: null,
+                name: null,
+                phoneNumber: null,
+                role: null,
+            },
+        };
+
+        let auth: authInfo = storedData ? JSON.parse(storedData) : defaultAuth;
+
+        if (!auth.authInfo.name || !auth.authInfo.phoneNumber || !auth.authInfo.role) {
+            localStorage.removeItem("auth");
+            setAuthStatus({
+                status: false,
+                name: null,
+                phoneNumber: null,
+                role: null,
+                id: null,
+            });
+        } else {
+            setAuthStatus({
+                status: true,
+                name: auth.authInfo.name,
+                phoneNumber: auth.authInfo.phoneNumber,
+                role: auth.authInfo.role,
+                id: auth.authInfo.id,
+            });
+        }
+    }, []);
+
+    return authStatus;
+};

@@ -5,7 +5,7 @@ import SideBar from "@/components/SideBar/Sidebar";
 import Navbar from "@/components/AdminNavBar/NavBar";
 import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
-import { useIsLoogedIn } from "@/hooks/login";
+import { useIsLoggedIn } from "@/hooks/login";
 import { useRouter } from "next/navigation";
 
 
@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const redirect = useRouter()
-  const isloggedIn = useIsLoogedIn()
+  const isloggedIn = useIsLoggedIn()
   const [isOpen , setIsOpen] = useState(false);
 
   useEffect(()=>{

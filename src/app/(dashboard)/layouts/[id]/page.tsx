@@ -9,7 +9,9 @@ export default function LayoutDetails() {
         data,
         redirect,
         generatearray,
-        formatDate
+        formatDate,
+        handleAllotment,
+        handleUpdateBlockStatus
     } = getLayoutDetails();
 
 
@@ -33,6 +35,8 @@ export default function LayoutDetails() {
                                 return (+a.seatNumber) - (+b.seatNumber);
                             })}
                                 formatDate={formatDate}
+                                handleAllotment={handleAllotment}
+                                handleUpdateBlockStatus={handleUpdateBlockStatus}
                             />
                         </div>
                     </>

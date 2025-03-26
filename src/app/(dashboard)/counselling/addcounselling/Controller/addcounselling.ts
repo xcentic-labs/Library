@@ -3,13 +3,16 @@ import { counselling } from "@/types/types";
 import axios from "axios";
 import React, { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import { useIsLoogedIn } from "@/hooks/login";
+import { useIsLoggedIn } from "@/hooks/login";
+import { useRouter } from "next/navigation";
+
 export default function Addcounselling() {
+    const redirect = useRouter();
     const [data, setData] = useState<Array<counselling>>();
-    const { role } = useIsLoogedIn();
 
     // redirect if not admin
     useEffect(() => {
+        const { role } = useIsLoggedIn();
         if (role != 'Admin') {
             redirect.push('/')
         }

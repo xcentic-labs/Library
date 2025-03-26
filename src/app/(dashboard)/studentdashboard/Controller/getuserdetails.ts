@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { User } from "@/types/types";
-import { useIsLoogedIn } from "@/hooks/login";
+import { useIsLoggedIn } from "@/hooks/login";
 
 export default function getUserDetails() {
-    const {id} = useIsLoogedIn()
+    const {id} = useIsLoggedIn()
     const [data, setData] = useState<User>();
     const [isloading, setIsLoading] = useState<boolean>(false);
 

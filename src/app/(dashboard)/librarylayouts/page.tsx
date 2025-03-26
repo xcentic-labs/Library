@@ -59,7 +59,7 @@ export default function StudentLayout() {
                                         <option value="">Select Seat</option>
                                         {
                                             data.seats.map((item, index) => (
-                                                item.isBooked ? "" : <option key={index} value={item.seatNumber}>{item.seatNumber}</option>
+                                                item.isBooked  || item.isBlocked ? "" : <option key={index} value={item.seatNumber}>{item.seatNumber}</option>
                                             ))
                                         }
                                     </select>

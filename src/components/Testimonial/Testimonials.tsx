@@ -6,7 +6,7 @@ import person from '@/assets/student.png'
 const testimonial = [1, 2, 3, 4, 5, 6]
 const Testimonial = () => {
     return (
-        <div className="w-full py-10">
+        <div className="w-full py-10" id="testimonials">
             <div className="max-w-7xl mx-auto p-4">
                 <div className="flex justify-center items-center h-fit">
                     <p className="flex justify-center items-center border-[1px] border-greenleast px-3 rounded-lg text-xs  gap-1 mb-4 py-1 text-greenleast font-semibold">

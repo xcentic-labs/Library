@@ -51,8 +51,8 @@ export default function SessionListTable({ data, isloading, redirect , handleMak
                                 !data || data.length == 0
                                     ?
                                     <tr className="w-full h-14" >
-                                        <th className="w-full h-full" colSpan={6}>
-                                            <h1>No Layout Found</h1>
+                                        <th className="w-full h-full" colSpan={8}>
+                                            <h1>No Counselling Found</h1>
                                         </th>
                                     </tr>
                                     :
@@ -81,7 +81,7 @@ export default function SessionListTable({ data, isloading, redirect , handleMak
                                                             <button className="px-2 bg-green-600 py-1 rounded-lg text-nowrap"
                                                             onClick={()=> handleMakrCompleted(counselling.id)}
                                                             >
-                                                                Makr As Done
+                                                                Mark As Done
                                                             </button>
                                                     }
 

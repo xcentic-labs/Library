@@ -4,13 +4,13 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { User } from "@/types/types";
 import { useRouter } from "next/navigation";
-import { useIsLoogedIn } from "@/hooks/login";
+import { useIsLoggedIn } from "@/hooks/login";
 
 export default function getAllUser() {
     const [data, setData] = useState<Array<User>>();
     const [isloading, setIsLoading] = useState<boolean>(false);
     const redirect = useRouter();
-    const { role } = useIsLoogedIn();
+    const { role } = useIsLoggedIn();
 
     // redirect if not admin
     useEffect(()=>{

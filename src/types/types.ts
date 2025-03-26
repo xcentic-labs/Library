@@ -21,6 +21,7 @@ export interface seatbody {
     index: number,
     layoutId: number,
     isBooked?: boolean,
+    isBlocked? : boolean,
     bookingEndDate?: Date,
     bookingStartDate?: Date,
     userId?: number | undefined | null
@@ -86,8 +87,9 @@ export interface newArray {
     isSeat: boolean,
     isBox: boolean,
     isLocker: boolean,
-    seatNumber: string | number
+    seatNumber: string | number | undefined
     isBooked?: boolean
+    isBlocked? : boolean
 }
 
 
