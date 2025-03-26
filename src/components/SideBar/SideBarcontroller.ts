@@ -1,37 +1,49 @@
-import { auth } from "@/types/types"
+"use client";
+import { auth } from "@/types/types";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+
 export const SideBarController = () => {
-    const redirect = useRouter()
-    const storeData: any = (localStorage.getItem('auth'));
-    const parsedStoreData: any = JSON.parse(storeData)
-    const authPermission = parsedStoreData?.authPermission
+  const redirect = useRouter();
+  const [data, setData] = useState<any[]>([]);
 
-    const data = !authPermission ? [] : authPermission.sort((a: any, b: any) => {
-        return a.priority - b.priority
-    })
+  useEffect(() => {
+    // Ensure localStorage is accessed only on the client side
+    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+      const storeData: any = localStorage.getItem("auth");
+      const parsedStoreData: any = JSON.parse(storeData);
+      const authPermission = parsedStoreData?.authPermission;
 
+      const sortedData = !authPermission
+        ? []
+        : authPermission.sort((a: any, b: any) => a.priority - b.priority);
 
-    const handleLogout = async () => {
-        try {
-            const res = await axios.get('/api/logout');
-
-            if (res.status === 200) {
-                toast.success(res.data.message);
-                redirect.push('/')
-            } else {
-                toast.error(res.data.error)
-            }
-        } catch (error: any) {
-            console.log(error);
-            toast.error(error.response.data.error)
-        }
+      setData(sortedData);
     }
-    return {
-        data,
-        handleLogout
-    }
-}
+  }, []); // Runs only once when the component mounts
 
-export default SideBarController
+  const handleLogout = async () => {
+    try {
+      const res = await axios.get("/api/logout");
+
+      if (res.status === 200) {
+        toast.success(res.data.message);
+        redirect.push("/");
+      } else {
+        toast.error(res.data.error);
+      }
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.response?.data?.error || "An error occurred");
+    }
+  };
+
+  return {
+    data,
+    handleLogout,
+  };
+};
+
+export default SideBarController;

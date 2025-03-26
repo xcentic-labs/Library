@@ -1,9 +1,4 @@
-"use client"
-
-import { admindashboard } from "./Controller/admindashboard";
-
 export default function AdminDashBoard() {
-    const {data} = admindashboard()
     return (
         <section className="w-full h-full md:p-10 p-5">
             <h1 className="text-xl mb-6 text-gray-700 capitalize font-bold">Dashboard</h1>

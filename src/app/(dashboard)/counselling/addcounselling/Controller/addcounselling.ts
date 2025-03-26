@@ -3,7 +3,6 @@ import { counselling } from "@/types/types";
 import axios from "axios";
 import React, { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import { useIsLoggedIn } from "@/hooks/login";
 import { useRouter } from "next/navigation";
 
 export default function Addcounselling() {

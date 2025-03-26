@@ -39,23 +39,38 @@ export default function Login(){
     try {
       const res = await axios.post("/api/login" , JSON.stringify(data));
       
-      if(res.status == 200){
+      if (res.status === 200) {
         console.log(res.data);
-
+      
+        // Construct the auth object
         const obj = {
-          authStatus : true,
-          authInfo : res.data.auth.authInfo,
-          authPermission : res.data.auth.authPermission
+          authStatus: true,
+          authInfo: res.data.auth.authInfo,
+          authPermission: res.data.auth.authPermission,
         };
-
-        localStorage.setItem('auth' , JSON.stringify(obj));
-        res.data.auth.authInfo.role == 'Admin' ? redirect.push('/admindashboard') : redirect.push('/studentdashboard');
+      
+        // Save the auth object to localStorage
+        if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+          localStorage.setItem("auth", JSON.stringify(obj));
+        }
+      
+        // Redirect based on user role
+        if (res.data.auth.authInfo.role === "Admin") {
+          redirect.push("/admindashboard");
+        } else {
+          redirect.push("/studentdashboard");
+        }
+      
+        // Reset the form fields
         setData({
-          phoneNumber : "",
-          password : ""
+          phoneNumber: "",
+          password: "",
         });
-        return toast.success("LoggedIn Sucessfully");
-      }else{
+      
+        // Display success toast
+        return toast.success("Logged In Successfully");
+      }
+      else{
         toast.error(res.data.error);
       }
     } catch (error : any) {
