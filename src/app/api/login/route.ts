@@ -18,6 +18,7 @@ export async function POST(req : NextRequest) {
             }
         });
 
+
         console.log(user)
 
         if(!user) return NextResponse.json({"error" : "User Not Found"} , {status : 404});
@@ -26,6 +27,16 @@ export async function POST(req : NextRequest) {
 
         if(!isMatched) return NextResponse.json({"error" : "Password Not Matched"} , {status  :403});
 
+
+        const updatedUser = await prisma.user.update({
+            where  : {
+                phoneNumber : phoneNumber
+            },
+            data : {
+                isLoggedIn  : true
+            }
+        });
+
         const authPermission = await prisma.menu.findMany({
             where : {
                 permitTo : user.role                
@@ -33,11 +44,14 @@ export async function POST(req : NextRequest) {
             include : {
                 item : true
             }
-        })
+        });
+
+        if(!updatedUser) return NextResponse.json({"error" : "Unable To login"} , {status  :500});
 
         const cookie = await cookies()
         const token = generateToken( user.name , user.phoneNumber , user.role);
         cookie.set('authtoken' , token);
+        cookie.set('userId' , user.id.toString());
 
         return NextResponse.json({"message" : "Logged in Sucessfully" , auth : {
             authstatus : true,

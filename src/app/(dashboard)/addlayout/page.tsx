@@ -18,7 +18,6 @@ export default function Layout() {
         handleSeatPickUp,
         handleChnageSize,
         handleApplyLayout,
-        // handleSaveDraft,
         handleDetailsChange,
         layoutDetails,
         handelNextStep,

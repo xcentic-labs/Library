@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { useIsLoggedIn } from "@/hooks/login";
 import { session } from "@/types/types";
 
 export default function getAllSession() {
@@ -11,13 +10,6 @@ export default function getAllSession() {
     const [isloading, setIsLoading] = useState<boolean>(false);
     const redirect = useRouter();
 
-    // redirect if not admin
-    useEffect(()=>{
-        const { role } = useIsLoggedIn();
-        if(role != 'Admin'){
-            redirect.push('/')
-        }
-    },[]);
     
     const fetchAllUserDetails = async () => {
         try {

@@ -32,15 +32,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const redirect = useRouter()
-  const isloggedIn = useIsLoggedIn()
-  const [isOpen , setIsOpen] = useState(false);
+  const { status, loading } = useIsLoggedIn(); // Include loading from the hook
+  const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(()=>{
-    console.log(isloggedIn)
-    if(!isloggedIn.status){
-      redirect.push('/')
+  useEffect(() => {
+    if (!loading && !status) {
+      // Only redirect when loading is false and status is false
+      redirect.push('/');
     }
-  },[])
+  }, [loading, status, redirect]);
+
   return (
     <html lang="en">
        <head>

@@ -15,14 +15,6 @@ export function getLayoutDetails() {
     const params = useParams()
     const [data, setData] = useState<layoutdata | undefined>();
     const [isloading, setIsLoading] = useState(false);
-    const {role} = useIsLoggedIn();
-
-    // redirect if not admin
-    useEffect(()=>{
-        if(role != 'Admin'){
-            redirect.push('/')
-        }
-    },[]);
     
     const fetchLayoutDetails = async () => {
         try {

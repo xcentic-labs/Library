@@ -6,13 +6,13 @@ import { User } from "@/types/types";
 import { useIsLoggedIn } from "@/hooks/login";
 
 export default function getUserDetails() {
-    const {id} = useIsLoggedIn()
+    const {id , loading} = useIsLoggedIn()
     const [data, setData] = useState<User>();
     const [isloading, setIsLoading] = useState<boolean>(false);
 
-    console.log()
 
     const getSpecficUser = async () => {
+        if(!id) return
         try {
             const res = await axios.get(`/api/user/${id}`);
             if (res.status == 200) {
@@ -28,7 +28,7 @@ export default function getUserDetails() {
 
     useEffect(()=>{
         getSpecficUser()
-    },[])
+    },[loading , id])
 
     const formatDate = (date?: string | Date) => date ? new Date(date).toLocaleDateString() : "N/A";
 

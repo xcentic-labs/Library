@@ -10,13 +10,6 @@ export function getLayouts() {
     const [data, setData] = useState<Array<layoutDetails>>([]);
     const [isloading, setIsLoading] = useState(false);
     const redirect = useRouter();
-    const {role} = useIsLoggedIn()
-
-    useEffect(()=>{
-        if(role != 'Admin'){
-            redirect.push('/')
-        }
-    },[])
     
     const fetchLayout = async () => {
         setIsLoading(true);

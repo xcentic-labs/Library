@@ -11,9 +11,9 @@ export default function StudentDashBoard() {
             <div className='w-full bg-white rounded-lg flex flex-col justify-center items-start p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer border border-[#dad5be] mb-8'>
                 <h3 className='text-xl font-semibold text-[#32524D] mb-4'>User Details</h3>
                 <div className="w-full flex flex-col gap-2">
-                    <p className="text-lg text-gray-700"><span className="font-bold text-[#32524D]">Name : </span> Anish Kumar</p>
-                    <p className="text-lg text-gray-700"><span className="font-bold text-[#32524D]">Phone Number : </span> +91 6203821043</p>
-                    <p className="text-lg text-gray-700"><span className="font-bold text-[#32524D]">Email : </span> anish123@gmail.com</p>
+                    <p className="text-lg text-gray-700"><span className="font-bold text-[#32524D]">Name : </span> {data?.name}</p>
+                    <p className="text-lg text-gray-700"><span className="font-bold text-[#32524D]">Phone Number : </span> +91 {data?.phoneNumber}</p>
+                    <p className="text-lg text-gray-700"><span className="font-bold text-[#32524D]">Email : </span> {data?.email}</p>
                 </div>
             </div>
 

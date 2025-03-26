@@ -1,52 +1,86 @@
 "use client";
-
 import { useEffect, useState } from "react";
-import { authInfo } from "@/types/types";
+import axios from "axios";
+
+interface UserInfo {
+    status: boolean;
+    name: string;
+    phoneNumber: string;
+    role: string;
+    id: number | string;
+}
+
+// Cache for storing user info
+let cachedUserInfo: UserInfo | null = null;
 
 export const useIsLoggedIn = () => {
-    const [authStatus, setAuthStatus] = useState({
-        status: false,
-        name: null,
-        phoneNumber: null,
-        role: null,
-        id: null,
-    });
+    const [data, setData] = useState<UserInfo | null>(cachedUserInfo); // Initialize with cache
+    const [loading, setLoading] = useState(!cachedUserInfo); // Skip loading if cache exists
+
+    const fetchUser = async () => {
+        try {
+            const res = await axios.get('/api/login/isloggedin');
+
+            if (res.status === 200 && res.data?.user.status) {
+                const userInfo: UserInfo = {
+                    status: true,
+                    name: res.data.user.name || "",
+                    phoneNumber: res.data.user.phoneNumber || "",
+                    role: res.data.user.role || "",
+                    id: res.data.user.id || "",
+                };
+                cachedUserInfo = userInfo; // Update the cache
+                setData(userInfo);
+            } else {
+                const defaultInfo: UserInfo = {
+                    status: false,
+                    name: "",
+                    phoneNumber: "",
+                    role: "",
+                    id: "",
+                };
+                cachedUserInfo = defaultInfo; // Update the cache
+                setData(defaultInfo);
+            }
+        } catch (error) {
+            console.error(error);
+            const defaultInfo: UserInfo = {
+                status: false,
+                name: "",
+                phoneNumber: "",
+                role: "",
+                id: "",
+            };
+            cachedUserInfo = defaultInfo; // Update the cache
+            setData(defaultInfo);
+        } finally {
+            setLoading(false); // Ensure loading state is updated
+        }
+    };
 
     useEffect(() => {
-        if (typeof window === "undefined") return;
-
-        const storedData = localStorage.getItem("auth");
-        const defaultAuth = {
-            authStatus: false,
-            authInfo: {
-                id: null,
-                name: null,
-                phoneNumber: null,
-                role: null,
-            },
-        };
-
-        let auth: authInfo = storedData ? JSON.parse(storedData) : defaultAuth;
-
-        if (!auth.authInfo.name || !auth.authInfo.phoneNumber || !auth.authInfo.role) {
-            localStorage.removeItem("auth");
-            setAuthStatus({
-                status: false,
-                name: null,
-                phoneNumber: null,
-                role: null,
-                id: null,
-            });
-        } else {
-            setAuthStatus({
-                status: true,
-                name: auth.authInfo.name,
-                phoneNumber: auth.authInfo.phoneNumber,
-                role: auth.authInfo.role,
-                id: auth.authInfo.id,
-            });
+        // Only fetch if data is not cached or the status is false
+        if (!cachedUserInfo || !cachedUserInfo.status) {
+            fetchUser();
         }
     }, []);
+    
 
-    return authStatus;
+    console.log({
+        loading,
+        status: data?.status || false,
+        name: data?.name || "",
+        phoneNumber: data?.phoneNumber || "",
+        role: data?.role || "",
+        id: data?.id || "",
+    })
+    return {
+        loading,
+        status: data?.status || false,
+        name: data?.name || "",
+        phoneNumber: data?.phoneNumber || "",
+        role: data?.role || "",
+        id: data?.id || "",
+    };
 };
+

@@ -138,37 +138,6 @@ export const useLayout = () => {
         }
     }
 
-    useEffect(() => {
-        console.log(layoutDetails)
-    }, [layoutDetails])
-
-    // const handleSaveDraft = () => {
-    //     if (!layoutDetails.layoutName) return toast.error("Layout name is Required");
-    //     if (!layoutDetails.pricePerMonth || layoutDetails.pricePerMonth == 0) return toast.error("Price Pre Month is Required");
-
-    //     const draftLayout = {
-    //         layoutName: layoutDetails.layoutName,
-    //         layoutDetails: layoutDetails,
-    //         layout: layout,
-    //         array: array
-    //     }
-
-    //     const prev: any = localStorage.getItem('Draft-layout');
-    //     const arr = JSON.parse(prev) || [];
-
-    //     arr.push(draftLayout);
-
-    //     localStorage.setItem(`Draft-layout`, JSON.stringify(arr));
-    //     setLayoutDetails({
-    //         layoutName: "",
-    //         pricePerMonth: 0,
-    //     });
-    //     setStep(1);
-    //     handleChnageSize('small')
-
-    //     return toast.success(`${layoutDetails.layoutName} Saved`)
-    // }
-
     const handelNextStep = async () => {
         if (!layoutDetails.layoutName) return toast.error("Layout name is Required");
 
@@ -280,7 +249,6 @@ export const useLayout = () => {
         handleSeatPickUp,
         handleChnageSize,
         handleApplyLayout,
-        // handleSaveDraft,
         layoutDetails,
         setLayoutDetails,
         handleDetailsChange,

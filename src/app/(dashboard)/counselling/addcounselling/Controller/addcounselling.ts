@@ -10,13 +10,6 @@ export default function Addcounselling() {
     const redirect = useRouter();
     const [data, setData] = useState<Array<counselling>>();
 
-    // redirect if not admin
-    useEffect(() => {
-        const { role } = useIsLoggedIn();
-        if (role != 'Admin') {
-            redirect.push('/')
-        }
-    }, []);
     const handleAddcounselling = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!e.target.name.value || !e.target.price.value || !e.target.benefits.value) return toast.error("All fields Are required");

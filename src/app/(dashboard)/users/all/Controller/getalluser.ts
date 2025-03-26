@@ -10,14 +10,6 @@ export default function getAllUser() {
     const [data, setData] = useState<Array<User>>();
     const [isloading, setIsLoading] = useState<boolean>(false);
     const redirect = useRouter();
-    const { role } = useIsLoggedIn();
-
-    // redirect if not admin
-    useEffect(()=>{
-        if(role != 'Admin'){
-            redirect.push('/')
-        }
-    },[]);
     
     const fetchAllUserDetails = async () => {
         try {

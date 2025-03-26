@@ -11,14 +11,7 @@ export default function getPendingSession() {
     const [data, setData] = useState<Array<session>>();
     const [isloading, setIsLoading] = useState<boolean>(false);
     const redirect = useRouter();
-    const { role } = useIsLoggedIn();
 
-    // redirect if not admin
-    useEffect(()=>{
-        if(role != 'Admin'){
-            redirect.push('/')
-        }
-    },[]);
     
     const fetchAllUserDetails = async () => {
         try {

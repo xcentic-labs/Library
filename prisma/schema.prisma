@@ -24,6 +24,7 @@ model User {
   phoneNumber String              @unique @db.VarChar(10)
   email       String
   password    String
+  isLoggedIn  Boolean             @default(false)
   role        Role                @default(User)
   createrAt   DateTime            @default(now())
   seat        Seat[]

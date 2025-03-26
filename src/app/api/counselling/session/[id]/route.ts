@@ -11,7 +11,9 @@ export async function GET(res: NextRequest, { params }: { params: { id: string }
             },
             include: {
                 counselling: true
-
+            },
+            orderBy :{
+                id : 'desc'
             }
         })
 

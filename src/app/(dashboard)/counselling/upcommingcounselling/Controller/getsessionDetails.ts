@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
 import {toast} from 'react-toastify'
 
 const getsessionDetails = () => {
-    const { id } = useIsLoggedIn();
+    const { id , loading  } = useIsLoggedIn();
     const [data , setData] = useState<Array<session>>()
+
+
 
     useEffect(()=>{
         !id ? "" : fetchSessionDetails((+id))
-    },[])
+    },[loading ,id ])
     const fetchSessionDetails = async (id: number) => {
         try {
             const res = await axios.get(`/api/counselling/session/${id}`);
