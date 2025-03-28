@@ -1,13 +1,15 @@
 "use client"
-import { getLayoutDetails } from "../layouts/[id]/Controller/getLayoutDetails"
 import LayoutGrid from "../layouts/[id]/UI/LayoutGrid"
 import libraryLayoutsController from "./Controllers/libraryLayoutsControllers"
 import Script from "next/script"
+import { BiSolidZoomIn, BiSolidZoomOut } from "react-icons/bi";
+import { FaLock } from "react-icons/fa";
+
 
 
 export default function StudentLayout() {
     const {
-        redirect, layoutName, handleChnageLayout, data, generatearray, setTimePeriod, setSeatNumber, handleBookSeat, seatNumber, timePeriod, total, handleChnageAmount
+        redirect, layoutName, handleChnageLayout, data, generatearray, setTimePeriod, setSeatNumber, handleBookSeat, seatNumber, timePeriod, total, handleChnageAmount, scale, setScale
     } = libraryLayoutsController()
 
     return (
@@ -34,14 +36,30 @@ export default function StudentLayout() {
                         :
                         (
                             <>
-                                <h1 className="text-xl w-full text-center bg-greenleast  text-white font-bold capitalize rounded-t-2xl py-2">Layout Design</h1>
-                                <div className="w-full sm:h-full h-[30rem]  p-20 overflow-scroll scrollbar border-[4px] border-greenleast rounded-b-2xl mb-4">
+                                <h1 className="text-xl w-full text-center bg-greenleast  text-white font-bold capitalize rounded-t-2xl py-2 ">Layout Design</h1>
+                                <div className="w-full sm:h-full h-[30rem] p-2 sm:p-10  md:p-20 overflow-scroll scrollbar border-[4px] border-greenleast relative">
                                     {
                                         !data ?
                                             ""
                                             :
-                                            <LayoutGrid cols={data.layoutCols} rows={data.layoutRows} array={generatearray(data)} scale="100%" />
+                                            <LayoutGrid cols={data.layoutCols} rows={data.layoutRows} array={generatearray(data)} scale={scale} />
                                     }
+                                </div>
+                                <div className="flex  h-fit  border-[4px] border-greenleast rounded-b-2xl bg-white border-t-0" >                                    
+                                    <div className="w-full h-full flex justify-between items-center ">
+                                        <p className={`w-1/4 h-full text-green-600 flex text-md p-2 pb-0 items-center gap-2`}>
+                                            <FaLock /> <samp className="text-xs">With Locker</samp>
+                                        </p>
+                                        <p className={`w-1/4 h-full text-red-600 flex text-md p-2 pb-0 items-center gap-2`}>
+                                            <FaLock /> <samp className="text-xs">Without Locker</samp>
+                                        </p>
+                                        <button className={`w-1/4 h-full flex items-center justify-center border-l-[3px] border-greenleast p-2 ${ scale === 200 ? "opacity-50 cursor-not-allowed" : ""}`} onClick={() => scale == 200 ? "" : setScale(scale + 10)} disabled={scale==200} >
+                                            <BiSolidZoomIn className={`text-2xl  ${ scale === 200 ? "opacity-50 cursor-not-allowed text-gray-500" : "text-greenleast"}`} />
+                                        </button>
+                                        <button className={`w-1/4 h-full flex items-center justify-center border-l-[3px] border-greenleast p-2 ${ scale === 10 ? "opacity-50 cursor-not-allowed text-gray-500" : ""}`} onClick={() => scale == 10 ? "" : setScale(scale - 10)} disabled={scale==10}>
+                                            <BiSolidZoomOut className={`text-2xl  ${ scale === 200 ? "opacity-50 cursor-not-allowed text-gray-500" : "text-greenleast"}`} />
+                                        </button>
+                                    </div>
                                 </div>
                                 <div className="mb-4">
                                     <h1 className="text-xl w-full text-center text-black font-bold capitalize rounded-t-2xl py-2 mb-4">Layout Details</h1>
@@ -59,7 +77,7 @@ export default function StudentLayout() {
                                         <option value="">Select Seat</option>
                                         {
                                             data.seats.map((item, index) => (
-                                                item.isBooked  || item.isBlocked ? "" : <option key={index} value={item.seatNumber}>{item.seatNumber}</option>
+                                                item.isBooked || item.isBlocked ? "" : <option key={index} value={item.seatNumber}>{item.seatNumber}</option>
                                             ))
                                         }
                                     </select>

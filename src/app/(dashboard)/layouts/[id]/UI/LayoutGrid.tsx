@@ -12,16 +12,16 @@ interface LayoutGridProps {
     cols: number,
     rows: number,
     array: newArray[];
-    scale: string
+    scale: number,
 }
 
-export default function LayoutGrid({ cols, rows, array, scale = '100%' }: LayoutGridProps) {
+export default function LayoutGrid({ cols, rows, array, scale }: LayoutGridProps) {
 
     return (
         <div className={`w-fit h-fit gap-1 bg-white/80 p-2 grid z-10`} style={{
             gridTemplateColumns: `repeat(${cols}, 1fr)`,
             gridTemplateRows: `repeat(${rows}, 1fr)`,
-            scale: `${scale}`
+            zoom: `${scale}%`
         }}>
             {
                 array.map((item, index) => (

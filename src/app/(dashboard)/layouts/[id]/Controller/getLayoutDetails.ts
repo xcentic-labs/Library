@@ -15,6 +15,7 @@ export function getLayoutDetails() {
     const params = useParams()
     const [data, setData] = useState<layoutdata | undefined>();
     const [isloading, setIsLoading] = useState(false);
+    const [scale ,setScale] = useState<number>(100);
     
     const fetchLayoutDetails = async () => {
         try {
@@ -183,6 +184,8 @@ export function getLayoutDetails() {
         generatearray,
         formatDate,
         handleAllotment,
-        handleUpdateBlockStatus
+        handleUpdateBlockStatus,
+        scale ,
+        setScale
     }
 }

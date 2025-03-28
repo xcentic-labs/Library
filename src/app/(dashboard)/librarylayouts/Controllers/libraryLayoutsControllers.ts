@@ -28,6 +28,7 @@ export const libraryLayoutsController = () => {
     const [total, setTotal] = useState(0)
     const redirect = useRouter();
     const { id, name, phoneNumber } = useIsLoggedIn();
+    const [scale ,setScale] = useState<number>(100);
 
 
     const fetchLayoutNames = async () => {
@@ -60,7 +61,7 @@ export const libraryLayoutsController = () => {
                 index: item.index,
                 isSeat: true,
                 isBox: false,
-                isLocker: true,
+                isLocker: item.isLocker,
                 seatNumber: item.seatNumber,
                 isBooked: item.isBooked,
                 isBlocked : item.isBlocked,
@@ -215,7 +216,9 @@ export const libraryLayoutsController = () => {
         seatNumber,
         timePeriod,
         total,
-        handleChnageAmount
+        handleChnageAmount,
+        scale,
+        setScale
     }
 }
 
