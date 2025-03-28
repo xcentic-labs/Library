@@ -1,8 +1,10 @@
 "use client"
 import { useIsLoggedIn } from "@/hooks/login";
+import Image from "next/image";
 import Link from "next/link"
 import { useState } from "react";
 import { IoMenu } from "react-icons/io5";
+import logo from '@/assets/logo.png'
 
 
 export default function Header() {
@@ -15,9 +17,9 @@ export default function Header() {
     return (
         <header className="w-full h-[8vh] flex fixed top-0 bottom-0 z-50">
             <div className="w-full h-full ml-[15%] bg-primary rounded-bl-3xl flex justify-between md:pr-10 pr-5 z-50">
-                <div className="md:w-[15%] w-[30%] rounded-bl-3xl border-t-0 border-2 border-primary p-2 flex justify-center items-center bg-white">
+                <div className="md:w-[15%] w-[30%] rounded-bl-3xl border-t-0 border-2 border-primary p-2 flex justify-center items-center bg-white overflow-hidden">
                     <Link href='/'>
-                        <h1 className="font-bold">Path Catalyst</h1>
+                        <Image src={logo} className="w-36 h-16 " alt="Logo" />
                     </Link>
                 </div>
                 <nav className="md:w-[85%] w-[70%] h-full flex items-center justify-end">

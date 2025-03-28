@@ -24,3 +24,7 @@ html{
 .scrollbar::-webkit-scrollbar{
     display: none;
 }
+
+.invert{
+    filter: invert(1);
+}

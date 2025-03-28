@@ -4,8 +4,8 @@ import { FaRegNewspaper , FaPlugCircleCheck } from "react-icons/fa6";
 import { MdNetworkWifi  } from "react-icons/md";
 import { GiCctvCamera } from "react-icons/gi";
 import { IoFastFood } from "react-icons/io5";
-import lib1 from '@/assets/lib.png'
-import lib2 from '@/assets/lib2.jpg'
+import lib1 from '@/assets/pathlib5.jpg'
+import lib2 from '@/assets/pathlib1.png'
 
 
 

@@ -2,8 +2,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-import lib1 from '@/assets/lib.png'
-import lib2 from '@/assets/lib2.jpg'
+import lib1 from '@/assets/pathlib4.png'
+import lib2 from '@/assets/pathlib3.png'
 
 const libraryRules = [
     {

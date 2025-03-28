@@ -2,7 +2,8 @@ import { LuPhone } from "react-icons/lu";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { GrLocation } from "react-icons/gr";
 import Link from "next/link";
-
+import logo from '@/assets/logo.png'
+import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -10,7 +11,7 @@ const Footer = () => {
       <div className="text-white/90  sm:py-8 max-w-7xl mx-auto">
         <div className="max-w-screen-xl mx-auto grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-4 mb-10">
         <div className='w-full h-full flex justify-start  items-center mb-10 col-span-2 mr-0 md:mr-28'>
-          {/* <Image src={img} alt="img" className='w-64 ml-10' /> */}
+          <Image src={logo} alt="img" className='w-64 ml-10 invert' />
         </div>
           <div>
             <h3 className="text-lg font-semibold mb-4">Pages</h3>
