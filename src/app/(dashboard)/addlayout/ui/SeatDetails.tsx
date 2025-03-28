@@ -19,7 +19,7 @@ const SeatDetails = ({ array , handleUpdateSeatDetails }: seatDetailsProps) => {
                             <div className=" flex flex-wrap justify-between px-2">
                                 <div className="w-[40%]" >
                                     <label htmlFor="" className="">Seat Number</label>
-                                    <input type="number" name="seatNumber" className="h-8 w-full p-2  rounded-md  border-2 border-greenleast" onChange={(e)=> handleUpdateSeatDetails(index , e)}  />
+                                    <input type="text" name="seatNumber" className="h-8 w-full p-2  rounded-md  border-2 border-greenleast" onChange={(e)=> handleUpdateSeatDetails(index , e)}  />
                                 </div>
                                 <div className="w-[40%]">
                                     <label className="block">Locker Available?</label>

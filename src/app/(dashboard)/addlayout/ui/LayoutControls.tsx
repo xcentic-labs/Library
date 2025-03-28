@@ -85,7 +85,7 @@ export const LayoutControls = ({ handleChnageSize, layoutSize, handleApplyLayout
                                         ))
                                     }
                                 </select>
-                                <input type="number" name="fee" className="h-10 p-2 w-[48%] rounded-lg  border-2 border-greenleast mb-4" placeholder='Enter Amount'  onChange={(e)=> handleDetailsChange(e , monthindex)}/>
+                                <input type="text" name="fee" className="h-10 p-2 w-[48%] rounded-lg  border-2 border-greenleast mb-4" placeholder='Enter Amount'  onChange={(e)=> handleDetailsChange(e , monthindex)}/>
                             </div>
                         ))
                     }
