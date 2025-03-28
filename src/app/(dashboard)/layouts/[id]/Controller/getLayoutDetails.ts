@@ -53,7 +53,7 @@ export function getLayoutDetails() {
                 index : item.index,
                 isSeat : true,
                 isBox : false,
-                isLocker : true,
+                isLocker : item.isLocker,
                 seatNumber : item.seatNumber,
                 isBooked : item.isBooked,
                 isBlocked : item.isBlocked

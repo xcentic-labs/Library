@@ -12,6 +12,7 @@ export default function StudentDashBoard() {
                 <h3 className='text-xl font-semibold text-[#32524D] mb-4'>User Details</h3>
                 <div className="w-full flex flex-col gap-2">
                     <p className="text-lg text-gray-700"><span className="font-bold text-[#32524D]">Name : </span> {data?.name}</p>
+                    <p className="text-lg text-gray-700"><span className="font-bold text-[#32524D]">Your User ID : </span> {data?.id}</p>
                     <p className="text-lg text-gray-700"><span className="font-bold text-[#32524D]">Phone Number : </span> +91 {data?.phoneNumber}</p>
                     <p className="text-lg text-gray-700"><span className="font-bold text-[#32524D]">Email : </span> {data?.email}</p>
                 </div>

@@ -32,14 +32,9 @@ export default function LayoutGrid({ cols, rows, array, scale = '100%' }: Layout
                                     <div className={`relative z-10 `}>
                                         <p className={`absolute z-10 text-greenleast text-xs  ${item.isBooked || item.isBlocked ? 'opacity-50 text-slate-600' : 'opacity-100'}`}>{item.seatNumber}</p>
                                         <Image src={item.isBooked || item.isBlocked ? bookedSeat : seat} className={`w-12 h-12 cursor-pointer z-10 ${item.isBooked || item.isBlocked ? 'opacity-50' : 'opacity-100'}`} alt="seat" />
-                                        {
-                                            item.isLocker ?
-                                                <p className={`absolute z-10 top-0 -right-1 text-green-600 text-[10px]  ${item.isBooked || item.isBlocked ? 'opacity-50 text-slate-600' : 'opacity-100'}`}>
-                                                    <FaLock />
-                                                </p>
-                                                :
-                                                ""
-                                        }
+                                        <p className={`absolute z-10 top-0 -right-1 ${item.isLocker ? 'text-green-600' : "text-red-600"}  text-[10px]  ${item.isBooked || item.isBlocked ? 'opacity-50 text-slate-600' : 'opacity-100'}`}>
+                                            <FaLock />
+                                        </p>
                                     </div>
                                 )
                                 :
