@@ -32,7 +32,7 @@ export default function LayoutDetails() {
                     :
                     <>
                         <h1 className="text-xl w-full text-center bg-greenleast  text-white font-bold capitalize rounded-t-2xl py-2">Layout Design</h1>
-                        <div className="w-full sm:h-full h-[30rem]  p-20 overflow-scroll scrollbar border-[4px] border-greenleast  z-10">
+                        <div className="w-full sm:h-full h-[30rem]  p-20 overflow-scroll scrollbar border-[4px] border-greenleast z-10">
                             <LayoutGrid cols={data.layoutCols} rows={data.layoutRows} array={generatearray(data)} scale={scale} />
                         </div>
                         <div className="flex  h-fit  border-[4px] border-greenleast rounded-b-2xl bg-white border-t-0 mb-10">

@@ -48,10 +48,13 @@ export async function POST(req : NextRequest) {
 
         if(!updatedUser) return NextResponse.json({"error" : "Unable To login"} , {status  :500});
 
+        const date = new Date();
+        date.setDate(date.getDate()+30)
+
         const cookie = await cookies()
         const token = generateToken( user.name , user.phoneNumber , user.role);
-        cookie.set('authtoken' , token);
-        cookie.set('userId' , user.id.toString());
+        cookie.set('authtoken' , token , {expires : date});
+        cookie.set('userId' , user.id.toString() , {expires : date});
 
         return NextResponse.json({"message" : "Logged in Sucessfully" , auth : {
             authstatus : true,

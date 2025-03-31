@@ -54,8 +54,8 @@ export default function RootLayout({
         <header className="w-full h-fit ">
             <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
         </header>
-        <section className="flex w-full h-[90vh] justify-between items-center relative">
-          <div className={`absolute top-0 left-0  lg:w-[20%] md:w-[30%] w-[60%] lg:hidden block duration-300 ${isOpen ?  'translate-x-[0%]' : '-translate-x-[100%]'}`}>
+        <section className="flex w-full h-[90vh] justify-between items-center relative z-50">
+          <div className={`absolute top-0 left-0  lg:w-[20%] md:w-[30%] w-[60%] lg:hidden block duration-300 z-50 ${isOpen ?  'translate-x-[0%]' : '-translate-x-[100%]'}`}>
               <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
           </div>
           <aside className="w-[20%] lg:block hidden">
