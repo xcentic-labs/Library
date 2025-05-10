@@ -38,7 +38,7 @@ export default function Header() {
                             {
                                 status ?
                                     <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
-                                        <Link href="/dashboard" onClick={toggelMenu}>DashBoard</Link>
+                                        <Link href={role == 'Admin' ? '/admindashboard' : '/studentdashboard'} onClick={toggelMenu}>DashBoard</Link>
                                     </li>
                                     :
                                     <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >

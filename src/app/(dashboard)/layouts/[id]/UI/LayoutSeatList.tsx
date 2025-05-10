@@ -1,8 +1,6 @@
 "use client"
 
 import { seatbody } from "@/types/types"
-import { FaEye } from "react-icons/fa"
-import { MdDelete } from "react-icons/md"
 
 interface LayoutSeatListProps {
     data: seatbody[],

@@ -1,12 +1,12 @@
 
 export interface User {
-    id? : number,
+    id?: number,
     name: string,
     phoneNumber: string,
     email: string,
     password: string
-    role? : string,
-    seat? : seatbody[]
+    role?: string,
+    seat?: seatbody[]
 }
 
 export interface auth {
@@ -21,12 +21,13 @@ export interface seatbody {
     index: number,
     layoutId: number,
     isBooked?: boolean,
-    isBlocked? : boolean,
+    slot? : slot
+    isBlocked?: boolean,
     bookingEndDate?: Date,
     bookingStartDate?: Date,
     userId?: number | undefined | null
-    layout? : {
-        layoutName : string
+    layout?: {
+        layoutName: string
     }
 }
 
@@ -38,7 +39,8 @@ export interface bookseat {
     timePeriod: number,
     razorpayOrderId: string,
     razorpayPaymentId: string,
-    razorpaySignature: string
+    razorpaySignature: string,
+    slot: slot
 }
 
 export interface authInfo {
@@ -89,27 +91,33 @@ export interface newArray {
     isLocker: boolean,
     seatNumber: string | number | undefined
     isBooked?: boolean
-    isBlocked? : boolean
+    isBlocked?: boolean
 }
 
 
-export interface counselling{
-    id? : number,
-    name : string,
-    price : number,
-    benefits : string
+export interface counselling {
+    id?: number,
+    name: string,
+    price: number,
+    benefits: string
 }
 
-export interface session{
+export interface session {
     id: number,
     status: boolean,
     counsellingId: number,
     userId: number,
     createrAt: Date
     counselling: counselling,
-    bookedBy : {
-        email : string,
-        phoneNumber : string,
-        name : string
+    bookedBy: {
+        email: string,
+        phoneNumber: string,
+        name: string
     }
+}
+
+enum slot {
+    Morning = "MORNING",
+    Afternoon = "AFTERNOON",
+    Evening = "EVENING",
 }

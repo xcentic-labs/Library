@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
         });
 
         if (!result) return NextResponse.json({ "error": "Somting went wrong" }, { status: 500 });
-        return NextResponse.json({ "message": "User Created Sucessfully" }, { status: 200 });
+        return NextResponse.json({ "message": "User Created Sucessfully" , userId  : result.id}, { status: 200 });
     } catch (error: unknown) {
         console.log(error)
         if (error instanceof PrismaClientKnownRequestError) {

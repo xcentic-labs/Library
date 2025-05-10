@@ -25,7 +25,7 @@ export default function LayoutDetails() {
 
 
         <div className="w-full h-[90vh]  overflow-y-scroll scrollbar md:p-10 p-3">
-            <h1 className="text-xl font-medium mb-6 text-gray-700 capitalize"><span className="text-gray-500 cursor-pointer" onClick={() => redirect.push('/dashboard')}>Dashboard</span> / Layout / {!data ? "Unknown" : data.layoutName}</h1>
+            <h1 className="text-xl font-medium mb-6 text-gray-700 capitalize"><span className="text-gray-500 cursor-pointer" onClick={() => redirect.push('/admindashboard')}>Dashboard</span> / Layout / {!data ? "Unknown" : data.layoutName}</h1>
             {
                 !data ?
                     ""

@@ -65,7 +65,7 @@ const counsellingBooking = () => {
         if (!orderId) return toast.error("Unable to create Order");
 
         const options = {
-            key: process.env.key_id,
+            key: 'rzp_test_StXsmXtZWX5FH9',
             amount: (+amount)*100,
             currency: 'INR',
             name: name,

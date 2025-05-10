@@ -8,6 +8,7 @@ import { useIsLoggedIn } from "@/hooks/login";
 
 
 
+
 interface layoutName {
     id: number,
     layoutName: string
@@ -23,8 +24,13 @@ export const libraryLayoutsController = () => {
     const [layoutName, setLayoutNames] = useState<Array<layoutName>>([]);
     const [data, setData] = useState<layoutdata | undefined>();;
     const [isloading, setIsLoading] = useState(false);
+
+    // details
     const [timePeriod, setTimePeriod] = useState('0');
     const [seatNumber, setSeatNumber] = useState<string>()
+    const [slot , setSlot] = useState<string>('');
+
+
     const [total, setTotal] = useState(0)
     const redirect = useRouter();
     const { id, name, phoneNumber } = useIsLoggedIn();
@@ -116,88 +122,92 @@ export const libraryLayoutsController = () => {
 
         fetchLayoutDetails(+(e.target.value));
     }
-
-
-
+    
     const handleBookSeat = async () => {
-
-        if (!seatNumber || seatNumber == '0') return toast.error("Selaect Seat Number");
-        if (!timePeriod || timePeriod == '0') return toast.error("Selaect Time Period");
+        if (!seatNumber || seatNumber === '0') {
+            return toast.error("Select Seat Number");
+        }
+        if (!timePeriod || timePeriod === '0') {
+            return toast.error("Select Time Period");
+        }
         const totalAmount = total * 100;
-
+    
+        // Create Order
         const orderId = await createOrder(totalAmount);
-
+    
         if (!orderId) return toast.error("Unable to create Order");
-
+    
+        // Razorpay options
         const options = {
-            key: process.env.key_id,
-            amount: total,
+            key: 'rzp_test_StXsmXtZWX5FH9',
+            amount: totalAmount,
             currency: 'INR',
             name: name,
-            description: `Seat Numbaer : ${seatNumber} for ${timePeriod} Months`,
+            description: `Seat Number: ${seatNumber} for ${timePeriod} Months`,
             order_id: orderId,
-            handler: async function bookseat(response: any) {
+            handler: async function (response: any) {
                 try {
                     const obj = {
                         userId: id,
-                        seatNumber: +(seatNumber),
-                        timePeriod: +(timePeriod),
+                        seatNumber: +seatNumber,
+                        timePeriod: +timePeriod,
+                        slot: slot,
                         layoutId: data?.id,
-                        razorpayOrderId : response.razorpay_order_id,
-                        razorpayPaymentId : response.razorpay_payment_id,
-                        razorpaySignature : response.razorpay_signature,
-
-                    }
-                    const res = await axios.patch('/api/seat', JSON.stringify(obj));
-
-                    if (res.status == 200) {
+                        razorpayOrderId: response.razorpay_order_id,
+                        razorpayPaymentId: response.razorpay_payment_id,
+                        razorpaySignature: response.razorpay_signature,
+                    };
+    
+                    const res = await axios.patch('/api/seat', obj);
+    
+                    if (res.status === 200) {
                         toast.success(res.data.message);
-                        redirect.push('/studentdashboard')
+                        redirect.push('/studentdashboard');
                     } else {
-                        toast.error(res.data.error)
+                        toast.error(res.data.error);
                     }
                 } catch (error: any) {
-                    toast.error(error.response.data.error)
+                    toast.error(error.response?.data?.error || "Payment failed");
                 }
             },
             prefill: {
                 name: name,
-                phoneNumber: phoneNumber
+                phoneNumber: phoneNumber,
             },
             theme: {
                 color: '#1c3f3a',
             },
-        }
-
+        };
+    
         const paymentObject = new window.Razorpay(options);
         paymentObject.on('payment.failed', function (response: any) {
             alert(response.error.description);
         });
         paymentObject.open();
-    }
-
-
+    };
+    
     const createOrder = async (amount: string | number) => {
         try {
             const body = {
                 amount: amount,
-                currency: 'INR'
-            }
-            const response = await axios.post('/api/payment/createorder', JSON.stringify(body));
-
-            if (response.status == 200) {
-                toast.success("Order Created Sucessfully");
-                console.log(response.data);
-                return response.data.orderId
-            }
-            else {
-                return ""
+                currency: 'INR',
+            };
+            const response = await axios.post('/api/payment/createorder', body);
+    
+            if (response.status === 200) {
+                toast.success("Order Created Successfully");
+                return response.data.orderId;
+            } else {
+                toast.error("Failed to create order");
+                return "";
             }
         } catch (error: any) {
-            console.log(error);
-            return ""
+            console.error(error);
+            toast.error("Error creating order");
+            return "";
         }
-    }
+    };
+    
 
 
     useEffect(() => {
@@ -218,7 +228,9 @@ export const libraryLayoutsController = () => {
         total,
         handleChnageAmount,
         scale,
-        setScale
+        setScale,
+        slot,
+        setSlot
     }
 }
 

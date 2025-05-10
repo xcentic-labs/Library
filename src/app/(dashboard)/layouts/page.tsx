@@ -8,7 +8,7 @@ export default function Layouts() {
 
     return (
         <section className="w-full h-full md:p-10 p-5">
-            <h1 className="text-xl font-medium mb-6 text-gray-700 capitalize"><span className="text-gray-500 cursor-pointer" onClick={() => redirect.push('/dashboard')}>Dashboard</span> / Layout</h1>
+            <h1 className="text-xl font-medium mb-6 text-gray-700 capitalize"><span className="text-gray-500 cursor-pointer" onClick={() => redirect.push('/admindashboard')}>Dashboard</span> / Layout</h1>
             <div className="rounded-xl overflow-x-scroll scrollbar border border-gray-300 shadow-md bg-white">
                 <table className="min-w-full text-sm text-gray-700">
                     <thead className="bg-greenleast text-white text-base font-semibold">

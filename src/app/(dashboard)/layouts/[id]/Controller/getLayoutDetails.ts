@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useParams , useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { layoutdata, newArray } from "@/types/types";
@@ -15,8 +15,8 @@ export function getLayoutDetails() {
     const params = useParams()
     const [data, setData] = useState<layoutdata | undefined>();
     const [isloading, setIsLoading] = useState(false);
-    const [scale ,setScale] = useState<number>(100);
-    
+    const [scale, setScale] = useState<number>(100);
+
     const fetchLayoutDetails = async () => {
         try {
             const res = await axios.get(`/api/layout/${params.id}`);
@@ -36,117 +36,160 @@ export function getLayoutDetails() {
 
     useEffect(() => {
         fetchLayoutDetails()
-    },[]);
+    }, []);
 
-    const generatearray = (data : layoutdata  ) =>{
-        let array : newArray[] = !data ? [] : new Array(data?.layoutCols * data?.layoutRows).fill({
-            id : null ,
-            index : null,
-            isSeat : false,
-            isBox : false,
-            isLocker : true,
-            seatNumber : null
+    const generatearray = (data: layoutdata) => {
+        let array: newArray[] = !data ? [] : new Array(data?.layoutCols * data?.layoutRows).fill({
+            id: null,
+            index: null,
+            isSeat: false,
+            isBox: false,
+            isLocker: true,
+            seatNumber: null
         });
 
-        data?.seats.forEach((item)=>{
+        data?.seats.forEach((item) => {
             array[item.index] = {
-                id : item.id,
-                index : item.index,
-                isSeat : true,
-                isBox : false,
-                isLocker : item.isLocker,
-                seatNumber : item.seatNumber,
-                isBooked : item.isBooked,
-                isBlocked : item.isBlocked
+                id: item.id,
+                index: item.index,
+                isSeat: true,
+                isBox: false,
+                isLocker: item.isLocker,
+                seatNumber: item.seatNumber,
+                isBooked: item.isBooked,
+                isBlocked: item.isBlocked
             };
         });
 
-        const boxarray : number[] = !data ? [] :  JSON.parse(data?.boxesAt);
+        const boxarray: number[] = !data ? [] : JSON.parse(data?.boxesAt);
 
         array = array.map((item, index) => ({
-            ...item, 
-            isBox: boxarray.includes(index), 
+            ...item,
+            isBox: boxarray.includes(index),
         }));
-    
+
         return array;
     }
 
     const formatDate = (date?: string | Date) => date ? new Date(date).toLocaleDateString() : "N/A";
 
-    const handleAllotment = async (seatID : string  | number | undefined) => {
-        if(!seatID) return  toast.error("Some Thing Went Wrong");
+    const handleAllotment = async (seatID: string | number | undefined) => {
+        if (!seatID) return toast.error("Some Thing Went Wrong");
         const result = await Swal.fire({
             title: "Allotment Details",
             html: `
-                <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; width: 100%;">
-                    <div style="width: 100%;>
-                        <label for="userid" style="font-size: 1rem; font-weight: bold;">Enter User ID</label>
-                        <input 
-                            type="text" 
-                            id="userid" 
-                            name="userid" 
-                            style="width: 100%; height: 2.5rem; border: 2px solid #1c3f3a; padding: 0.5rem;" 
-                        />
-                    </div>
-                    <div style="width: 100%;>
-                        <label for="months" style="font-size: 1rem; font-weight: bold;">Months</label>
-                        <select 
-                            id="months" 
-                            name="months" 
-                            style="width: 100%; height: 2.5rem; border: 2px solid #1c3f3a; padding: 0.5rem;"
-                        >
-                            <option value="1">1 Month</option>
-                            <option value="2">2 Months</option>
-                            <option value="3">3 Months</option>
-                            <option value="4">4 Months</option>
-                            <option value="5">5 Months</option>
-                            <option value="6">6 Months</option>
-                            <option value="7">7 Months</option>
-                            <option value="8">8 Months</option>
-                            <option value="9">9 Months</option>
-                            <option value="10">10 Months</option>
-                            <option value="11">11 Months</option>
-                            <option value="12">12 Months</option>
-                        </select>
-                    </div>
-                </div>
+<div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+    <!-- Name Field -->
+    <div style="display: flex; align-items: center; gap: 1rem; width: 100%;">
+        <label for="name" style="width: 150px; font-size: 1rem; font-weight: bold;">Enter Name</label>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            style="flex: 1; height: 2.5rem; border: 2px solid #1c3f3a; padding: 0.5rem; border-radius: 6px;"
+        />
+    </div>
+
+    
+
+    <!-- Phone Number Field -->
+    <div style="display: flex; align-items: center; gap: 1rem; width: 100%;">
+        <label for="phonenumber" style="width: 150px; font-size: 1rem; font-weight: bold;">Enter Phone Number</label>
+        <input
+            type="text"
+            id="phonenumber"
+            name="phonenumber"
+            style="flex: 1; height: 2.5rem; border: 2px solid #1c3f3a; padding: 0.5rem; border-radius: 6px;"
+        />
+    </div>
+
+    <!-- Email Field -->
+    <div style="display: flex; align-items: center; gap: 1rem; width: 100%;">
+        <label for="email" style="width: 150px; font-size: 1rem; font-weight: bold;">Enter Email Id</label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            style="flex: 1; height: 2.5rem; border: 2px solid #1c3f3a; padding: 0.5rem; border-radius: 6px;"
+        />
+    </div>
+
+    <!-- Months Field -->
+    <div style="display: flex; align-items: center; gap: 1rem; width: 100%;">
+        <label for="months" style="width: 150px; font-size: 1rem; font-weight: bold;">Months</label>
+        <select
+            id="months"
+            name="months"
+            style="flex: 1; height: 2.5rem; border: 2px solid #1c3f3a; padding: 0.5rem; border-radius: 6px;"
+        >
+            <option value="1">1 Month</option>
+            <option value="2">2 Months</option>
+            <option value="3">3 Months</option>
+            <option value="4">4 Months</option>
+            <option value="5">5 Months</option>
+            <option value="6">6 Months</option>
+            <option value="7">7 Months</option>
+            <option value="8">8 Months</option>
+            <option value="9">9 Months</option>
+            <option value="10">10 Months</option>
+            <option value="11">11 Months</option>
+            <option value="12">12 Months</option>
+        </select>
+    </div>
+</div>
             `,
             focusConfirm: false, // Prevents autofocus on the confirm button
             preConfirm: () => {
-                const userIdElement = document.getElementById("userid");
-                const monthsElement = document.getElementById("months");
-    
-                if (!userIdElement || !monthsElement) {
+                const name = document.getElementById("name") as HTMLInputElement;
+                const phonenumber = document.getElementById("phonenumber") as HTMLInputElement;
+                const email = document.getElementById("email") as HTMLInputElement;
+                const monthsElement = document.getElementById("months") as HTMLSelectElement;
+
+                if (!name.value || !phonenumber.value || !email.value || !monthsElement.value) {
                     Swal.showValidationMessage("Please fill out all fields.");
                     return;
                 }
-    
-                const userId = (userIdElement as HTMLInputElement).value;
-                const timePeriod = (monthsElement as HTMLSelectElement).value;
-    
-                return { userId, timePeriod };
+
+                return {
+                    name: name.value,
+                    phonenumber: phonenumber.value,
+                    email: email.value,
+                    months: monthsElement.value
+                };
             },
             showCancelButton: true,
         });
-    
+
         if (result.isConfirmed) {
-            const { userId, timePeriod } = result.value || {};
-            if (userId && timePeriod) {
-                const data =  {
-                    userId : userId,
-                    timePeriod : timePeriod,
-                    seatID : seatID
+            const { name, phonenumber , email , months } = result.value || {};
+            if (name && phonenumber && email && months) {
+                const data = {
+                    name: name,
+                    phoneNumber: phonenumber,
+                    email: email,
+                    password : 'pc123@'
                 }
                 try {
-                    const response = await axios.patch('/api/seat/allotment' , JSON.stringify(data));
+                    const res = await axios.post(`/api/user`, JSON.stringify(data))
 
-                    if(response.status == 200){
-                        fetchLayoutDetails()
-                        toast.success("Seat Alloted Sucessfully");
-                    }else{
-                        toast.error(response.data.error)
+                    if (res.status == 200) {
+                        const response = await axios.patch('/api/seat/allotment', {
+                            userId : res.data.userId,
+                            seatID : 1,
+                            timePeriod: months,
+                        });
+
+                        if (response.status == 200) {
+                            fetchLayoutDetails()
+                            toast.success("Seat Alloted Sucessfully");
+                        } else {
+                            toast.error(response.data.error)
+                        }
                     }
-                } catch (error : any) {
+                    else{
+                        toast.error("Unable to create Account")
+                    }
+                } catch (error: any) {
                     toast.error(error.response.data.error)
                 }
             } else {
@@ -157,25 +200,25 @@ export function getLayoutDetails() {
         }
     };
 
-    const handleUpdateBlockStatus = async (status : boolean , seatID : string | number | undefined)=>{
+    const handleUpdateBlockStatus = async (status: boolean, seatID: string | number | undefined) => {
         const data = {
-            status : status,
-            seatID : seatID
+            status: status,
+            seatID: seatID
         }
         try {
-            const response = await axios.patch('/api/seat/block' , JSON.stringify(data));
+            const response = await axios.patch('/api/seat/block', JSON.stringify(data));
 
-            if(response.status == 200){
+            if (response.status == 200) {
                 fetchLayoutDetails()
                 toast.success("Seat Alloted Sucessfully");
-            }else{
+            } else {
                 toast.error(response.data.error)
             }
-        } catch (error : any) {
+        } catch (error: any) {
             toast.error(error.response.data.error)
         }
     }
-    
+
 
     return {
         data,
@@ -185,7 +228,7 @@ export function getLayoutDetails() {
         formatDate,
         handleAllotment,
         handleUpdateBlockStatus,
-        scale ,
+        scale,
         setScale
     }
 }

@@ -6,7 +6,7 @@ export async function middleware(request : NextRequest) {
   const { pathname } = request.nextUrl; // Get the requested path
   const method = request.method; // Get the HTTP method (GET, POST, etc.)
 
-  if ((pathname === '/api/layout' && method === 'POST') || (pathname.startsWith('/api/layout/') && method === 'DELETE') || (pathname.startsWith('/api/seat') && method === 'POST') || (pathname === '/api/user' && method === 'GET') || (pathname === '/api/counselling' && method === 'POST') ||  (pathname.startsWith('/api/counselling/') && method === 'DELETE') || (pathname.startsWith('/api/counselling/session') && method === 'PATCH') || (pathname == '/api/counselling/session'  && method === 'GET') || (pathname == '/api/seat/allotment'  && method === 'PATCH') || (pathname == '/api/seat/block'  && method === 'PATCH') ) {
+  if ((pathname === '/api/layout' && method === 'POST') || (pathname.startsWith('/api/layout/') && method === 'DELETE') || (pathname.startsWith('/api/seat') && method === 'POST') || (pathname === '/api/user' && method === 'GET') || (pathname === '/api/counselling' && method === 'POST') || (pathname === '/api/admin/dashboard' && method === 'GET') ||  (pathname.startsWith('/api/counselling/') && method === 'DELETE') || (pathname.startsWith('/api/counselling/session') && method === 'PATCH') || (pathname == '/api/counselling/session'  && method === 'GET') || (pathname == '/api/seat/allotment'  && method === 'PATCH') || (pathname == '/api/seat/block'  && method === 'PATCH') ) {
     
 
     const cookieStore = await cookies();

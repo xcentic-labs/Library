@@ -2,6 +2,12 @@ import { bookseat } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prismaClient";
 import crypto from "crypto";
+import { Slot } from "@prisma/client";
+
+function isValidSlot(value: any): value is Slot {
+    return Object.values(Slot).includes(value);
+}
+  
 
 
 export async function POST(req: NextRequest) {
@@ -41,17 +47,23 @@ export async function PATCH(req: NextRequest) {
     try {
 
         const body = await req.json();
-        const { userId, seatNumber, layoutId, timePeriod, razorpayOrderId, razorpayPaymentId, razorpaySignature } = body as bookseat;
+        const { userId, seatNumber, layoutId, slot, timePeriod, razorpayOrderId, razorpayPaymentId, razorpaySignature } = body as bookseat;
 
-        if (!userId || !seatNumber || !layoutId || !timePeriod || !razorpayOrderId || !razorpayPaymentId || !razorpaySignature) return NextResponse.json({ "error": "All fields are required" }, { status: 400 });
+        if (!userId || !seatNumber || !layoutId || !slot || !timePeriod || !razorpayOrderId || !razorpayPaymentId || !razorpaySignature) return NextResponse.json({ "error": "All fields are required" }, { status: 400 });
 
         const signature = generatedSignature(razorpayOrderId, razorpayPaymentId);
 
-        if (signature !== razorpaySignature) return NextResponse.json( { message: 'payment verification failed'},{ status: 400 });
-        
+        if (signature !== razorpaySignature) return NextResponse.json({ message: 'payment verification failed' }, { status: 400 });
+
         const currentDate = new Date();
         const endDate = new Date();
         endDate.setMonth(currentDate.getMonth() + timePeriod);
+
+        const validSlots = Object.values(Slot); 
+
+        if (!isValidSlot(slot)) {
+            return NextResponse.json({ message: 'Invalid Slot Type' }, { status: 400 });
+        }
 
 
         const result = await prisma.seat.updateMany({
@@ -65,12 +77,13 @@ export async function PATCH(req: NextRequest) {
                 bookingStartDate: currentDate,
                 bookingEndDate: endDate,
                 userId: userId,
-                isBooked: true
+                isBooked: true,
+                slot: { set: slot as unknown as Slot } 
             }
         });
 
         if (!result) return NextResponse.json({ "error": "Unable to Book seat" }, { status: 500 });
-        return NextResponse.json({ "message": "Seat Booked Sucessfully", data: result } , {status : 200});
+        return NextResponse.json({ "message": "Seat Booked Sucessfully", data: result }, { status: 200 });
 
     } catch (error) {
         console.log(error);
@@ -80,7 +93,7 @@ export async function PATCH(req: NextRequest) {
 
 
 export const generatedSignature = (razorpayOrderId: string, razorpayPaymentId: string) => {
-    const keySecret = process.env.key_secret;
+    const keySecret = process.env.RAZORPAY_KEY_SECRET;
     if (!keySecret) {
         throw new Error(
             'Razorpay key secret is not defined in environment variables.'

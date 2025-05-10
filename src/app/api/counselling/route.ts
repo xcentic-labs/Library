@@ -1,6 +1,5 @@
 import prisma from "@/lib/prismaClient";
 import { counselling } from "@/types/types";
-import { Epilogue } from "next/font/google";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

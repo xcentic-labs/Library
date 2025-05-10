@@ -24,7 +24,7 @@ export default function Signup() {
 
   useEffect(()=>{
     if(status){
-      redirect.push('/dashboard');
+      redirect.push('/studentdashboard');
     }
   },[])
   const handleSubmit = async () => {

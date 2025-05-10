@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE `User` ADD COLUMN `AadharNumber` VARCHAR(191) NULL,
+    ADD COLUMN `Gender` VARCHAR(191) NULL,
+    ADD COLUMN `education` VARCHAR(191) NULL,
+    ADD COLUMN `fatherName` VARCHAR(191) NULL,
+    ADD COLUMN `motherName` VARCHAR(191) NULL;

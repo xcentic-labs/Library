@@ -19,7 +19,7 @@ export default function Login(){
   useEffect(()=>{
     
     if(status){
-      redirect.push('/dashboard')
+      redirect.push('/studentdashboard')
     }
   },[])
 
@@ -128,7 +128,9 @@ export default function Login(){
             onChange={handleChange}
           />
         </div>
-        <p className="mb-6 w-full text-right text-greenleast font-semibold cursor-pointer hover:text-greenleastshade">Forgot Password ?</p>
+        <p className="mb-6 w-full text-right text-greenleast font-semibold cursor-pointer hover:text-greenleastshade">
+          <Link href={'/forgotpassword'}>Forgot Password ?</Link>
+        </p>
 
         <button 
           className='w-full flex justify-center items-center text-white bg-greenleast hover:bg-white hover:text-greenleast border-2 border-greenleast rounded-2xl py-3 font-bold duration-300 text-lg tracking-[2px] mb-4'
