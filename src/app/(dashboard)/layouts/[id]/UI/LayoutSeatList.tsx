@@ -1,15 +1,17 @@
 "use client"
 
 import { seatbody } from "@/types/types"
+import { div } from "framer-motion/client"
 
 interface LayoutSeatListProps {
     data: seatbody[],
     formatDate: (value: Date | undefined) => string,
     handleAllotment: (seatId: string | number | undefined) => void
-    handleUpdateBlockStatus : (status : boolean , seatId: string | number | undefined) => void
+    handleExistingAllotment: (seatId: string | number | undefined) => void
+    handleUpdateBlockStatus: (status: boolean, seatId: string | number | undefined) => void
 }
 
-export default function LayoutSeatList({ data, formatDate, handleAllotment , handleUpdateBlockStatus }: LayoutSeatListProps) {
+export default function LayoutSeatList({ data, formatDate, handleAllotment, handleUpdateBlockStatus, handleExistingAllotment }: LayoutSeatListProps) {
 
     return (
         <div className="rounded-xl overflow-x-scroll scrollbar border border-gray-300 shadow-md bg-white">
@@ -85,12 +87,22 @@ export default function LayoutSeatList({ data, formatDate, handleAllotment , han
                                                 item.isBooked ?
                                                     <h4 className="font-bold text-green-600">Alloted</h4>
                                                     :
-                                                    <button
-                                                        className="bg-green-600 hover:bg-green-700 cursor-pointer p-2 rounded-md transition duration-200 shadow-md flex items-center justify-center text-nowrap font-bold"
-                                                        onClick={() => handleAllotment(item.id)}
-                                                    >
-                                                        Allot To
-                                                    </button>
+                                                    <div className="flex gap-2">
+                                                        <button
+                                                            className="bg-green-600 hover:bg-green-700 cursor-pointer p-2 rounded-md transition duration-200 shadow-md flex items-center justify-center text-nowrap font-bold"
+                                                            onClick={() => handleAllotment(item.id)}
+                                                        >
+                                                            To New
+                                                        </button>
+
+                                                        <button
+                                                            className="bg-green-600 hover:bg-green-700 cursor-pointer p-2 rounded-md transition duration-200 shadow-md flex items-center justify-center text-nowrap font-bold"
+                                                            onClick={() => handleExistingAllotment(item.id)}
+                                                        >
+                                                            To Existing
+                                                        </button>
+
+                                                    </div>
                                             }
                                         </td>
                                         <td className="py-3 px-6">
@@ -100,10 +112,10 @@ export default function LayoutSeatList({ data, formatDate, handleAllotment , han
                                                     :
                                                     <button
                                                         className={`${item.isBlocked ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'} cursor-pointer p-2 rounded-md transition duration-200 shadow-md flex items-center justify-center text-nowrap font-bold`}
-                                                        onClick={()=> handleUpdateBlockStatus( item.isBlocked ? false : true , item.id)}
+                                                        onClick={() => handleUpdateBlockStatus(item.isBlocked ? false : true, item.id)}
                                                     >
                                                         {
-                                                            item.isBlocked ?  "Unblock Seat" :"Block Seat"
+                                                            item.isBlocked ? "Unblock Seat" : "Block Seat"
                                                         }
                                                     </button>
 

@@ -8,6 +8,7 @@ interface UserInfo {
     phoneNumber: string;
     role: string;
     id: number | string;
+    email : string
 }
 
 // Cache for storing user info
@@ -28,6 +29,7 @@ export const useIsLoggedIn = () => {
                     phoneNumber: res.data.user.phoneNumber || "",
                     role: res.data.user.role || "",
                     id: res.data.user.id || "",
+                    email : res.data.user.id || "",
                 };
                 cachedUserInfo = userInfo; // Update the cache
                 setData(userInfo);
@@ -38,6 +40,7 @@ export const useIsLoggedIn = () => {
                     phoneNumber: "",
                     role: "",
                     id: "",
+                    email : "",
                 };
                 cachedUserInfo = defaultInfo; // Update the cache
                 setData(defaultInfo);
@@ -50,6 +53,7 @@ export const useIsLoggedIn = () => {
                 phoneNumber: "",
                 role: "",
                 id: "",
+                email : "",
             };
             cachedUserInfo = defaultInfo; // Update the cache
             setData(defaultInfo);
@@ -81,6 +85,7 @@ export const useIsLoggedIn = () => {
         phoneNumber: data?.phoneNumber || "",
         role: data?.role || "",
         id: data?.id || "",
+        email : data?.email
     };
 };
 

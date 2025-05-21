@@ -71,10 +71,10 @@ model Seat {
 }
 
 model counselling {
-  id       Int    @id @default(autoincrement())
-  name     String
-  price    Int
-  benefits String
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  price              Int
+  benefits           String
   counsellingsession counsellingsession[]
 }
 
@@ -107,9 +107,16 @@ model item {
 
 model otp {
   id        Int    @id @default(autoincrement())
-  email     String 
+  email     String
   otp       String
   sessionId String
+}
+
+model announcement {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
 }
 
 enum Slot {

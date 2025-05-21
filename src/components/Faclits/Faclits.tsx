@@ -54,7 +54,7 @@ export default function Faclits() {
             </div>
             <div className="lg:w-[50%] md:h-full h-[50%] w-full  flex flex-col justify-start items-start p-4 sm:p-10 lg:p-20 ">
                 <h1 className="lg:text-5xl/snug md:text-4xl/snug font-semibold font-ubuntu mb-6 relative  text-3xl/snug">
-                    Faclits We <span className="text-greenleast">Offer</span>
+                    Facilities We <span className="text-greenleast">Offer</span>
                     <span className="w-[40%] h-[3px] md:h-[5px] bg-greenleast absolute bottom-0 right-0"></span>
                 </h1>
                 {

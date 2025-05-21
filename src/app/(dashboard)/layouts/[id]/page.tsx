@@ -16,7 +16,8 @@ export default function LayoutDetails() {
         handleAllotment,
         handleUpdateBlockStatus,
         scale,
-        setScale
+        setScale,
+        handleExistingAllotment
     } = getLayoutDetails();
 
 
@@ -55,6 +56,7 @@ export default function LayoutDetails() {
                                 formatDate={formatDate}
                                 handleAllotment={handleAllotment}
                                 handleUpdateBlockStatus={handleUpdateBlockStatus}
+                                handleExistingAllotment={handleExistingAllotment}
                             />
                         </div>
                     </>

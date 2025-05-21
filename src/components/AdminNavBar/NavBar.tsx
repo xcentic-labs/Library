@@ -3,6 +3,7 @@ import user from '@/assets/man-user-circle-icon (1).png'
 import logo from  '@/assets/logo.png'
 import Link from "next/link"
 import { RiMenu3Line } from "react-icons/ri";
+import { useIsLoggedIn } from "@/hooks/login";
 
 interface NavProp {
   isOpen: boolean,
@@ -10,6 +11,7 @@ interface NavProp {
 }
 
 const Navbar = ({ isOpen, setIsOpen }: NavProp) => {
+  const {name , phoneNumber } = useIsLoggedIn()
   return (
     <div className='w-full h-fit py-4 bg-primary  md:px-10 shadow flex items-center justify-between z-10'>
       <div>
@@ -25,8 +27,8 @@ const Navbar = ({ isOpen, setIsOpen }: NavProp) => {
           <Image src={user} className="w-full h-full scale-75" alt="USER Image" />
         </div>
         <div className=' flex-col items-start justify-center md:flex hidden'>
-          <h1 className='font-bold text-sm'>Anish</h1>
-          <p className='text-xs'>anish123@gmail.com</p>
+          <h1 className='font-bold text-sm capitalize'>{name}</h1>
+          <p className='text-xs'>+91 {phoneNumber}</p>
         </div>
       </div>
     </div>

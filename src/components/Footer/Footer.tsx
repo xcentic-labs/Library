@@ -18,7 +18,7 @@ const Footer = () => {
             <ul className="flex flex-col gap-2 text-sm space-y-2">
               <Link href={'/'}><li className="duration-300 cursor-pointer  hover:text-white/80">Home</li></Link>
               <Link href={'/#seatbooking'}><li className="duration-300 cursor-pointer  hover:text-white/80">Book your Seat</li></Link>
-              <Link href={'/#faclits'}><li className="duration-300 cursor-pointer  hover:text-white/80">Faclits We Offer</li></Link>
+              <Link href={'/#faclits'}><li className="duration-300 cursor-pointer  hover:text-white/80">Facilities We Offer</li></Link>
               <Link href={'/#rules'}><li className="duration-300 cursor-pointer  hover:text-white/80">Our Library Rules</li></Link>
               <Link href={'/#testimonials'}><li className="duration-300 cursor-pointer  hover:text-white/80">Testimonials</li></Link>
             </ul>
@@ -26,8 +26,8 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contacts</h3>
             <ul className="flex flex-col gap-2 text-xs sm:text-sm text-white/90 font-semibold space-y-2">
-              <li className="duration-300 cursor-pointer  hover:text-white/80 flex items-center justify-start gap-2"> <LuPhone size={18} /> +91 6203821043</li>
-              <li className="duration-300 cursor-pointer  hover:text-white/80 flex items-center justify-start gap-2"> <MdOutlineMailOutline size={18} /> anissh946@gmail.com</li>
+              <li className="duration-300 cursor-pointer  hover:text-white/80 flex items-center justify-start gap-2"> <LuPhone size={18} /> +91 7011159121</li>
+              <li className="duration-300 cursor-pointer  hover:text-white/80 flex items-center justify-start gap-2"> <MdOutlineMailOutline size={18} /> info@thepathcatalyst.com</li>
               <li className="duration-300 cursor-pointer  hover:text-white/80 flex items-center justify-start gap-2"> <GrLocation size={18} />Ganga Vihar, Gokalpur, Delhi</li>
             </ul>
           </div>
@@ -38,7 +38,8 @@ const Footer = () => {
       </div>
       <div className='border-t-2 max-w-7xl mx-auto border-gray-200  pt-2 flex justify-between md:flex-row flex-col items-center'>
         <p className=' text-white text-sm sm:flex hidden'>©2024 Path Catalst All rights Reserved</p>
-        <p className="text-white text-sm">Developed By <a href="https://xcentic.in" className=" tracking-[2px] font-semibold hover:underline hover:text-white/80 duration-300 cursor-pointer">XCENTIC</a></p>
+        {/* <p className="text-white text-sm">Developed By <a href="https://xcentic.in" className=" tracking-[2px] font-semibold hover:underline hover:text-white/80 duration-300 cursor-pointer">XCENTIC</a></p> */}
+        <p className="text-white text-sm">Developed By Neeraj Singh</p>
       </div>
     </footer>
   )

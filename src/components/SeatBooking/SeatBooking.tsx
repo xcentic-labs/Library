@@ -9,7 +9,7 @@ import Link from "next/link";
 export default function SeatBooking() {
     const {status } = useIsLoggedIn()
     return (
-        <section className="w-full  bg-secondary">
+        <section className="w-full ">
             <div className="w-full h-fit bg-white md:rounded-bl-[20%] p-5 md:py-10">
                 <div className="max-w-7xl mx-auto p-4 ">
                     <h1 className=" text-3xl md:text-5xl font-ubuntu text-center font-bold capitalize" id="seatbooking">Book Your Seat Now <br /> <span className="text-greenleast text-2xl md:text-4xl relative">just at @499 <span className="w-full h-[5px] bg-greenleast absolute -bottom-2 right-0"></span></span></h1>

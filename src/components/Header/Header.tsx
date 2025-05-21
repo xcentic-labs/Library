@@ -30,7 +30,10 @@ export default function Header() {
                                 <Link href='/' scroll={true} onClick={toggelMenu}>Home</Link>
                             </li>
                             <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
-                                <Link href="/#faclits" onClick={toggelMenu}>Faclits</Link>
+                                <Link href='/allannouncement' scroll={true} onClick={toggelMenu}>Announcement</Link>
+                            </li>
+                            <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
+                                <Link href="/#faclits" onClick={toggelMenu}>Facilities</Link>
                             </li>
                             <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
                                 <Link href="/#rules" onClick={toggelMenu}>Rules</Link>
@@ -50,6 +53,9 @@ export default function Header() {
                     <ul className="w-full h-full md:flex hidden items-center gap-10 justify-end">
                         <li className="font-bold text-white hover:text-greenleast duration-300 cursor-pointer">
                             <Link href='/' scroll={true}>Home</Link>
+                        </li>
+                        <li className="font-bold text-white hover:text-greenleast duration-300 cursor-pointer">
+                            <Link href='/allannouncement' scroll={true}>Announcement</Link>
                         </li>
                         <li className="font-bold text-white hover:text-greenleast duration-300 cursor-pointer">
                             <Link href="/#faclits">Faclits</Link>

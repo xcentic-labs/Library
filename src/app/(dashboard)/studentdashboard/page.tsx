@@ -32,7 +32,7 @@ export default function StudentDashBoard() {
                         </div>
                         <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-amber-500">
                             <h3 className="text-sm font-medium text-gray-500">User ID</h3>
-                            <p className="text-2xl font-bold text-gray-800 mt-2">{data?.id}</p>
+                            <p className="text-2xl font-semibold text-gray-800 mt-2">{`PC2025${data?.id}`}</p>
                         </div>
                         <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-emerald-500">
                             <h3 className="text-sm font-medium text-gray-500">Status</h3>

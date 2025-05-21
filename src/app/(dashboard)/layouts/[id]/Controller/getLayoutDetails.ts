@@ -161,21 +161,21 @@ export function getLayoutDetails() {
         });
 
         if (result.isConfirmed) {
-            const { name, phonenumber , email , months } = result.value || {};
+            const { name, phonenumber, email, months } = result.value || {};
             if (name && phonenumber && email && months) {
                 const data = {
                     name: name,
                     phoneNumber: phonenumber,
                     email: email,
-                    password : 'pc123@'
+                    password: 'pc123@'
                 }
                 try {
                     const res = await axios.post(`/api/user`, JSON.stringify(data))
 
                     if (res.status == 200) {
                         const response = await axios.patch('/api/seat/allotment', {
-                            userId : res.data.userId,
-                            seatID : 1,
+                            userId: res.data.userId,
+                            seatID: seatID,
                             timePeriod: months,
                         });
 
@@ -186,7 +186,7 @@ export function getLayoutDetails() {
                             toast.error(response.data.error)
                         }
                     }
-                    else{
+                    else {
                         toast.error("Unable to create Account")
                     }
                 } catch (error: any) {
@@ -199,6 +199,98 @@ export function getLayoutDetails() {
             toast.error("Allotment canceled.")
         }
     };
+
+
+    const handleExistingAllotment = async (seatID: string | number | undefined) => {
+        if (!seatID) return toast.error("Some Thing Went Wrong");
+
+        const result = await Swal.fire({
+            title: "Allotment Details",
+            html: `
+                <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+                <!-- Name Field -->
+                <div style="display: flex; align-items: center; gap: 1rem; width: 100%;">
+                <label for="name" style="width: 150px; font-size: 1rem; font-weight: bold;">User Id</label>
+                <input
+                    type="text"
+                    id="userid"
+                    name="userid"
+                    style="flex: 1; height: 2.5rem; border: 2px solid #1c3f3a; padding: 0.5rem; border-radius: 6px;"
+                />
+                </div>
+    <!-- Months Field -->
+    <div style="display: flex; align-items: center; gap: 1rem; width: 100%;">
+        <label for="months" style="width: 150px; font-size: 1rem; font-weight: bold;">Months</label>
+        <select
+            id="months"
+            name="months"
+            style="flex: 1; height: 2.5rem; border: 2px solid #1c3f3a; padding: 0.5rem; border-radius: 6px;"
+        >
+            <option value="1">1 Month</option>
+            <option value="2">2 Months</option>
+            <option value="3">3 Months</option>
+            <option value="4">4 Months</option>
+            <option value="5">5 Months</option>
+            <option value="6">6 Months</option>
+            <option value="7">7 Months</option>
+            <option value="8">8 Months</option>
+            <option value="9">9 Months</option>
+            <option value="10">10 Months</option>
+            <option value="11">11 Months</option>
+            <option value="12">12 Months</option>
+        </select>
+    </div>
+</div>
+            `,
+            focusConfirm: false, // Prevents autofocus on the confirm button
+            preConfirm: () => {
+                const userid = document.getElementById("userid") as HTMLInputElement;
+                const monthsElement = document.getElementById("months") as HTMLSelectElement;
+
+                if (!userid.value || !monthsElement.value) {
+                    Swal.showValidationMessage("Please fill out all fields.");
+                    return;
+                }
+
+                return {
+                    userid: userid.value,
+                    months: monthsElement.value
+                };
+            },
+            showCancelButton: true,
+        });
+
+
+        if (result.isConfirmed) {
+            const { userid, months } = result.value || {};
+
+            
+
+            if (userid && months) {
+                try {
+                    const response = await axios.patch('/api/seat/allotment', {
+                        userId: userid.toUpperCase().split('PC2025')[1],
+                        seatID: seatID,
+                        timePeriod: months,
+                    });
+
+                    if (response.status == 200) {
+                        fetchLayoutDetails()
+                        toast.success("Seat Alloted Sucessfully");
+                    } else {
+                        toast.error("Invalid user id")
+                    }
+
+                } catch (error: any) {
+                    toast.error("Invalid user id")
+                }
+            } else {
+                toast.error("User ID or Time Period is missing.");
+            }
+        } else {
+            toast.error("Allotment canceled.")
+        }
+    }
 
     const handleUpdateBlockStatus = async (status: boolean, seatID: string | number | undefined) => {
         const data = {
@@ -228,6 +320,7 @@ export function getLayoutDetails() {
         formatDate,
         handleAllotment,
         handleUpdateBlockStatus,
+        handleExistingAllotment,
         scale,
         setScale
     }
