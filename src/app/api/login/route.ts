@@ -63,6 +63,7 @@ export async function POST(req : NextRequest) {
                 name : user.name,
                 phoneNumber : user.phoneNumber,
                 role : user.role,
+                email : user.email
             },
             authPermission : authPermission
         } },{status : 200});

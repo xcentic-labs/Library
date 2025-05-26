@@ -1,6 +1,6 @@
 "use client"
 import axios from "axios";
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { layoutdata, newArray } from "@/types/types";
@@ -28,13 +28,64 @@ export const libraryLayoutsController = () => {
     // details
     const [timePeriod, setTimePeriod] = useState('0');
     const [seatNumber, setSeatNumber] = useState<string>()
-    const [slot , setSlot] = useState<string>('');
+    const [slot, setSlot] = useState<string>('');
 
 
     const [total, setTotal] = useState(0)
     const redirect = useRouter();
-    const { id, name, phoneNumber } = useIsLoggedIn();
-    const [scale ,setScale] = useState<number>(100);
+    const { id, name, phoneNumber, email } = useIsLoggedIn();
+    const [scale, setScale] = useState<number>(100);
+
+    const searchParams = useSearchParams();
+
+    // checking if the payment is done or not 
+    useEffect(() => {
+        const bookseat = async () => {
+            const clientTxnId = searchParams.get('client_txn_id');
+            const txnDate = searchParams.get('txn_date');
+            const seatNumber = searchParams.get('seatnumber');
+            const layoutId = searchParams.get('layoutid');
+            const timePeriod = searchParams.get('timeperiod');
+            const userId = searchParams.get('userid');
+            const rawSlot = searchParams.get("slot");
+            const slot = rawSlot?.split("?")[0]; // This will clean out everything after '?'
+
+
+            // console.log(timePeriod)
+            if (!clientTxnId || !txnDate || !layoutId || !seatNumber || !timePeriod || !slot) {
+                console.log('faild  here')
+                return 
+            }
+
+            try {
+                
+                console.log(userId)
+                const obj = {
+                    userId: userId,
+                    seatNumber: +seatNumber,
+                    timePeriod: +timePeriod,
+                    slot: slot,
+                    layoutId: layoutId,
+                    tnxId: clientTxnId,
+                    txnDate: txnDate
+                };
+
+                console.log("heref once")
+
+                const response = await axios.patch('/api/seat', obj);
+
+                if (response.status === 200) {
+                    toast.success(response.data.message);
+                    redirect.push('/studentdashboard');
+                } else {
+                    toast.error(response.data.error);
+                }
+            } catch (error: any) {
+                toast.error("Payment Unsuccessful")
+            }
+        }
+        bookseat();
+    }, [])
 
 
     const fetchLayoutNames = async () => {
@@ -70,7 +121,7 @@ export const libraryLayoutsController = () => {
                 isLocker: item.isLocker,
                 seatNumber: item.seatNumber,
                 isBooked: item.isBooked,
-                isBlocked : item.isBlocked,
+                isBlocked: item.isBlocked,
             };
         });
 
@@ -105,7 +156,7 @@ export const libraryLayoutsController = () => {
 
     const handleChnageAmount = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setTimePeriod(e.target.value);
-        const month  = data?.Fee.filter((item)=>{
+        const month = data?.Fee.filter((item) => {
             return item.month === +(e.target.value)
         })
         !month ? "" : setTotal(month[0].fee)
@@ -122,7 +173,7 @@ export const libraryLayoutsController = () => {
 
         fetchLayoutDetails(+(e.target.value));
     }
-    
+
     const handleBookSeat = async () => {
         if (!seatNumber || seatNumber === '0') {
             return toast.error("Select Seat Number");
@@ -130,85 +181,36 @@ export const libraryLayoutsController = () => {
         if (!timePeriod || timePeriod === '0') {
             return toast.error("Select Time Period");
         }
-        const totalAmount = total * 100;
-    
-        // Create Order
-        const orderId = await createOrder(totalAmount);
-    
-        if (!orderId) return toast.error("Unable to create Order");
-    
-        // Razorpay options
-        const options = {
-            key: 'rzp_test_StXsmXtZWX5FH9',
-            amount: totalAmount,
-            currency: 'INR',
-            name: name,
-            description: `Seat Number: ${seatNumber} for ${timePeriod} Months`,
-            order_id: orderId,
-            handler: async function (response: any) {
-                try {
-                    const obj = {
-                        userId: id,
-                        seatNumber: +seatNumber,
-                        timePeriod: +timePeriod,
-                        slot: slot,
-                        layoutId: data?.id,
-                        razorpayOrderId: response.razorpay_order_id,
-                        razorpayPaymentId: response.razorpay_payment_id,
-                        razorpaySignature: response.razorpay_signature,
-                    };
-    
-                    const res = await axios.patch('/api/seat', obj);
-    
-                    if (res.status === 200) {
-                        toast.success(res.data.message);
-                        redirect.push('/studentdashboard');
-                    } else {
-                        toast.error(res.data.error);
-                    }
-                } catch (error: any) {
-                    toast.error(error.response?.data?.error || "Payment failed");
-                }
-            },
-            prefill: {
-                name: name,
-                phoneNumber: phoneNumber,
-            },
-            theme: {
-                color: '#1c3f3a',
-            },
-        };
-    
-        const paymentObject = new window.Razorpay(options);
-        paymentObject.on('payment.failed', function (response: any) {
-            alert(response.error.description);
-        });
-        paymentObject.open();
-    };
-    
-    const createOrder = async (amount: string | number) => {
+        const totalAmount = total;
+
         try {
             const body = {
-                amount: amount,
-                currency: 'INR',
+                amount: totalAmount,
+                name: name,
+                email: email,
+                phoneNumber: phoneNumber,
+                seatNumber : seatNumber,
+                layoutName : layoutName,
+                timePeriod : timePeriod,
+                slot: slot,
+                layoutId : data?.id,
+                userId : id
             };
-            const response = await axios.post('/api/payment/createorder', body);
-    
+
+            const response = await axios.post('/api/payment/createseatorder', body);
+
             if (response.status === 200) {
                 toast.success("Order Created Successfully");
-                return response.data.orderId;
+                window.location.href = response.data.orderInfo.paymentUrl
             } else {
                 toast.error("Failed to create order");
-                return "";
             }
         } catch (error: any) {
             console.error(error);
             toast.error("Error creating order");
-            return "";
         }
-    };
-    
 
+    };
 
     useEffect(() => {
         fetchLayoutNames();
@@ -230,7 +232,7 @@ export const libraryLayoutsController = () => {
         scale,
         setScale,
         slot,
-        setSlot
+        setSlot,
     }
 }
 

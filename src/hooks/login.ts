@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { emitWarning } from "process";
 
 interface UserInfo {
     status: boolean;
@@ -29,7 +30,7 @@ export const useIsLoggedIn = () => {
                     phoneNumber: res.data.user.phoneNumber || "",
                     role: res.data.user.role || "",
                     id: res.data.user.id || "",
-                    email : res.data.user.id || "",
+                    email : res.data.user.email || "",
                 };
                 cachedUserInfo = userInfo; // Update the cache
                 setData(userInfo);
@@ -68,16 +69,18 @@ export const useIsLoggedIn = () => {
             fetchUser();
         }
     }, []);
-    
 
-    console.log({
-        loading,
-        status: data?.status || false,
-        name: data?.name || "",
-        phoneNumber: data?.phoneNumber || "",
-        role: data?.role || "",
-        id: data?.id || "",
-    })
+    // console.log(d/ata)
+
+    // console.log({
+    //     loading,
+    //     status: data?.status || false,
+    //     name: data?.name || "",
+    //     phoneNumber: data?.phoneNumber || "",
+    //     role: data?.role || "",
+    //     id: data?.id || "",
+    //     email : data?.email ||  "",
+    // })
     return {
         loading,
         status: data?.status || false,

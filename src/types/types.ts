@@ -40,7 +40,9 @@ export interface bookseat {
     razorpayOrderId: string,
     razorpayPaymentId: string,
     razorpaySignature: string,
-    slot: slot
+    slot: slot,
+    tnxId : string
+    txnDate : string
 }
 
 export interface authInfo {

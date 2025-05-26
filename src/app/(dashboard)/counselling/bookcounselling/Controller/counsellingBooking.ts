@@ -2,16 +2,58 @@
 import axios from "axios"
 import { counselling } from "@/types/types"
 import { useEffect, useState } from "react"
-import { toast } from "react-toastify/unstyled"
+import { toast } from "react-toastify"
 import { useIsLoggedIn } from "@/hooks/login"
 import { useRouter } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 
 const counsellingBooking = () => {
     const [data, setData] = useState<Array<counselling>>()
-    const { role, phoneNumber , id , name } = useIsLoggedIn()
+    const { role, phoneNumber, id, name, email } = useIsLoggedIn()
     const redirect = useRouter();
 
-    
+
+    const searchParams = useSearchParams();
+
+    // checking if the payment is done or not 
+    useEffect(() => {
+        const bookseat = async () => {
+            const clientTxnId = searchParams.get('client_txn_id');
+            const txnDate = searchParams.get('txn_date');
+            const userId = searchParams.get('userid');
+            const rawcounsellingid = searchParams.get("counsellingid");
+            const counsellingid = rawcounsellingid?.split("?")[0]; // This will clean out everything after '?'
+
+
+            // console.log(timePeriod)
+            if (!clientTxnId || !txnDate || !counsellingid || !userId) {
+                return
+            }
+
+            try {
+
+                console.log(userId)
+                const obj = {
+                    userId: userId,
+                    tnxId: clientTxnId,
+                    txnDate: txnDate,
+                    counsellingId : counsellingid  
+                };
+
+                const response = await axios.patch('/api/counselling/session', obj);
+
+                if (response.status === 200) {
+                    toast.success(response.data.message);
+                    redirect.push('/studentdashboard');
+                } else {
+                    toast.error(response.data.error);
+                }
+            } catch (error: any) {
+                toast.error("Payment Unsuccessful")
+            }
+        }
+        bookseat();
+    }, [])
 
     const fetchcounselling = async () => {
         try {
@@ -35,79 +77,30 @@ const counsellingBooking = () => {
 
 
 
-    const createOrder = async (amount: string | number) => {
+
+    const handleBookSession = async (amount: string | number, counsellingId: number | string | undefined) => {
         try {
             const body = {
                 amount: amount,
-                currency: 'INR'
-            }
-            const response = await axios.post('/api/payment/createorder', JSON.stringify(body));
+                counsellingId: counsellingId,
+                name: name,
+                email: email,
+                phoneNumber: phoneNumber,
+                userId: id
+            };
+            const response = await axios.post('/api/payment/createcounslingorder', body);
 
-            if (response.status == 200) {
-                toast.success("Order Created Sucessfully");
-                console.log(response.data);
-                return response.data.orderId
-            }
-            else {
-                return ""
+            if (response.status === 200) {
+                toast.success("Order Created Successfully");
+                window.location.href = response.data.orderInfo.paymentUrl
+            } else {
+                toast.error("Failed to create order");
             }
         } catch (error: any) {
-            console.log(error);
-            return ""
+            console.error(error);
+            toast.error("Error creating order");
         }
-    }
-
-
-    const handleBookSession = async (amount: string | number , Counselling : counselling) => {
-
-        const orderId = await createOrder((+amount)*100);
-
-        if (!orderId) return toast.error("Unable to create Order");
-
-        const options = {
-            key: 'rzp_test_StXsmXtZWX5FH9',
-            amount: (+amount)*100,
-            currency: 'INR',
-            name: name,
-            description: `Booking an ${Counselling.name} for  ₹ ${amount}`,
-            order_id: orderId,
-            handler: async function bookseat(response: any) {
-                try {
-                    const obj = {
-                        userId: id,
-                        counsellingId: Counselling.id ,
-                        razorpayOrderId: response.razorpay_order_id,
-                        razorpayPaymentId: response.razorpay_payment_id,
-                        razorpaySignature: response.razorpay_signature,
-
-                    }
-                    const res = await axios.post('/api/counselling/session', JSON.stringify(obj));
-
-                    if (res.status == 200) {
-                        toast.success(res.data.message);
-                        redirect.push('/studentdashboard')
-                    } else {
-                        toast.error(res.data.error)
-                    }
-                } catch (error: any) {
-                    toast.error(error.response.data.error)
-                }
-            },
-            prefill: {
-                name: name,
-                phoneNumber: phoneNumber
-            },
-            theme: {
-                color: '#1c3f3a',
-            },
-        }
-
-        const paymentObject = new window.Razorpay(options);
-        paymentObject.on('payment.failed', function (response: any) {
-            alert(response.error.description);
-        });
-        paymentObject.open();
-    }
+    };
 
 
     return {

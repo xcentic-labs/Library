@@ -103,7 +103,7 @@ const BookCounselling = () => {
                                         </div>
                                         <button 
                                             className="px-6 py-2   bg-greenleast hover:bg-greenleastshade text-white rounded-lg shadow-sm font-medium transition-all"
-                                            onClick={() => handleBookSession(counselling.price, counselling)}
+                                            onClick={() => handleBookSession(counselling.price, counselling.id )}
                                         >
                                             Book Session
                                         </button>

@@ -119,6 +119,12 @@ model announcement {
   createdAt   DateTime @default(now())
 }
 
+model paymentverification {
+  id     Int     @id @default(autoincrement())
+  tnx_id String  @unique
+  isUsed Boolean @default(false)
+}
+
 enum Slot {
   Morning
   AfterNoon

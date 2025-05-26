@@ -1,9 +1,10 @@
 "use client"
+import { div } from "framer-motion/client";
 import LayoutGrid from "../layouts/[id]/UI/LayoutGrid"
 import libraryLayoutsController from "./Controllers/libraryLayoutsControllers"
-import Script from "next/script"
 import { BiSolidZoomIn, BiSolidZoomOut } from "react-icons/bi";
 import { FaLock } from "react-icons/fa";
+
 
 
 
@@ -14,11 +15,8 @@ export default function StudentLayout() {
 
     return (
         <>
-            <Script
-                id="razorpay-checkout-js"
-                src="https://checkout.razorpay.com/v1/checkout.js"
-            />
-            <section className="w-full h-full md:p-10 p-5 overflow-y-scroll scrollbar">
+            
+            <section className="w-full h-full md:p-10 p-5 overflow-y-scroll scrollbar relative">
                 <h1 className="text-xl font-medium mb-6 text-gray-700 capitalize"><span className="text-gray-500 cursor-pointer" onClick={() => redirect.push('/admindashboard')}>Dashboard</span> / Layout</h1>
                 <div className="mb-5">
                     <select name="" id="" className="w-full p-2 border-2 border-greenleast rounded-md  font-bold" onChange={(e) => handleChnageLayout(e)}>
