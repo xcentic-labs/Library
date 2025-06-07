@@ -24,6 +24,7 @@ export const libraryLayoutsController = () => {
     const [layoutName, setLayoutNames] = useState<Array<layoutName>>([]);
     const [data, setData] = useState<layoutdata | undefined>();;
     const [isloading, setIsLoading] = useState(false);
+    const searchParams = useSearchParams();
 
     // details
     const [timePeriod, setTimePeriod] = useState('0');
@@ -35,8 +36,6 @@ export const libraryLayoutsController = () => {
     const redirect = useRouter();
     const { id, name, phoneNumber, email } = useIsLoggedIn();
     const [scale, setScale] = useState<number>(100);
-
-    const searchParams = useSearchParams();
 
     // checking if the payment is done or not 
     useEffect(() => {

@@ -1,14 +1,15 @@
 "use client"
 import Script from "next/script";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import counsellingBooking from "./Controller/counsellingBooking";
+
 
 const BookCounselling = () => {
     const { data, handleBookSession } = counsellingBooking();
     const [activeFaq, setActiveFaq] = useState<number>(0);
 
     // FAQ toggle handler
-    const toggleFaq = (index : number) => {
+    const toggleFaq = (index: number) => {
         if (activeFaq === index) {
             setActiveFaq(0);
         } else {
@@ -46,12 +47,12 @@ const BookCounselling = () => {
             <Script
                 id="razorpay-checkout-js"
                 src="https://checkout.razorpay.com/v1/checkout.js"
-            />        
+            />
             <h1 className="text-xl font-medium mt-5 ml-5 text-gray-700 capitalize">Dashboard / Counselling</h1>
-            
+
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            
-                
+
+
                 {/* Counselling Cards */}
                 {!data || data.length === 0 ? (
                     <div className="flex justify-center items-center h-64 bg-white rounded-lg shadow-md">
@@ -66,8 +67,8 @@ const BookCounselling = () => {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {data?.map((counselling, index) => (
-                            <div 
-                                key={index} 
+                            <div
+                                key={index}
                                 className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300"
                             >
                                 <div className="h-3 "></div>
@@ -80,10 +81,10 @@ const BookCounselling = () => {
                                         </div>
                                         <div>
                                             <h2 className="text-xl font-bold text-gray-800">{counselling.name}</h2>
-                                            
+
                                         </div>
                                     </div>
-                                    
+
                                     <h3 className="font-medium text-gray-700 mb-2">Benefits:</h3>
                                     <ul className="space-y-2 mb-6">
                                         {counselling.benefits.split(',').map((item, i) => (
@@ -95,15 +96,15 @@ const BookCounselling = () => {
                                             </li>
                                         ))}
                                     </ul>
-                                    
+
                                     <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                                         <div>
                                             <p className="text-2xl font-bold text-gray-800">₹{counselling.price}</p>
                                             <p className="text-sm text-gray-500">Includes GST</p>
                                         </div>
-                                        <button 
+                                        <button
                                             className="px-6 py-2   bg-greenleast hover:bg-greenleastshade text-white rounded-lg shadow-sm font-medium transition-all"
-                                            onClick={() => handleBookSession(counselling.price, counselling.id )}
+                                            onClick={() => handleBookSession(counselling.price, counselling.id)}
                                         >
                                             Book Session
                                         </button>
@@ -117,7 +118,7 @@ const BookCounselling = () => {
                 {/* FAQ Section */}
                 <div className="mt-16" id="faq">
                     <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">Frequently Asked Questions</h2>
-                    
+
                     <div className="bg-white rounded-lg shadow-md overflow-hidden">
                         {faqs.map((faq, index) => (
                             <div key={index} className="border-b border-gray-200 last:border-b-0">
@@ -127,17 +128,17 @@ const BookCounselling = () => {
                                 >
                                     <div className="flex justify-between items-center">
                                         <h3 className="text-lg  text-gray-800 font-bold">{faq.question}</h3>
-                                        <svg 
-                                            className={`w-5 h-5 text-gray-500 transform transition-transform ${activeFaq === index ? 'rotate-180' : ''}`} 
-                                            fill="currentColor" 
+                                        <svg
+                                            className={`w-5 h-5 text-gray-500 transform transition-transform ${activeFaq === index ? 'rotate-180' : ''}`}
+                                            fill="currentColor"
                                             viewBox="0 0 20 20"
                                         >
                                             <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path>
                                         </svg>
                                     </div>
                                 </button>
-                                
-                                <div 
+
+                                <div
                                     className={`px-6 pb-4 ${activeFaq === index ? 'block' : 'hidden'}`}
                                 >
                                     <p className="text-gray-600">{faq.answer}</p>
@@ -145,10 +146,16 @@ const BookCounselling = () => {
                             </div>
                         ))}
                     </div>
-                </div>        
-            </div>   
+                </div>
+            </div>
         </section>
     );
 };
 
-export default BookCounselling;
+export default function main() {
+    return (
+        <Suspense>
+            <BookCounselling />
+        </Suspense>
+    )
+}

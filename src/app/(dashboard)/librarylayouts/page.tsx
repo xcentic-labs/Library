@@ -4,18 +4,17 @@ import LayoutGrid from "../layouts/[id]/UI/LayoutGrid"
 import libraryLayoutsController from "./Controllers/libraryLayoutsControllers"
 import { BiSolidZoomIn, BiSolidZoomOut } from "react-icons/bi";
 import { FaLock } from "react-icons/fa";
+import { Suspense } from "react";
 
 
 
-
-export default function StudentLayout() {
+function StudentLayout() {
     const {
         redirect, layoutName, handleChnageLayout, data, generatearray, setTimePeriod, setSeatNumber, handleBookSeat, seatNumber, timePeriod, total, handleChnageAmount, scale, setScale, slot, setSlot
     } = libraryLayoutsController()
 
     return (
-        <>
-            
+        <>      
             <section className="w-full h-full md:p-10 p-5 overflow-y-scroll scrollbar relative">
                 <h1 className="text-xl font-medium mb-6 text-gray-700 capitalize"><span className="text-gray-500 cursor-pointer" onClick={() => redirect.push('/admindashboard')}>Dashboard</span> / Layout</h1>
                 <div className="mb-5">
@@ -185,5 +184,13 @@ export default function StudentLayout() {
                 }
             </section>
         </>
+    )
+}
+
+export default function main(){
+    return (
+        <Suspense>
+            <StudentLayout />
+        </Suspense>
     )
 }
