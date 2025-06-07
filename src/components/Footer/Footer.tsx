@@ -17,10 +17,10 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Pages</h3>
             <ul className="flex flex-col gap-2 text-sm space-y-2">
               <Link href={'/'}><li className="duration-300 cursor-pointer  hover:text-white/80">Home</li></Link>
-              <Link href={'/#seatbooking'}><li className="duration-300 cursor-pointer  hover:text-white/80">Book your Seat</li></Link>
-              <Link href={'/#faclits'}><li className="duration-300 cursor-pointer  hover:text-white/80">Facilities We Offer</li></Link>
-              <Link href={'/#rules'}><li className="duration-300 cursor-pointer  hover:text-white/80">Our Library Rules</li></Link>
-              <Link href={'/#testimonials'}><li className="duration-300 cursor-pointer  hover:text-white/80">Testimonials</li></Link>
+              <Link href={'/privacypolicy'}><li className="duration-300 cursor-pointer  hover:text-white/80">Privacy Policy</li></Link>
+              <Link href={'/termsandconditions'}><li className="duration-300 cursor-pointer  hover:text-white/80">Terms And Conditions</li></Link>
+              <Link href={'/allannouncement'}><li className="duration-300 cursor-pointer  hover:text-white/80">Allannouncement</li></Link>
+              {/* <Link href={'/#testimonials'}><li className="duration-300 cursor-pointer  hover:text-white/80">Testimonials</li></Link> */}
             </ul>
           </div>
           <div>
