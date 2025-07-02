@@ -4,7 +4,7 @@ import LayoutGrid from "../layouts/[id]/UI/LayoutGrid"
 import libraryLayoutsController from "./Controllers/libraryLayoutsControllers"
 import { BiSolidZoomIn, BiSolidZoomOut } from "react-icons/bi";
 import { FaLock } from "react-icons/fa";
-
+import Script from "next/script";
 
 
 
@@ -15,7 +15,10 @@ export default function StudentLayout() {
 
     return (
         <>
-            
+            <Script
+                id="razorpay-checkout-js"
+                src="https://checkout.razorpay.com/v1/checkout.js"
+            />
             <section className="w-full h-full md:p-10 p-5 overflow-y-scroll scrollbar relative">
                 <h1 className="text-xl font-medium mb-6 text-gray-700 capitalize"><span className="text-gray-500 cursor-pointer" onClick={() => redirect.push('/admindashboard')}>Dashboard</span> / Layout</h1>
                 <div className="mb-5">
