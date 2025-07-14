@@ -11,37 +11,37 @@ import lib2 from '@/assets/pathlib1.png'
 
 const faclits = [
     {
-        title : "Clean RO Water",
-        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+        title: "Clean RO Water",
+        desc: "We provide safe and purified RO drinking water to ensure your health and hydration throughout the day.",
         icon: <LuGlassWater className="text-3xl text-greenleast" />
     },
     {
-        title : "News Paper",
-        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+        title: "Newspaper",
+        desc: "Stay informed with daily newspapers available for students to read and keep up with current affairs.",
         icon: <FaRegNewspaper className="sm:text-3xl text-2xl text-greenleast" />
     },
     {
-        title : "Cafeteria",
-        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+        title: "Cafeteria",
+        desc: "Enjoy hygienic and delicious meals and snacks at our in-house cafeteria, open during library hours.",
         icon: <IoFastFood className="sm:text-3xl text-2xl text-greenleast" />
     },
     {
-        title : "High Speed Wi-fi",
-        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+        title: "High-Speed Wi-Fi",
+        desc: "Access seamless and fast internet connectivity to support your research and online study needs.",
         icon: <MdNetworkWifi className="sm:text-3xl text-2xl text-greenleast" />
     },
     {
-        title : "24 Hrs CCTV",
-        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+        title: "24 Hrs CCTV",
+        desc: "Our facility is under 24/7 CCTV surveillance to ensure a safe and secure environment for all users.",
         icon: <GiCctvCamera className="sm:text-3xl text-2xl text-greenleast" />
     },
     {
-        title : "Seprate Cabin With Charging Point",
-        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+        title: "Separate Cabin With Charging Point",
+        desc: "Private study cabins equipped with power outlets provide a focused and comfortable learning space.",
         icon: <FaPlugCircleCheck className="sm:text-3xl text-2xl text-greenleast" />
-    },
+    }
+];
 
-]
 
 export default function Faclits() {
     return (

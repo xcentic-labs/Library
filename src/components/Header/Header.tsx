@@ -58,7 +58,7 @@ export default function Header() {
                             <Link href='/allannouncement' scroll={true}>Announcement</Link>
                         </li>
                         <li className="font-bold text-white hover:text-greenleast duration-300 cursor-pointer">
-                            <Link href="/#faclits">Faclits</Link>
+                            <Link href="/#faclits">Facilities</Link>
                         </li>
                         <li className="font-bold text-white hover:text-greenleast duration-300 cursor-pointer">
                             <Link href="/#rules">Rules</Link>

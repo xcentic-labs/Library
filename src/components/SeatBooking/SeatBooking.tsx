@@ -19,7 +19,7 @@ export default function SeatBooking() {
                         <h1 className="text-2xl md:text-3xl/snug font-semibold font-ubuntu mb-6">
                             Be The part of <span className="text-greenleast">Path Catalyst</span>
                         </h1>
-                        <p className="text-justify mb-6 text-black/50 font-ubuntu"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit a porro fugit enim iste omnis. Laborum, minima! Praesentium asperiores dignissimos odit quo neque, optio porro, deleniti odio ullam ut, blanditiis dolorem. Eveniet esse deleniti totam nihil provident commodi. Quia, earum.</p>
+                        <p className="text-justify mb-6 text-black/50 font-ubuntu"></p>
                         <div className="grid grid-cols-2 gap-5 mb-6">
                             <div className="bg-white rounded-lg  shadow-featurecard p-4 flex sm:flex-row flex-col items-start sm:items-center sm:gap-0 gap-2">
                                 <FaBook className="text-greenleast text-2xl sm:text-4xl mr-4" />

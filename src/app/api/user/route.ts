@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
         });
 
         if (!result) return NextResponse.json({ "error": "Somting went wrong" }, { status: 500 });
-        return NextResponse.json({ "message": "User Created Sucessfully" , userId  : result.id}, { status: 200 });
+        return NextResponse.json({ "message": "User Created Sucessfully", userId: result.id }, { status: 200 });
     } catch (error: unknown) {
         console.log(error)
         if (error instanceof PrismaClientKnownRequestError) {
@@ -40,32 +40,48 @@ export async function GET(req: NextRequest) {
 
         let result = null
 
-        if (type == 'all') {
+        if (type === 'all') {
             result = await prisma.user.findMany({
                 select: {
                     seat: true,
                     id: true,
                     phoneNumber: true,
                     email: true,
-                    name: true
+                    name: true,
                 },
-            })
+            });
+        } else if (type === 'unsubscribed') {
+            result = await prisma.user.findMany({
+                where: {
+                    seat: {
+                        none: {}, // users with NO seat
+                    },
+                },
+                select: {
+                    seat: true,
+                    id: true,
+                    phoneNumber: true,
+                    email: true,
+                    name: true,
+                },
+            });
         } else {
             result = await prisma.user.findMany({
                 where: {
-                    seat : {
-                        some : {}
-                    }
+                    seat: {
+                        some: {}, // users WITH at least one seat
+                    },
                 },
                 select: {
                     seat: true,
                     id: true,
                     phoneNumber: true,
                     email: true,
-                    name: true
+                    name: true,
                 },
-            })
+            });
         }
+
 
         return NextResponse.json(result, { status: 200 });
     } catch (error) {

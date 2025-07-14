@@ -13,7 +13,7 @@ export default function About() {
                             About <span className="text-greenleast">Me</span>
                         </h1>
                         <p className="text-justify mb-6 text-black/70 font-ubuntu">
-                            Results-driven IT expert with 20 years of experience delivering innovative solutions, driving digital transformation, and leading high-performing teams. Proven track record of driving business growth, improving efficiency, and ensuring seamless technology integration. Skilled in Java,Java script, CSS, Selenium,RPA (AA,Uipath),Azure, Database of expertise with a passion for staying ahead of the curve and leveraging technology to drive business success.
+                        Experienced IT Professional | 20+ Years in Software Development & Automation Seasoned IT expert with over two decades of delivering innovative solutions and leading digital transformation initiatives. Proven track record in driving business growth, enhancing efficiency, and ensuring seamless technology integration. Skilled in Java, JavaScript, CSS, Selenium, RPA (Automation Anywhere, UiPath), Azure, and database management. Passionate about leveraging technology to propel business success and staying ahead of industry trends.
                         </p>
                         
                         

@@ -102,13 +102,50 @@ export const libraryLayoutsController = () => {
         }
     }
 
+    useEffect(()=>{
+        if(!timePeriod) return
+        const selectedSeat = data?.seats.filter((seat)=> seat.seatNumber ==  seatNumber)[0]
+
+        if(selectedSeat?.isLocker){
+            const month = data?.Fee.filter((item) => {
+                return item.month === +(timePeriod)
+            })
+
+            console.log(month)
+            !month ? "" : setTotal(month[0].fee)
+        }
+
+        if(selectedSeat?.isLocker == false){
+            const month = data?.Fee.filter((item) => {
+                return item.month === +(timePeriod)
+            })
+            
+            !month ? "" : setTotal(+(month[0].fee) - month[0].month*100)
+        }
+    },[timePeriod , seatNumber])
+
 
     const handleChnageAmount = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        if(!seatNumber) return toast.warning("Select Seat Number");
         setTimePeriod(e.target.value);
-        const month = data?.Fee.filter((item) => {
-            return item.month === +(e.target.value)
-        })
-        !month ? "" : setTotal(month[0].fee)
+        const selectedSeat = data?.seats.filter((seat)=> seat.seatNumber ==  seatNumber)[0]
+
+        if(selectedSeat?.isLocker){
+            const month = data?.Fee.filter((item) => {
+                return item.month === +(e.target.value)
+            })
+
+            console.log(month)
+            !month ? "" : setTotal(month[0].fee)
+        }
+
+        if(selectedSeat?.isLocker == false){
+            const month = data?.Fee.filter((item) => {
+                return item.month === +(e.target.value)
+            })
+            
+            !month ? "" : setTotal(+(month[0].fee) - month[0].month*100)
+        }
     }
 
     const handleChnageLayout = (e: React.ChangeEvent<HTMLSelectElement>) => {

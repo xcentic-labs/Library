@@ -38,7 +38,7 @@ const Rules: React.FC = () => {
     };
 
     return (
-        <div className="w-full h-fit bg-white md:bg-secondary">
+        <div className="w-full h-fit bg-white md:bg-secondary mb-10">
             <section className="w-full h-fit py-5 sm:py-10 flex lg:flex-row lg:gap-0  gap-12 flex-col justify-center   items-center bg-white rounded-tr-[20%]" id="rules">
                 <div className="lg:w-[50%] md:h-full h-[50%] w-full  flex flex-col justify-start items-start p-5 sm:p-10 lg:p-20 ">
                     <h1 className=" text-3xl md:text-5xl/snug font-semibold font-ubuntu mb-6 relative sm:text-left text-center">
