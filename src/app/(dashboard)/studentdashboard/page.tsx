@@ -53,7 +53,7 @@ export default function StudentDashBoard() {
                                 </div>
                                 <div>
                                     <h3 className="text-sm font-medium text-gray-500 mb-1">User ID</h3>
-                                    <p className="text-gray-800">{data?.id}</p>
+                                    <p className="text-gray-800">{`PC2025${data?.id}`}</p>
                                 </div>
                                 <div>
                                     <h3 className="text-sm font-medium text-gray-500 mb-1">Email Address</h3>

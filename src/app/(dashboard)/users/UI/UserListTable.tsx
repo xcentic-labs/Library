@@ -10,7 +10,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 interface LayoutSeatListProps {
     data: User[] | undefined,
     isloading: boolean,
-    redirect : AppRouterInstance
+    redirect: AppRouterInstance
 }
 
 export default function UserListTable({ data, isloading, redirect }: LayoutSeatListProps) {
@@ -56,6 +56,7 @@ export default function UserListTable({ data, isloading, redirect }: LayoutSeatL
                                     (
                                         data.map((user, index) => (
 
+                                            <>
                                             <tr key={index} className="text-center">
                                                 <th className="py-3 px-6">{index + 1}</th>
                                                 <th className="py-3 px-6">{user.name}</th>
@@ -70,19 +71,21 @@ export default function UserListTable({ data, isloading, redirect }: LayoutSeatL
                                                         {user.seat?.length != 0 ? "Yes" : "No"}
                                                     </span>
                                                 </td>
-                                                
+
                                                 <th className="py-3 px-6 flex justify-center">
                                                     <button
                                                         className="bg-greenleast hover:bg-greenleastshade cursor-pointer p-2 rounded-md transition duration-200 shadow-md flex items-center justify-center"
                                                         title="View Details"
-                                                        onClick={() => redirect.push(`/users/${user.id}`) }
+                                                        onClick={() => redirect.push(`/users/${user.id}`)}
                                                     >
                                                         <FaEye className="text-white text-md" />
                                                     </button>
                                                 </th>
                                             </tr>
+                                            </>
 
                                         ))
+                                        
                                     )
                         }
                     </tbody>

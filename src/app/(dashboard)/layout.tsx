@@ -48,7 +48,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" />
        </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${ubuntu.className} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${ubuntu.className} antialiased `}
       >
         <ToastContainer />
         <header className="w-full h-fit ">
@@ -61,7 +61,7 @@ export default function RootLayout({
           <aside className="w-[20%] lg:block hidden">
             <SideBar isOpen={isOpen} setIsOpen={setIsOpen}/>
           </aside>
-          <div className="lg:w-[80%] h-full bg-slate-100 w-full">
+          <div className="lg:w-[80%] h-full bg-slate-100 w-full overflow-scroll scrollbar mb-4">
             {children}
           </div>
         </section>
