@@ -29,9 +29,9 @@ export default function Header() {
                             <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
                                 <Link href='/' scroll={true} onClick={toggelMenu}>Home</Link>
                             </li>
-                            <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
+                            {/* <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
                                 <Link href='/allannouncement' scroll={true} onClick={toggelMenu}>Announcement</Link>
-                            </li>
+                            </li> */}
                             <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
                                 <Link href="/#faclits" onClick={toggelMenu}>Facilities</Link>
                             </li>
@@ -54,9 +54,9 @@ export default function Header() {
                         <li className="font-bold text-white hover:text-greenleast duration-300 cursor-pointer">
                             <Link href='/' scroll={true}>Home</Link>
                         </li>
-                        <li className="font-bold text-white hover:text-greenleast duration-300 cursor-pointer">
+                        {/* <li className="font-bold text-white hover:text-greenleast duration-300 cursor-pointer">
                             <Link href='/allannouncement' scroll={true}>Announcement</Link>
-                        </li>
+                        </li> */}
                         <li className="font-bold text-white hover:text-greenleast duration-300 cursor-pointer">
                             <Link href="/#faclits">Faclits</Link>
                         </li>

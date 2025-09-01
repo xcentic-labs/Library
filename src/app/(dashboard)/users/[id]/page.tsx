@@ -31,7 +31,7 @@ export default function User() {
                 <table className="min-w-full text-sm text-gray-700">
                     <thead className=" text-base font-semibold border-[1.5px] border-black">
                         <tr className='bg-greenleast text-white'>
-                            <th className='h-10' colSpan={5}>User Seat Details</th>
+                            <th className='h-10' colSpan={6}>User Seat Details</th>
                         </tr>
                         <tr className=''>
                             <th className="py-3 px-6 border-[1.5px] border-black">S.No.</th>
@@ -39,6 +39,7 @@ export default function User() {
                             <th className="py-3 px-6 border-[1.5px] border-black">Layout Name</th>
                             <th className="py-3 px-6 border-[1.5px] border-black">Booking Date</th>
                             <th className="py-3 px-6 border-[1.5px] border-black">Locker</th>
+                            <th className="py-3 px-6 border-[1.5px] border-black">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,6 +72,9 @@ export default function User() {
                                             >
                                                 {seat.isLocker ? "Yes" : "No"}
                                             </span>
+                                        </td>
+                                        <td className="py-3 px-6 border-[1.5px] border-black">
+                                            Edit date
                                         </td>
                                     </tr>
                                 ))

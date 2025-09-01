@@ -64,10 +64,13 @@ export default function Announcement() {
     };
 
     return (
-        <section className="mt-10 w-full px-4 sm:px-6 md:px-8 lg:px-16 py-12 bg-gradient-to-b from-white to-[#eae6d7] min-h-screen">
-            <div className="max-w-7xl mx-auto">
+        <section className="w-full h-full md:p-10 p-5 rounded-lg shadow-md overflow-y-scroll scrollbar">
+            <h1 className="text-xl mb-6 text-gray-700 capitalize font-bold">
+                All Announcement
+            </h1>
+            <div className="max-w-7xl mx-auto ">
                 {/* Header section */}
-                <div className="mb-8 md:mb-12 text-center sm:text-left">
+                {/* <div className="mb-8 md:mb-12 text-center sm:text-left">
                     <div className="inline-block bg-[#dad5be] p-2 rounded-lg mb-3">
                         <FaBullhorn className="text-[#fc7651]" size={28} />
                     </div>
@@ -77,14 +80,13 @@ export default function Announcement() {
                     <p className="text-[#32524D] max-w-2xl">
                         Stay updated with the latest news, events, and important information from our community.
                     </p>
-                </div>
+                </div> */}
 
                 {/* Loading state */}
                 {isLoading && (
                     <div className="flex justify-center items-center py-12">
-                        <div className="animate-pulse flex flex-col items-center">
-                            <div className="w-12 h-12 rounded-full bg-[#dad5be] mb-3"></div>
-                            <div className="h-4 w-32 bg-[#dad5be] rounded"></div>
+                        <div className="w-8 h-8 rounded-full animate-spin flex flex-col items-center border-2 border-l-0 border-[#32524D]">
+                            {/* <div className="w-80 rounded-xl h-48 bg-gray-200 mb-3"></div> */}
                         </div>
                     </div>
                 )}
@@ -127,7 +129,7 @@ export default function Announcement() {
                                 initial="hidden"
                                 animate="visible"
                                 variants={cardVariants}
-                                className="bg-[#eae6d7] border-l-4 border-[#32524D] p-4 sm:p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 
+                                className="border-l-4 border  border-[#32524D] p-4 sm:p-6 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 
                                     transform hover:-translate-y-1 flex flex-col h-full"
                             >
                                 {/* Card header */}
