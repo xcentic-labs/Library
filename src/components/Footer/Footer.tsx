@@ -36,10 +36,10 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className='border-t-2 max-w-7xl mx-auto border-gray-200  pt-2 flex justify-between md:flex-row flex-col items-center'>
+      <div className='border-t-2 max-w-7xl mx-auto border-gray-200  pt-2 flex justify-center md:flex-row flex-col items-center'>
         <p className=' text-white text-sm sm:flex hidden'>©2024 Path Catalst All rights Reserved</p>
         {/* <p className="text-white text-sm">Developed By <a href="https://xcentic.in" className=" tracking-[2px] font-semibold hover:underline hover:text-white/80 duration-300 cursor-pointer">XCENTIC</a></p> */}
-        <p className="text-white text-sm">Developed By Neeraj Singh</p>
+        {/* <p className="text-white text-sm">Developed By Neeraj Singh</p> */}
       </div>
     </footer>
   )
