@@ -31,6 +31,8 @@ model User {
   fatherName   String?
   motherName   String?
   AadharNumber String?
+  userPhoto    String?
+  aadharPhoto  String?
   Gender       String?
   seat         Seat[]
   session      counsellingsession[]

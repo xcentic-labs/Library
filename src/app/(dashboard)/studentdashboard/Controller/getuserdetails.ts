@@ -14,6 +14,7 @@ export default function getUserDetails() {
     const getSpecficUser = async () => {
         if(!id) return
         try {
+            setIsLoading(true);
             const res = await axios.get(`/api/user/${id}`);
             if (res.status == 200) {
                 console.log(res.data.user);
@@ -22,7 +23,10 @@ export default function getUserDetails() {
                 toast.error(res.data.error);
             }
         } catch (error: any) {    
-                toast.error(error.response.data.error);
+                toast.error(error?.response?.data?.error || "Failed to fetch user");
+        }
+        finally {
+            setIsLoading(false);
         }
     }
 
@@ -44,10 +48,36 @@ export default function getUserDetails() {
         return yearDiff * 12 + monthDiff;
     };
     
+    // PATCH user details (used to update mother/father/Aadhar etc.)
+    const updateUserDetails = async (payload: Partial<{ education: string; fatherName: string | null; motherName: string | null; AadharNumber: string | null; Gender: string | null; userPhoto?: string | null; aadharPhoto?: string | null }>) => {
+        if (!id) {
+            toast.error("User id missing");
+            return null;
+        }
+        try {
+            setIsLoading(true);
+            const res = await axios.patch(`/api/user/${id}`, payload);
+            if (res.status === 200) {
+                toast.success("Details updated successfully");
+                setData(res.data.user);
+                return res.data.user;
+            } else {
+                toast.error(res.data.error || "Failed to update details");
+                return null;
+            }
+        } catch (error: any) {
+            toast.error(error?.response?.data?.error || "Failed to update details");
+            return null;
+        } finally {
+            setIsLoading(false);
+        }
+    }
+    
 
     return {
         data,
         isloading,
+    updateUserDetails,
         formatDate,
         calculateMonthsBetween
     }

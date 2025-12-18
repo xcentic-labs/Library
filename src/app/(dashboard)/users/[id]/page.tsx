@@ -4,7 +4,7 @@ import getuser from './Controller/getuser'
 export default function User() {
     const { data, isloading, formatDate } = getuser()
     return (
-        <section className="w-full h-full md:p-10 p-5">
+        <section className="w-full h-full md:p-10 p-5 overflow-y-auto scrollbar">
             <h1 className="text-xl font-medium mb-6 text-gray-700 capitalize"><span className="text-gray-500 cursor-pointer" >Dashboard</span> / All Users / {data?.id}</h1>
             <div className="rounded-t-xl overflow-x-scroll scrollbar border border-gray-300 shadow-md bg-white mb-8">
                 <table className="min-w-full text-sm text-gray-700 ">
@@ -26,6 +26,43 @@ export default function User() {
                         </tr>
                     </thead>
                 </table>
+            </div>
+            {/* Additional Info: mother, father, aadhar, photos */}
+            <div className="rounded-t-xl overflow-x-auto scrollbar border border-gray-300 shadow-md bg-white p-6 mb-8">
+                <h2 className="text-lg font-semibold mb-4">Additional Info</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="p-4 border rounded">
+                        <h3 className="text-xs font-semibold text-gray-500 uppercase mb-2">Mother's Name</h3>
+                        <p className={`${data?.motherName ? 'text-gray-800' : 'text-gray-400 italic'}`}>{data?.motherName ?? 'Not provided'}</p>
+                    </div>
+                    <div className="p-4 border rounded">
+                        <h3 className="text-xs font-semibold text-gray-500 uppercase mb-2">Father's Name</h3>
+                        <p className={`${data?.fatherName ? 'text-gray-800' : 'text-gray-400 italic'}`}>{data?.fatherName ?? 'Not provided'}</p>
+                    </div>
+                    <div className="p-4 border rounded">
+                        <h3 className="text-xs font-semibold text-gray-500 uppercase mb-2">Aadhar Number</h3>
+                        <p className={`${data?.AadharNumber ? 'text-gray-800 font-mono' : 'text-gray-400 italic'}`}>{data?.AadharNumber ?? 'Not provided'}</p>
+                    </div>
+                </div>
+
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="p-4 border rounded flex flex-col items-start">
+                        <h3 className="text-xs font-semibold text-gray-500 uppercase mb-2">User Photo</h3>
+                        { (data as any)?.userPhoto ? (
+                            <img src={(data as any).userPhoto} alt="user" className="w-40 h-40 object-cover rounded" />
+                        ) : (
+                            <div className="w-40 h-40 flex items-center justify-center bg-gray-50 text-gray-400 rounded">Not uploaded</div>
+                        ) }
+                    </div>
+                    <div className="p-4 border rounded flex flex-col items-start">
+                        <h3 className="text-xs font-semibold text-gray-500 uppercase mb-2">Aadhar Photo</h3>
+                        { (data as any)?.aadharPhoto ? (
+                            <img src={(data as any).aadharPhoto} alt="aadhar" className="w-40 h-40 object-cover rounded" />
+                        ) : (
+                            <div className="w-40 h-40 flex items-center justify-center bg-gray-50 text-gray-400 rounded">Not uploaded</div>
+                        ) }
+                    </div>
+                </div>
             </div>
             <div className="rounded-t-xl overflow-x-scroll scrollbar border border-gray-300 shadow-md bg-white">
                 <table className="min-w-full text-sm text-gray-700">

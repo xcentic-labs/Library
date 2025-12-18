@@ -6,7 +6,10 @@ export interface User {
     email: string,
     password: string
     role?: string,
-    seat?: seatbody[]
+    seat?: seatbody[],
+    motherName?  : string,
+    fatherName? : string,
+    AadharNumber?: string,
 }
 
 export interface auth {
