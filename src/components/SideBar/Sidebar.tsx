@@ -23,9 +23,10 @@ interface section {
     }[];
 }
 
+
 export default function SideBar({ isOpen, setIsOpen }: NavProp) {
     const {
-        data, handleLogout
+        data , handleLogout
     } = SideBarController()
     return (
         <div className="h-[90vh] w-full bg-greenleast p-4 pr-0 flex-col duration-300 overflow-y-scroll lg:border-0 lg:border-r-4 scrollbar z-50">
