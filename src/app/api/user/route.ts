@@ -47,14 +47,16 @@ export async function GET(req: NextRequest) {
                     id: true,
                     phoneNumber: true,
                     email: true,
-                    name: true
+                    name: true,
+                    aadharPhoto : true,
+                    userPhoto :  true,
                 },
             })
-        } else {
+        } else if (type == 'subscribed') {
             result = await prisma.user.findMany({
                 where: {
-                    seat : {
-                        some : {}
+                    seat: {
+                        some: {}
                     }
                 },
                 select: {
@@ -62,12 +64,40 @@ export async function GET(req: NextRequest) {
                     id: true,
                     phoneNumber: true,
                     email: true,
-                    name: true
+                    name: true,
+                    aadharPhoto: true,
+                    userPhoto: true,
+                },
+            })
+        } else {
+            result = await prisma.user.findMany({
+                where: {
+                    seat: {
+                        none: {}
+                    }
+                },
+                select: {
+                    seat: true,
+                    id: true,
+                    phoneNumber: true,
+                    email: true,
+                    name: true,
+                    aadharPhoto: true,
+                    userPhoto: true,
                 },
             })
         }
 
-        return NextResponse.json(result, { status: 200 });
+        const userData = result.map((user) => ({
+            id: user.id,
+            phoneNumber: user.phoneNumber,
+            email: user.email,
+            name: user.name,
+            isProfileComplete: user.aadharPhoto && user.userPhoto ? true : false,
+            seat: user.seat
+        }));
+
+        return NextResponse.json(userData , { status: 200 });
     } catch (error) {
         console.log(error);
         return NextResponse.json({ "error": "Internal server server error" }, { status: 500 })

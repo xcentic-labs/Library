@@ -53,11 +53,11 @@ export const libraryLayoutsController = () => {
             // console.log(timePeriod)
             if (!clientTxnId || !txnDate || !layoutId || !seatNumber || !timePeriod || !slot) {
                 console.log('faild  here')
-                return 
+                return
             }
 
             try {
-                
+
                 console.log(userId)
                 const obj = {
                     userId: userId,
@@ -154,11 +154,22 @@ export const libraryLayoutsController = () => {
 
 
     const handleChnageAmount = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        if (!seatNumber || seatNumber === '0') {
+            return toast.error("Select Seat Number");
+        }
+        const selectedSeat = data?.seats.find((item) => item.seatNumber === +seatNumber);
         setTimePeriod(e.target.value);
         const month = data?.Fee.filter((item) => {
             return item.month === +(e.target.value)
         })
-        !month ? "" : setTotal(month[0].fee)
+
+        
+
+        if (selectedSeat?.isLocker) {
+            !month ? "" : setTotal(month[0].fee + month[0].month * 100);
+        } else {
+            !month ? "" : setTotal(month[0].fee);
+        }
     }
 
     const handleChnageLayout = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -188,12 +199,12 @@ export const libraryLayoutsController = () => {
                 name: name,
                 email: email,
                 phoneNumber: phoneNumber,
-                seatNumber : seatNumber,
-                layoutName : layoutName,
-                timePeriod : timePeriod,
+                seatNumber: seatNumber,
+                layoutName: layoutName,
+                timePeriod: timePeriod,
                 slot: slot,
-                layoutId : data?.id,
-                userId : id
+                layoutId: data?.id,
+                userId: id
             };
 
             const response = await axios.post('/api/payment/createseatorder', body);

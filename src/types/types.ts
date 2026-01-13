@@ -10,6 +10,7 @@ export interface User {
     motherName?  : string,
     fatherName? : string,
     AadharNumber?: string,
+    isProfileComplete : boolean
 }
 
 export interface auth {

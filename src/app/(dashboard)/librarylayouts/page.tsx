@@ -89,11 +89,11 @@ function StudentLayout() {
                                     <h2 className="text-xl text-center font-bold text-gray-800 mb-4">
                                         Layout Details
                                     </h2>
-                                    <table className="min-w-full max-w-2xl mx-auto border border-gray-300 shadow-md rounded-lg overflow-hidden text-center bg-white">
+                                    <table className="min-w-full max-w-2xl mx-auto border border-gray-300 shadow-md rounded-lg overflow-hidden text-center bg-white mb-10">
                                         <thead className="bg-greenleast rounded-t-xl">
                                             <tr>
                                                 <th colSpan={2} className="px-6 py-4 text-lg font-semibold text-white">
-                                                    Layout Name : <span className="text-white">{data?.layoutName}</span>
+                                                    Layout Name : <span className="text-white">{data?.layoutName}</span> Without locker 
                                                 </th>
                                             </tr>
                                         </thead>
@@ -105,6 +105,28 @@ function StudentLayout() {
                                                     </td>
                                                     <td className="px-6 py-3 font-bold text-greenleastshade text-right">
                                                         ₹ {item.fee}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+
+                                    <table className="min-w-full max-w-2xl mx-auto border border-gray-300 shadow-md rounded-lg overflow-hidden text-center bg-white">
+                                        <thead className="bg-greenleast rounded-t-xl">
+                                            <tr>
+                                                <th colSpan={2} className="px-6 py-4 text-lg font-semibold text-white">
+                                                    Layout Name : <span className="text-white">{data?.layoutName}</span> With locker
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {data.Fee.map((item, index) => (
+                                                <tr key={index} className="border-t hover:bg-gray-50 transition-colors">
+                                                    <td className="px-6 py-3 text-left font-medium text-gray-700">
+                                                        Fee for <span className="capitalize">{item.month}</span> Month:
+                                                    </td>
+                                                    <td className="px-6 py-3 font-bold text-greenleastshade text-right">
+                                                        ₹ {item.fee + (100 * item.month)}
                                                     </td>
                                                 </tr>
                                             ))}
