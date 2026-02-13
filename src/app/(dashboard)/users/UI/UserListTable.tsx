@@ -24,8 +24,8 @@ export default function UserListTable({ data, isloading, redirect }: LayoutSeatL
                             <th className="py-3 px-6">S.No.</th>
                             <th className="py-3 px-6">Name</th>
                             <th className="py-3 px-6">Phone Number</th>
-                            <th className="py-3 px-6">Email</th>
                             <th className="py-3 px-6">PC ID</th>
+                            <th className="py-3 px-6">Subscribed</th>
                             <th className="py-3 px-6">Profile Complete</th>
                             <th className="py-3 px-6">Action</th>
                         </tr>
