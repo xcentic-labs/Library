@@ -1,8 +1,11 @@
 "use client"
+import { useState } from 'react'
 import getuser from './Controller/getuser'
+import EditDateModal from './EditDateModal'
 
 export default function User() {
-    const { data, isloading, formatDate } = getuser()
+    const { data, isloading, formatDate, refreshUser } = getuser()
+    const [editingSeat, setEditingSeat] = useState<any>(null)
     return (
         <section className="w-full h-full md:p-10 p-5 overflow-y-auto scrollbar">
             <h1 className="text-xl font-medium mb-6 text-gray-700 capitalize"><span className="text-gray-500 cursor-pointer" >Dashboard</span> / All Users / {data?.id}</h1>
@@ -111,7 +114,12 @@ export default function User() {
                                             </span>
                                         </td>
                                         <td className="py-3 px-6 border-[1.5px] border-black">
-                                            Edit date
+                                            <button
+                                                onClick={() => setEditingSeat(seat)}
+                                                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-xs font-semibold"
+                                            >
+                                                Edit Date
+                                            </button>
                                         </td>
                                     </tr>
                                 ))
@@ -119,6 +127,19 @@ export default function User() {
                     </tbody>
                 </table>
             </div>
+
+            {/* Edit Date Modal */}
+            {editingSeat && (
+                <EditDateModal
+                    isOpen={!!editingSeat}
+                    onClose={() => setEditingSeat(null)}
+                    seatId={editingSeat.id}
+                    currentStartDate={editingSeat.bookingStartDate}
+                    currentEndDate={editingSeat.bookingEndDate}
+                    seatNumber={editingSeat.seatNumber}
+                    onSuccess={refreshUser}
+                />
+            )}
         </section>
     )
 }

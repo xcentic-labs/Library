@@ -30,9 +30,14 @@ export default function getAllUser() {
 
     const formatDate = (date?: string | Date) => date ? new Date(date).toLocaleDateString() : "N/A";
 
+    const refreshUser = () => {
+        getSpecficUser();
+    };
+
     return {
         data,
         isloading,
-        formatDate
+        formatDate,
+        refreshUser
     }
 }
