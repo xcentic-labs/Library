@@ -229,16 +229,16 @@ export const useLayout = () => {
       return item.seatNumber == undefined || !item.seatNumber;
     });
 
-    const seatNumbers = newarray.map((item) => item.seatNumber);
+    const seatNumbers : number[] = newarray.map((item) => item.seatNumber);
     seatNumbers.sort((a : number, b : number) => a - b);
 
+    console.log(seatNumbers);
     const duplicates : number[] = []
     // get duplicate seat numbers
     seatNumbers.map((s : number , i : number) => {
-        if(s == seatNumbers[i + 1] && s != undefined && s != 0){
-            if(!duplicates.includes(s)){
-                duplicates.push(s)
-            }
+        if(s != i+1){
+            duplicates.push(s);
+            seatNumbers.splice(i + 1, 1);
         }
     })
 
