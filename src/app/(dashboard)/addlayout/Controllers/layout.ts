@@ -230,12 +230,15 @@ export const useLayout = () => {
     });
 
     const seatNumbers = newarray.map((item) => item.seatNumber);
+    seatNumbers.sort((a : number, b : number) => a - b);
 
     const duplicates : number[] = []
     // get duplicate seat numbers
     seatNumbers.map((s : number , i : number) => {
-        if(seatNumbers.includes(s)){
-            duplicates.push(s)
+        if(s == seatNumbers[i + 1] && s != undefined && s != 0){
+            if(!duplicates.includes(s)){
+                duplicates.push(s)
+            }
         }
     })
 
