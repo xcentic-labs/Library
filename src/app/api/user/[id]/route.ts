@@ -38,6 +38,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
                         seatNumber: true,
                         index: true,
                         isBooked: true,
+                        isExpired: true,
                         slot : true,
                         bookingStartDate: true,
                         bookingEndDate: true,

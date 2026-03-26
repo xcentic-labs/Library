@@ -51,6 +51,7 @@ export async function GET(req : NextRequest,{ params }: { params: { id: string }
 
         await prisma.seat.updateMany({
             where : {
+                isBooked : true,
                 bookingEndDate : {
                     lt : currentDate
                 }

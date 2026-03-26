@@ -65,12 +65,11 @@ model Seat {
   seatNumber       Int
   index            Int?
   slot             Slot?
+  isExpired       Boolean  @default(false)
   isBooked         Boolean  @default(false)
   bookingStartDate DateTime @default(now())
   bookingEndDate   DateTime @default(now())
-  isExpired        Boolean  @default(false)
   layoutId         Int? // Foreign key to Layout
-
   layout           Layout?  @relation(fields: [layoutId], references: [id])
 }
 

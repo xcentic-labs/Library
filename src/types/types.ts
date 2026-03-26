@@ -25,7 +25,8 @@ export interface seatbody {
     index: number,
     layoutId: number,
     isBooked?: boolean,
-    slot? : slot
+    slot? : slot,
+    isExpired?: boolean,
     isBlocked?: boolean,
     bookingEndDate?: Date,
     bookingStartDate?: Date,

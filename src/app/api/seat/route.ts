@@ -102,6 +102,7 @@ export async function PATCH(req: NextRequest) {
                     bookingEndDate: endDate,
                     userId: userId,
                     isBooked: true,
+                    isExpired: false,
                     slot: { set: slot as unknown as Slot }
                 }
             });

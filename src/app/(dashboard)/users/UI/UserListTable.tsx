@@ -26,6 +26,7 @@ export default function UserListTable({ data, isloading, redirect }: LayoutSeatL
                             <th className="py-3 px-6">Phone Number</th>
                             <th className="py-3 px-6">PC ID</th>
                             <th className="py-3 px-6">Subscribed</th>
+                            <th className="py-3 px-6">Seat Expired</th>
                             <th className="py-3 px-6">Profile Complete</th>
                             <th className="py-3 px-6">Action</th>
                         </tr>
@@ -69,6 +70,17 @@ export default function UserListTable({ data, isloading, redirect }: LayoutSeatL
                                                         {user.seat?.length != 0 ? "Yes" : "No"}
                                                     </span>
                                                 </td>
+
+                                                <td className="py-3 px-6">
+                                                    <span
+                                                        className={`px-4 py-[5px] rounded-lg text-xs font-semibold text-white ${user.seat?.length != 0 ? user.seat[0].isExpired ? "bg-red-500" : "bg-green-500" : "bg-gray-500"
+                                                            }`}
+                                                    >
+                                                        {user.seat?.length != 0 ? user.seat[0].isExpired ? "Yes" : "No" : "N/A"}
+                                                    </span>
+                                                </td>
+
+
                                                 <td className="py-3 px-6">
                                                     <span
                                                         className={`px-4 py-[5px] rounded-lg text-xs font-semibold text-white ${user.isProfileComplete ? "bg-green-500" : "bg-red-500"

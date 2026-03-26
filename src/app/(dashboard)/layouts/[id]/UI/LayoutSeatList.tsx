@@ -84,7 +84,7 @@ export default function LayoutSeatList({ data, formatDate, handleAllotment, hand
                                         {/*Allot To  */}
                                         <td className="py-3 px-6 flex items-center justify-center  text-nowrap">
                                             {
-                                                item.isBooked ?
+                                                item.isBooked && !item.isExpired ?
                                                     <h4 className="font-bold text-green-600">Alloted</h4>
                                                     :
                                                     <div className="flex gap-2">

@@ -20,7 +20,8 @@ export async function PATCH(req : NextRequest ,{ params }: { params: { id: strin
                 userId : (+userId),
                 bookingStartDate: currentDate,
                 bookingEndDate: endDate,
-                isBooked: true
+                isBooked: true,
+                isExpired: false
             }
         });
 
