@@ -38,6 +38,9 @@ export default function Header() {
                             <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
                                 <Link href="/#rules" onClick={toggelMenu}>Rules</Link>
                             </li>
+                            <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
+                                <Link href="/courses" onClick={toggelMenu}>Courses</Link>
+                            </li>
 
                             <li className="text-black hover:text-greenleast duration-300 cursor-pointer tracking-[3px]" >
                                 <Link href='https://foodcourt.thepathcatalyst.com' onClick={toggelMenu}>Food Court</Link>
@@ -66,6 +69,9 @@ export default function Header() {
                         </li>
                         <li className="font-bold text-white hover:text-greenleast duration-300 cursor-pointer">
                             <Link href="/#rules">Rules</Link>
+                        </li>
+                        <li className="font-bold text-white hover:text-greenleast duration-300 cursor-pointer">
+                            <Link href="/courses">Courses</Link>
                         </li>
                         <Link href="https://foodcourt.thepathcatalyst.com" className="bg-greenleast text-white px-5 py-2 rounded-lg font-bold cursor-pointer hover:bg-white hover:text-greenleast duration-300">
                                     Food Court
