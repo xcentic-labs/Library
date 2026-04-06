@@ -39,7 +39,7 @@ export async function PUT(
     }
 
     const body = await req.json();
-    const { title, description, price } = body;
+    const { title, description, price, images } = body;
 
     if (!title || !description || price === undefined || price === null) {
       return NextResponse.json(
@@ -56,12 +56,19 @@ export async function PUT(
       );
     }
 
+    const parsedImages = Array.isArray(images)
+      ? images.filter((img) => typeof img === "string" && img.trim() !== "")
+      : typeof images === "string" && images.trim() !== ""
+      ? [images.trim()]
+      : [];
+
     const updated = await prisma.course.update({
       where: { id },
       data: {
         title,
         description,
         price: parsedPrice,
+        images: parsedImages,
       },
     });
 

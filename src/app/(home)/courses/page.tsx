@@ -7,6 +7,7 @@ interface Course {
   title: string;
   description: string;
   price: number;
+  images: string[];
   createdAt: string;
 }
 
@@ -69,6 +70,13 @@ export default function CoursesPage() {
                 key={course.id}
                 className="bg-white rounded-2xl border border-[#d8d4c2] shadow-sm p-5 flex flex-col"
               >
+                {Array.isArray(course.images) && course.images.length > 0 && (
+                  <img
+                    src={course.images[0]}
+                    alt={course.title}
+                    className="w-full h-44 object-cover rounded-xl mb-4"
+                  />
+                )}
                 <h2 className="text-xl font-bold text-[#1c3f3a] mb-2">{course.title}</h2>
                 <p className="text-[#32524D] mb-4 flex-grow">{course.description}</p>
                 <div className="flex items-center justify-between mt-2">

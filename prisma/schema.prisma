@@ -127,6 +127,7 @@ model course {
   title       String
   description String
   price       Float
+  images      String[] @default([])
   createdAt   DateTime @default(now())
 }
 

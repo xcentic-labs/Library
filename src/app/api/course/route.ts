@@ -4,7 +4,7 @@ import prisma from "@/lib/prismaClient";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { title, description, price } = body;
+    const { title, description, price, images } = body;
 
     if (!title || !description || price === undefined || price === null) {
       return NextResponse.json(
@@ -21,11 +21,18 @@ export async function POST(req: Request) {
       );
     }
 
+    const parsedImages = Array.isArray(images)
+      ? images.filter((img) => typeof img === "string" && img.trim() !== "")
+      : typeof images === "string" && images.trim() !== ""
+      ? [images.trim()]
+      : [];
+
     const newCourse = await prisma.course.create({
       data: {
         title,
         description,
         price: parsedPrice,
+        images: parsedImages,
       },
     });
 
