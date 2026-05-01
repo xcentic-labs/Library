@@ -5,26 +5,30 @@ import { IoIosArrowDown } from "react-icons/io";
 import lib1 from '@/assets/pathlib4.png'
 import lib2 from '@/assets/pathlib3.png'
 
-const libraryRules = [
+const sharedRules = [
     {
-        rule: "Return Books on Time",
-        description: "Borrowed books must be returned by the due date to avoid fines and ensure availability for other readers."
+        rule: "Keep the Space Quiet",
+        description: "Maintain a calm atmosphere in both the library and co-working areas so everyone can focus on study and work."
     },
     {
-        rule: "Respect Library Property",
-        description: "Library furniture and equipment should be used responsibly and not damaged or misused."
+        rule: "Respect Shared Furniture",
+        description: "Use chairs, tables, desks, and charging points carefully and leave them clean for the next visitor."
     },
     {
-        rule: "No Mobile Phone Usage",
-        description: "Mobile phones should be on silent mode, and phone calls are not allowed inside the library."
+        rule: "Keep Phones on Silent",
+        description: "Phone calls and loud notifications are not allowed inside the reading and co-working zones."
     },
     {
-        rule: "Library Membership Card",
-        description: "Visitors must carry their library membership card for borrowing books and accessing certain resources."
+        rule: "Use Books and Resources Carefully",
+        description: "All books, magazines, and study materials must be handled carefully and returned to their proper place."
     },
     {
-        rule: "Follow Computer Usage Guidelines",
-        description: "Library computers are for educational and research purposes only. Inappropriate use is prohibited."
+        rule: "Follow Workstation Guidelines",
+        description: "Co-working desks and library computers are for learning, reading, and productive work only."
+    },
+    {
+        rule: "Keep Food and Drinks Limited",
+        description: "Only allow refreshments in designated areas to keep the library and co-working space clean and comfortable."
     }
 ];
 
@@ -42,10 +46,10 @@ const Rules: React.FC = () => {
             <section className="w-full h-fit py-5 sm:py-10 flex lg:flex-row lg:gap-0  gap-12 flex-col justify-center   items-center bg-white rounded-tr-[20%]" id="rules">
                 <div className="lg:w-[50%] md:h-full h-[50%] w-full  flex flex-col justify-start items-start p-5 sm:p-10 lg:p-20 ">
                     <h1 className=" text-3xl md:text-5xl/snug font-semibold font-ubuntu mb-6 relative sm:text-left text-center">
-                        Our Library <span className="text-greenleast">Rules</span>
+                        Co-Working & Library <span className="text-greenleast">Rules</span>
                         <span className="w-1/2 h-[5px] bg-greenleast absolute -bottom-2 right-0"></span>
                     </h1>
-                    {libraryRules.map((rule, index) => (
+                    {sharedRules.map((rule, index) => (
                         <div key={index} className="border-b border-gray-300 py-4">
                             <button
                                 className="w-full text-left text-sm font-bold sm:text-md flex justify-between items-center"
