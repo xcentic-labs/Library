@@ -98,7 +98,7 @@ export default function Updates() {
         {/* Slider Container */}
         <div className="relative group">
           {/* Main Slide */}
-          <div className="relative w-full overflow-hidden rounded-xl shadow-lg bg-gray-900">
+          <div className="relative w-full overflow-hidden rounded-xl shadow-lg bg-gray-900 ">
             <div className="relative w-full aspect-video sm:aspect-video md:aspect-[16/9]">
               <Image
                 src={currentUpdate.imagePath}
@@ -124,11 +124,11 @@ export default function Updates() {
           {/* Previous Button */}
           <button
             onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 sm:-translate-x-2 z-10 bg-white/80 hover:bg-white text-gray-900 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 shadow-lg"
+            className="absolute left-10 top-1/2 -translate-y-1/2 -translate-x-4 sm:-translate-x-2 z-10 bg-white/80 hover:bg-white text-gray-900 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 shadow-lg"
             aria-label="Previous slide"
           >
             <svg
-              className="w-6 h-6"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -145,11 +145,11 @@ export default function Updates() {
           {/* Next Button */}
           <button
             onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-2 z-10 bg-white/80 hover:bg-white text-gray-900 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 shadow-lg"
+            className="absolute right-10 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-2 z-10 bg-white/80 hover:bg-white text-gray-900 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 shadow-lg"
             aria-label="Next slide"
           >
             <svg
-              className="w-6 h-6"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -164,28 +164,6 @@ export default function Updates() {
           </button>
         </div>
 
-        {/* Dots Pagination */}
-        {updates.length > 1 && (
-          <div className="flex justify-center gap-2 mt-6">
-            {updates.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`transition-all ${
-                  index === currentIndex
-                    ? 'bg-blue-600 w-3 h-3 sm:w-4 sm:h-4'
-                    : 'bg-gray-400 w-2 h-2 sm:w-3 sm:h-3 hover:bg-gray-500'
-                } rounded-full`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* Slide Counter */}
-        <div className="text-center mt-4 text-sm text-gray-600">
-          {currentIndex + 1} / {updates.length}
-        </div>
       </div>
     </section>
   );
