@@ -161,7 +161,7 @@ export const SideBarController = () => {
               id: 1,
               name: "Add Update",
               icon: "fa fa-plus-circle",
-              route: "/updates/addupdate",
+              route: "/addupdates",
               parentId: 10,
             },
           ],
