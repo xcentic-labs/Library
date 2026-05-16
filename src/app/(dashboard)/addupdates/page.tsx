@@ -1,32 +1,31 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { AiOutlinePlus } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 
 export default function AddUpdates() {
   const [file, setFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState<string>('');
   const [title, setTitle] = useState('');
   const [loading, setLoading] = useState(false);
-  const [preview, setPreview] = useState<string | null>(null);
-  const router = useRouter();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       setFile(selectedFile);
-      // Create preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result as string);
-      };
-      reader.readAsDataURL(selectedFile);
+      setFileName(selectedFile.name);
     }
+  };
+
+  const handleBoxClick = () => {
+    const fileInput = document.getElementById('file-input') as HTMLInputElement;
+    fileInput?.click();
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     if (!file) {
       toast.error('Please select an image');
       return;
@@ -51,9 +50,9 @@ export default function AddUpdates() {
 
       toast.success('Update created successfully');
       setFile(null);
+      setFileName('');
       setTitle('');
-      setPreview(null);
-      
+
       // Reset form
       const form = e.target as HTMLFormElement;
       form.reset();
@@ -66,100 +65,69 @@ export default function AddUpdates() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">Add Update</h1>
+    <section className="w-full h-full md:p-10 p-5 rounded-lg shadow-md overflow-y-scroll scrollbar">
+      <h1 className="text-xl mb-6 text-gray-700 capitalize font-bold">
+        Dashboard / Add Update
+      </h1>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Title Input */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Title (Optional)
-              </label>
+      {/* Form */}
+      <div className="w-full h-fit bg-white p-4 rounded-lg mb-10">
+        <h2 className="text-xl mb-4 font-semibold text-[#32524D] capitalize flex items-center gap-2">
+          <AiOutlinePlus className="text-[#32524D]" /> Add Update
+        </h2>
+
+        <form onSubmit={handleSubmit}>
+          {/* Title Input */}
+          <div className="flex flex-col mb-4">
+            <label htmlFor="title" className="mb-2 text-sm font-medium text-gray-600">
+              Title (Optional)
+            </label>
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#32524D]"
+              placeholder="e.g., Library Announcement"
+            />
+          </div>
+
+          {/* File Input */}
+          <div className="flex flex-col mb-4">
+            <label className="mb-2 text-sm font-medium text-gray-600">
+              Upload Image *
+            </label>
+            <div
+              onClick={handleBoxClick}
+              className="w-full p-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-[#32524D] transition cursor-pointer flex items-center justify-center bg-gray-50 hover:bg-gray-100"
+            >
+              <div className="text-center">
+                <p className="text-gray-600 font-medium">
+                  {fileName || 'Click anywhere on box to choose file'}
+                </p>
+              </div>
               <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Enter update title"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                type="file"
+                id="file-input"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
               />
             </div>
+          </div>
 
-            {/* File Input */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Upload Image *
-              </label>
-              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400 transition">
-                <div className="space-y-1 text-center">
-                  {preview ? (
-                    <div className="mb-4">
-                      <img
-                        src={preview}
-                        alt="Preview"
-                        className="h-48 w-auto mx-auto rounded-lg"
-                      />
-                      <p className="text-sm text-gray-600 mt-2 font-medium">
-                        {file?.name}
-                      </p>
-                    </div>
-                  ) : (
-                    <>
-                      <svg
-                        className="mx-auto h-12 w-12 text-gray-400"
-                        stroke="currentColor"
-                        fill="none"
-                        viewBox="0 0 48 48"
-                      >
-                        <path
-                          d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4V12a4 4 0 014-4h16m0 0V4m0 8h12m0 0a4 4 0 014 4m0 0v8"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                      <p className="text-sm text-gray-600">
-                        <span className="font-medium text-blue-600 hover:text-blue-500 cursor-pointer">
-                          Click to upload
-                        </span>
-                        {' '}or drag and drop
-                      </p>
-                      <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
-                    </>
-                  )}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="hidden"
-                    id="file-input"
-                  />
-                  <label htmlFor="file-input" className="absolute inset-0 cursor-pointer" />
-                </div>
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <div className="flex gap-4">
-              <button
-                type="submit"
-                disabled={loading || !file}
-                className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
-              >
-                {loading ? 'Uploading...' : 'Create Update'}
-              </button>
-              <button
-                type="button"
-                onClick={() => router.back()}
-                className="px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
+          {/* Submit Button */}
+          <div className="flex gap-3 justify-end">
+            <button
+              type="submit"
+              disabled={loading || !file}
+              className="px-6 py-2 bg-[#32524D] text-white rounded-lg font-medium hover:bg-[#1f3633] disabled:bg-gray-400 disabled:cursor-not-allowed transition"
+            >
+              {loading ? 'Uploading...' : 'Add'}
+            </button>
+          </div>
+        </form>
       </div>
-    </div>
+    </section>
   );
 }
