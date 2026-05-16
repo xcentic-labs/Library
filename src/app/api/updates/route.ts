@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File;
-    const title = formData.get('title') as string;
+    const title = (formData.get('title') as string) || null;
 
     if (!file) {
       return NextResponse.json(
@@ -20,8 +20,16 @@ export async function POST(request: NextRequest) {
     // Create uploads directory if it doesn't exist
     const uploadDir = path.join(process.cwd(), 'public', 'uploads');
     
-    if (!fs.existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
+    try {
+      if (!fs.existsSync(uploadDir)) {
+        await mkdir(uploadDir, { recursive: true });
+      }
+    } catch (dirError) {
+      console.error('Directory creation error:', dirError);
+      return NextResponse.json(
+        { error: 'Failed to create upload directory' },
+        { status: 500 }
+      );
     }
 
     // Generate unique filename
@@ -29,7 +37,8 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes);
     const timestamp = Date.now();
     const randomStr = Math.random().toString(36).substring(7);
-    const filename = `update-${timestamp}-${randomStr}.${file.name.split('.').pop()}`;
+    const fileExtension = file.name.split('.').pop() || 'jpg';
+    const filename = `update-${timestamp}-${randomStr}.${fileExtension}`;
     
     // Save file
     const filepath = path.join(uploadDir, filename);
@@ -39,7 +48,7 @@ export async function POST(request: NextRequest) {
     const imagePath = `/uploads/${filename}`;
     const update = await prisma.updates.create({
       data: {
-        title: title || null,
+        title: title,
         imagePath,
       },
     });
@@ -54,8 +63,9 @@ export async function POST(request: NextRequest) {
     );
   } catch (error) {
     console.error('Upload error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to upload update';
     return NextResponse.json(
-      { error: 'Failed to upload update' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
@@ -72,8 +82,9 @@ export async function GET() {
     return NextResponse.json({ success: true, data: updates });
   } catch (error) {
     console.error('Fetch error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch updates';
     return NextResponse.json(
-      { error: 'Failed to fetch updates' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
@@ -106,8 +117,12 @@ export async function DELETE(request: NextRequest) {
     const filename = update.imagePath.split('/').pop();
     const filepath = path.join(process.cwd(), 'public', 'uploads', filename!);
     
-    if (fs.existsSync(filepath)) {
-      fs.unlinkSync(filepath);
+    try {
+      if (fs.existsSync(filepath)) {
+        fs.unlinkSync(filepath);
+      }
+    } catch (fileError) {
+      console.error('File deletion error:', fileError);
     }
 
     // Delete from database
@@ -118,6 +133,16 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ 
       success: true, 
       message: 'Update deleted successfully' 
+    });
+  } catch (error) {
+    console.error('Delete error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to delete update';
+    return NextResponse.json(
+      { error: errorMessage },
+      { status: 500 }
+    );
+  }
+}
     });
   } catch (error) {
     console.error('Delete error:', error);
