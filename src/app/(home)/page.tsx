@@ -4,12 +4,14 @@ import Rules from "@/components/Rules/Rules";
 import SeatBooking from "@/components/SeatBooking/SeatBooking";
 import Testimonial from "@/components/Testimonial/Testimonials";
 import About from "@/components/About/About";
+import Updates from "@/components/Updates/Updates";
 
 export default function Home() {
   return (
     <>
       <Hero />
       <SeatBooking />
+      <Updates />
       {/* <About /> */}
       <Faclits />
       <Rules />
