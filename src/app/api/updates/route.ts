@@ -143,12 +143,3 @@ export async function DELETE(request: NextRequest) {
     );
   }
 }
-    });
-  } catch (error) {
-    console.error('Delete error:', error);
-    return NextResponse.json(
-      { error: 'Failed to delete update' },
-      { status: 500 }
-    );
-  }
-}
