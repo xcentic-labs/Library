@@ -166,6 +166,21 @@ export const SideBarController = () => {
             },
           ],
         },
+        {
+          id: 11,
+          title: "Certificate",
+          permitTo: "Admin",
+          priority: "3.1",
+          item: [
+            {
+              id: 1,
+              name: "Generate Certificate",
+              icon: "fas fa-puls-circle",
+              route: "/generatecertificate",
+              parentId: 11,
+            }
+          ],
+        },
       ];
       const d2 = [
         {
