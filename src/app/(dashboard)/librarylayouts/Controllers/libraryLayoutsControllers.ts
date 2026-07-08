@@ -217,7 +217,7 @@ export const libraryLayoutsController = () => {
             }
         } catch (error: any) {
             console.error(error);
-            toast.error("Error creating order");
+            toast.error(error.response?.data?.error || "An error occurred while creating the order");
         }
 
     };
