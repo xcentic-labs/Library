@@ -7,9 +7,6 @@ import { toast } from "react-toastify";
 import { layoutdata, newArray } from "@/types/types";
 import { useIsLoggedIn } from "@/hooks/login";
 import Swal from "sweetalert2";
-import { json } from "stream/consumers";
-
-
 export function getLayoutDetails() {
     const redirect = useRouter()
     const params = useParams()
@@ -311,6 +308,84 @@ export function getLayoutDetails() {
         }
     }
 
+    const handleEditSubscription = async (seat: any) => {
+        const result = await Swal.fire({
+            title: "Edit Subscription Dates",
+            html: `
+                <div style="display:flex;flex-direction:column;gap:1rem;">
+                    <div style="display:flex;align-items:center;gap:0.75rem;">
+                        <label for="startDate" style="width:120px;font-weight:600;text-align:left;">Start Date</label>
+                        <input id="startDate" type="date" value="${new Date(seat.bookingStartDate || new Date()).toISOString().split('T')[0]}" style="flex:1;height:2.5rem;border:1px solid #1c3f3a;border-radius:6px;padding:0.5rem;" />
+                    </div>
+                    <div style="display:flex;align-items:center;gap:0.75rem;">
+                        <label for="endDate" style="width:120px;font-weight:600;text-align:left;">End Date</label>
+                        <input id="endDate" type="date" value="${new Date(seat.bookingEndDate || new Date()).toISOString().split('T')[0]}" style="flex:1;height:2.5rem;border:1px solid #1c3f3a;border-radius:6px;padding:0.5rem;" />
+                    </div>
+                </div>
+            `,
+            focusConfirm: false,
+            preConfirm: () => {
+                const startDate = (document.getElementById("startDate") as HTMLInputElement)?.value;
+                const endDate = (document.getElementById("endDate") as HTMLInputElement)?.value;
+
+                if (!startDate || !endDate) {
+                    Swal.showValidationMessage("Please select both dates.");
+                    return;
+                }
+
+                return { startDate, endDate };
+            },
+            showCancelButton: true,
+            confirmButtonText: "Save Changes"
+        });
+
+        if (result.isConfirmed) {
+            try {
+                const response = await axios.patch('/api/seat/subscription', {
+                    seatId: seat.id,
+                    newStartDate: result.value?.startDate,
+                    newEndDate: result.value?.endDate
+                });
+
+                if (response.status === 200) {
+                    fetchLayoutDetails();
+                    toast.success("Subscription dates updated successfully");
+                } else {
+                    toast.error(response.data.error || "Unable to update dates");
+                }
+            } catch (error: any) {
+                toast.error(error.response?.data?.error || "Unable to update dates");
+            }
+        }
+    };
+
+    const handleDeleteSubscription = async (seat: any) => {
+        const confirmation = await Swal.fire({
+            title: "Delete Subscription?",
+            text: `Are you sure you want to delete the subscription for seat ${seat.seatNumber}?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it",
+            cancelButtonText: "Cancel"
+        });
+
+        if (!confirmation.isConfirmed) {
+            return;
+        }
+
+        try {
+            const response = await axios.delete(`/api/seat/delete?seatId=${seat.id}`);
+
+            if (response.status === 200) {
+                fetchLayoutDetails();
+                toast.success("Subscription deleted successfully");
+            } else {
+                toast.error(response.data.error || "Unable to delete subscription");
+            }
+        } catch (error: any) {
+            toast.error(error.response?.data?.error || "Unable to delete subscription");
+        }
+    };
 
     return {
         data,
@@ -321,6 +396,8 @@ export function getLayoutDetails() {
         handleAllotment,
         handleUpdateBlockStatus,
         handleExistingAllotment,
+        handleEditSubscription,
+        handleDeleteSubscription,
         scale,
         setScale
     }

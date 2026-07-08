@@ -9,9 +9,11 @@ interface LayoutSeatListProps {
     handleAllotment: (seatId: string | number | undefined) => void
     handleExistingAllotment: (seatId: string | number | undefined) => void
     handleUpdateBlockStatus: (status: boolean, seatId: string | number | undefined) => void
+    handleEditSubscription: (seat: seatbody) => void
+    handleDeleteSubscription: (seat: seatbody) => void
 }
 
-export default function LayoutSeatList({ data, formatDate, handleAllotment, handleUpdateBlockStatus, handleExistingAllotment }: LayoutSeatListProps) {
+export default function LayoutSeatList({ data, formatDate, handleAllotment, handleUpdateBlockStatus, handleExistingAllotment, handleEditSubscription, handleDeleteSubscription }: LayoutSeatListProps) {
 
     return (
         <div className="rounded-xl overflow-x-scroll scrollbar border border-gray-300 shadow-md bg-white">
@@ -25,6 +27,7 @@ export default function LayoutSeatList({ data, formatDate, handleAllotment, hand
                         <th className="py-3 px-6">Booking Period</th>
                         <th className="py-3 px-6">Allotment</th>
                         <th className="py-3 px-6">Block</th>
+                        <th className="py-3 px-6">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -120,6 +123,22 @@ export default function LayoutSeatList({ data, formatDate, handleAllotment, hand
                                                     </button>
 
                                             }
+                                        </td>
+                                        <td className="py-3 px-6">
+                                            <div className="flex flex-wrap justify-center gap-2">
+                                                <button
+                                                    className="bg-blue-600 hover:bg-blue-700 cursor-pointer px-3 py-2 rounded-md transition duration-200 shadow-md text-xs font-bold text-white"
+                                                    onClick={() => handleEditSubscription(item)}
+                                                >
+                                                    Edit Dates
+                                                </button>
+                                                <button
+                                                    className="bg-red-600 hover:bg-red-700 cursor-pointer px-3 py-2 rounded-md transition duration-200 shadow-md text-xs font-bold text-white"
+                                                    onClick={() => handleDeleteSubscription(item)}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
                                         </td>
 
                                     </tr>
