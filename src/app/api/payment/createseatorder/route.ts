@@ -17,6 +17,19 @@ export async function POST(res: NextRequest) {
             userId : number | string
         }
 
+        // check if the user is assinged the seat already or not
+        const userwithSeat = await prisma.seat.findFirst({
+            where : {
+                userId : Number(userId),
+            }
+        })
+
+
+        if(userwithSeat) {
+            // user have already booked a seat so he cannot book another seat
+            return NextResponse.json({ "error": "You have already booked a seat" }, { status: 400 });
+        }
+
         console.log(slot)
 
         const tnx_id = 'PC_' + Date.now()
