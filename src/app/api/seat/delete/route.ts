@@ -17,10 +17,17 @@ export async function DELETE(req: NextRequest) {
         if (!seat) {
             return NextResponse.json({ error: "Seat not found" }, { status: 404 });
         }
+        const today = new Date();
 
         await prisma.seat.update({
             where: { id: +seatId },
-            data: { userId: null } // Unassign the seat by setting userId to null
+            data: { 
+                userId: null,
+                isBooked : false,
+                isExpired : true,
+                bookingStartDate : today,
+                bookingEndDate: today,
+            } // Unassign the seat by setting userId to null
         })
 
         return NextResponse.json({ message: "Subscription deleted successfully" }, { status: 200 });
