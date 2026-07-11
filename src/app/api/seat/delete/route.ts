@@ -18,9 +18,10 @@ export async function DELETE(req: NextRequest) {
             return NextResponse.json({ error: "Seat not found" }, { status: 404 });
         }
 
-        await prisma.seat.delete({
-            where: { id: +seatId }
-        });
+        await prisma.seat.update({
+            where: { id: +seatId },
+            data: { userId: null } // Unassign the seat by setting userId to null
+        })
 
         return NextResponse.json({ message: "Subscription deleted successfully" }, { status: 200 });
     } catch (error) {
