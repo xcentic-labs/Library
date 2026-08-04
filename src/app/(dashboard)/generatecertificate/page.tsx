@@ -3,6 +3,11 @@
 import { useRef, useState, useEffect } from 'react';
 import { AiOutlinePlus, AiOutlineDownload } from 'react-icons/ai';
 import { toast } from 'react-toastify';
+import {
+  CertificateController,
+  TEMPLATES,
+  TemplateId,
+} from './CertificateController';
 
 export default function GenerateCertificate() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -13,25 +18,46 @@ export default function GenerateCertificate() {
     minutes: '',
     centerName: '',
   });
-  const [selectedTemplate] = useState('template1');
+  const [selectedTemplate, setSelectedTemplate] = useState<TemplateId>('template1');
   const [loading, setLoading] = useState(false);
   const [templateImage, setTemplateImage] = useState<HTMLImageElement | null>(null);
 
-  // Load the template image
+  const templateFields = TEMPLATES[selectedTemplate].fields;
+  const showField = (field: keyof typeof formData) => templateFields.includes(field);
+
+  // Load the template image whenever the selected template changes
   useEffect(() => {
+    setTemplateImage(null);
     const img = new Image();
-    img.src = '/certificatetemp1.png';
+    img.src = TEMPLATES[selectedTemplate].src;
     img.onload = () => {
       setTemplateImage(img);
     };
-  }, []);
+  }, [selectedTemplate]);
 
   // Draw certificate whenever form data or image changes
   useEffect(() => {
     if (templateImage && canvasRef.current) {
       drawCertificate();
     }
-  }, [templateImage, formData]);
+  }, [templateImage, formData, selectedTemplate]);
+
+  // Shrink the font until the text fits inside maxWidth
+  const fitFont = (
+    ctx: CanvasRenderingContext2D,
+    text: string,
+    fontSize: number,
+    maxWidth: number,
+    weight = 'bold',
+    family = 'serif'
+  ) => {
+    let size = fontSize;
+    ctx.font = `${weight} ${size}px ${family}`;
+    while (ctx.measureText(text).width > maxWidth && size > 10) {
+      size -= 2;
+      ctx.font = `${weight} ${size}px ${family}`;
+    }
+  };
 
   const drawCertificate = () => {
     const canvas = canvasRef.current;
@@ -47,9 +73,21 @@ export default function GenerateCertificate() {
     // Draw the template image
     ctx.drawImage(templateImage, 0, 0);
 
-    // Set text properties
-    ctx.fillStyle = '#2B3F7C'; // Blue color matching template
     ctx.textAlign = 'center';
+
+    if (selectedTemplate === 'template2') {
+      // Template 2 prints only the student name, on the ruled line under
+      // "THIS CERTIFICATE IS PRESENTED TO" (measured from the artwork).
+      if (formData.name) {
+        ctx.fillStyle = '#1C3557'; // Navy matching the template
+        fitFont(ctx, formData.name, canvas.height * 0.058, canvas.width * 0.55);
+        ctx.fillText(formData.name, canvas.width / 2, canvas.height * 0.455);
+      }
+      return;
+    }
+
+    // Template 1
+    ctx.fillStyle = '#2B3F7C'; // Blue color matching template
 
     // Draw Student Name
     if (formData.name) {
@@ -66,7 +104,10 @@ export default function GenerateCertificate() {
     // Draw Duration
     if (formData.hours && formData.minutes) {
       ctx.font = '40px serif';
-      const duration = `${formData.hours} hours ${formData.minutes} minutes`;
+      const duration = CertificateController.formatDuration(
+        formData.hours,
+        formData.minutes
+      );
       ctx.fillText(duration, canvas.width / 2, canvas.height * 0.72);
     }
 
@@ -103,20 +144,12 @@ export default function GenerateCertificate() {
   };
 
   const handleGenerateCertificate = async () => {
-    if (!formData.name) {
-      toast.error('Please enter student name');
-      return;
-    }
-    if (!formData.courseName) {
-      toast.error('Please enter course name');
-      return;
-    }
-    if (!formData.hours || !formData.minutes) {
-      toast.error('Please enter duration (hours and minutes)');
-      return;
-    }
-    if (!formData.centerName) {
-      toast.error('Please enter center name');
+    const { valid, errors } = CertificateController.validateData(
+      formData,
+      selectedTemplate
+    );
+    if (!valid) {
+      toast.error(errors[0]);
       return;
     }
     toast.success('Certificate generated successfully');
@@ -141,7 +174,7 @@ export default function GenerateCertificate() {
 
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = `certificate-${formData.name.replace(/\s+/g, '_')}-${Date.now()}.png`;
+        link.download = CertificateController.generateFilename(formData.name);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -179,90 +212,108 @@ export default function GenerateCertificate() {
                 </label>
                 <select
                   value={selectedTemplate}
-                  disabled
-                  className="p-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed"
+                  onChange={(e) => setSelectedTemplate(e.target.value as TemplateId)}
+                  className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#32524D]"
                 >
-                  <option value="template1">Template 1 (Professional)</option>
+                  {Object.values(TEMPLATES).map((template) => (
+                    <option key={template.id} value={template.id}>
+                      {template.label}
+                    </option>
+                  ))}
                 </select>
-                <p className="text-xs text-gray-500 mt-1">Only 1 template available</p>
+                {selectedTemplate === 'template2' && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    This template only prints the student name
+                  </p>
+                )}
               </div>
 
               {/* Name Input */}
-              <div className="flex flex-col">
-                <label className="mb-2 text-sm font-medium text-gray-600">
-                  Student Name *
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="Enter student name"
-                  className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#32524D]"
-                />
-              </div>
+              {showField('name') && (
+                <div className="flex flex-col">
+                  <label className="mb-2 text-sm font-medium text-gray-600">
+                    Student Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="Enter student name"
+                    className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#32524D]"
+                  />
+                </div>
+              )}
 
               {/* Course Name Input */}
-              <div className="flex flex-col">
-                <label className="mb-2 text-sm font-medium text-gray-600">
-                  Course Name *
-                </label>
-                <input
-                  type="text"
-                  name="courseName"
-                  value={formData.courseName}
-                  onChange={handleInputChange}
-                  placeholder="Enter course name"
-                  className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#32524D]"
-                />
-              </div>
+              {showField('courseName') && (
+                <div className="flex flex-col">
+                  <label className="mb-2 text-sm font-medium text-gray-600">
+                    Course Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="courseName"
+                    value={formData.courseName}
+                    onChange={handleInputChange}
+                    placeholder="Enter course name"
+                    className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#32524D]"
+                  />
+                </div>
+              )}
 
               {/* Hours Input */}
-              <div className="flex flex-col">
-                <label className="mb-2 text-sm font-medium text-gray-600">
-                  Duration - Hours (2-3 digits) *
-                </label>
-                <input
-                  type="text"
-                  name="hours"
-                  value={formData.hours}
-                  onChange={handleInputChange}
-                  placeholder="e.g., 16"
-                  maxLength={3}
-                  className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#32524D]"
-                />
-              </div>
+              {showField('hours') && (
+                <div className="flex flex-col">
+                  <label className="mb-2 text-sm font-medium text-gray-600">
+                    Duration - Hours (2-3 digits) *
+                  </label>
+                  <input
+                    type="text"
+                    name="hours"
+                    value={formData.hours}
+                    onChange={handleInputChange}
+                    placeholder="e.g., 16"
+                    maxLength={3}
+                    className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#32524D]"
+                  />
+                </div>
+              )}
 
               {/* Minutes Input */}
-              <div className="flex flex-col">
-                <label className="mb-2 text-sm font-medium text-gray-600">
-                  Duration - Minutes (2 digits, max 60) *
-                </label>
-                <input
-                  type="text"
-                  name="minutes"
-                  value={formData.minutes}
-                  onChange={handleInputChange}
-                  placeholder="e.g., 23"
-                  maxLength={2}
-                  className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#32524D]"
-                />
-              </div>
+              {showField('minutes') && (
+                <div className="flex flex-col">
+                  <label className="mb-2 text-sm font-medium text-gray-600">
+                    Duration - Minutes (2 digits, max 60) *
+                  </label>
+                  <input
+                    type="text"
+                    name="minutes"
+                    value={formData.minutes}
+                    onChange={handleInputChange}
+                    placeholder="e.g., 23"
+                    maxLength={2}
+                    className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#32524D]"
+                  />
+                </div>
+              )}
 
               {/* Center Name Input */}
-              <div className="flex flex-col">
-                <label className="mb-2 text-sm font-medium text-gray-600">
-                  Center Name *
-                </label>
-                <textarea
-                  name="centerName"
-                  value={formData.centerName}
-                  onChange={handleInputChange}
-                  placeholder="Enter center/organization name"
-                  rows={2}
-                  className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#32524D]"
-                />
-              </div>
+              {showField('centerName') && (
+                <div className="flex flex-col">
+                  <label className="mb-2 text-sm font-medium text-gray-600">
+                    Center Name *
+                  </label>
+                  <textarea
+                    name="centerName"
+                    value={formData.centerName}
+                    onChange={handleInputChange}
+                    placeholder="Enter center/organization name"
+                    rows={2}
+                    className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#32524D]"
+                  />
+                </div>
+              )}
 
               {/* Action Buttons */}
               <div className="flex gap-3 pt-4">

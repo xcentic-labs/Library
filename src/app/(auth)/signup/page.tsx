@@ -10,6 +10,12 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useIsLoggedIn } from "@/hooks/login";
+import {
+  sanitizeName,
+  sanitizePhoneNumber,
+  validateName,
+  validatePhoneNumber,
+} from "@/lib/validation";
 
 export default function Signup() {
   const redirect = useRouter();
@@ -18,6 +24,10 @@ export default function Signup() {
     phoneNumber: "",
     email: "",
     password: ""
+  });
+  const [errors, setErrors] = useState<{ name: string | null; phoneNumber: string | null }>({
+    name: null,
+    phoneNumber: null,
   });
   const {status} = useIsLoggedIn();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -28,9 +38,17 @@ export default function Signup() {
     }
   },[])
   const handleSubmit = async () => {
-    console.log(data)
     if (!data.name || !data.phoneNumber || !data.email || !data.password) {
       return toast.error("All Fields Are required");
+    }
+
+    const nameError = validateName(data.name);
+    const phoneError = validatePhoneNumber(data.phoneNumber);
+
+    setErrors({ name: nameError, phoneNumber: phoneError });
+
+    if (nameError || phoneError) {
+      return toast.error(nameError || phoneError);
     }
 
     try {
@@ -44,6 +62,7 @@ export default function Signup() {
           email: "",
           password: ""
         });
+        setErrors({ name: null, phoneNumber: null });
         return toast.success("Account created Sucessfully");
       } else {
         return toast.error(res.data.error)
@@ -57,7 +76,18 @@ export default function Signup() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
-    const value = e.target.value
+    let value = e.target.value
+
+    // Keep invalid characters out of the field and flag the error live
+    if (name === 'name') {
+      value = sanitizeName(value);
+      setErrors((prev) => ({ ...prev, name: value ? validateName(value) : null }));
+    }
+
+    if (name === 'phoneNumber') {
+      value = sanitizePhoneNumber(value);
+      setErrors((prev) => ({ ...prev, phoneNumber: value ? validatePhoneNumber(value) : null }));
+    }
 
     setData((prev) => {
       return {
@@ -80,32 +110,38 @@ export default function Signup() {
           <p className="text-xl font-semibold mb-6 font-ubuntu">Welcome To Path Catalyst</p>
 
           <label className="mb-2 mx-1 font-medium block">Name</label>
-          <div className='flex justify-between gap-3 items-center border border-gray-500 rounded-2xl px-3 mb-4'>
+          <div className={`flex justify-between gap-3 items-center border rounded-2xl px-3 ${errors.name ? 'border-red-500 mb-1' : 'border-gray-500 mb-4'}`}>
             <div className="flex items-center gap-3">
               <FaUser size={20} />
               <input
                 type="text"
                 name='name'
+                value={data.name}
                 className='h-12 outline-none rounded-2xl w-full'
                 placeholder='Name'
                 onChange={handleChange}
               />
             </div>
           </div>
+          {errors.name && <p className="text-red-500 text-sm mx-1 mb-3">{errors.name}</p>}
 
           <label className="mb-2 mx-1 font-medium block">Phone Number</label>
-          <div className='flex justify-between gap-3 items-center border border-gray-500 rounded-2xl px-3 mb-4'>
+          <div className={`flex justify-between gap-3 items-center border rounded-2xl px-3 ${errors.phoneNumber ? 'border-red-500 mb-1' : 'border-gray-500 mb-4'}`}>
             <div className="flex items-center gap-3">
               <FaPhoneAlt size={20} />
               <input
                 type="text"
+                inputMode="numeric"
                 name='phoneNumber'
+                value={data.phoneNumber}
+                maxLength={10}
                 className='h-12 outline-none rounded-2xl w-full'
                 placeholder='Phone Number'
                 onChange={handleChange}
               />
             </div>
           </div>
+          {errors.phoneNumber && <p className="text-red-500 text-sm mx-1 mb-3">{errors.phoneNumber}</p>}
 
           <label className="mb-2 mx-1 font-medium block">Email</label>
           <div className='flex items-center gap-3 border border-gray-500 rounded-2xl px-3 mb-6'>
@@ -113,6 +149,7 @@ export default function Signup() {
             <input
               type="email"
               name='email'
+              value={data.email}
               className='h-12 outline-none rounded-2xl w-full'
               placeholder='Email'
               onChange={handleChange}
@@ -125,6 +162,7 @@ export default function Signup() {
             <input
               type="password"
               name='password'
+              value={data.password}
               className='h-12 outline-none rounded-2xl w-full'
               placeholder='Password'
               onChange={handleChange}

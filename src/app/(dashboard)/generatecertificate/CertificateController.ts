@@ -9,34 +9,69 @@ export interface CertificateData {
   centerName: string;
 }
 
-export const CertificateController = {
-  // Validate certificate data
-  validateData: (data: CertificateData): { valid: boolean; errors: string[] } => {
-    const errors: string[] = [];
+export type TemplateId = 'template1' | 'template2';
 
-    if (!data.name.trim()) {
+export interface TemplateConfig {
+  id: TemplateId;
+  label: string;
+  src: string;
+  // Fields the template actually prints (and therefore requires)
+  fields: (keyof CertificateData)[];
+}
+
+// Positions/sizes below are ratios of the template image height/width, so the
+// text stays in place whatever the source image resolution is.
+export const TEMPLATES: Record<TemplateId, TemplateConfig> = {
+  template1: {
+    id: 'template1',
+    label: 'Template 1 (Professional)',
+    src: '/certificatetemp1.png',
+    fields: ['name', 'courseName', 'hours', 'minutes', 'centerName'],
+  },
+  template2: {
+    id: 'template2',
+    label: 'Template 2 (Achievement)',
+    src: '/certificatetemp2.jpeg',
+    fields: ['name'],
+  },
+};
+
+export const CertificateController = {
+  // Validate certificate data for the given template
+  validateData: (
+    data: CertificateData,
+    templateId: TemplateId = 'template1'
+  ): { valid: boolean; errors: string[] } => {
+    const errors: string[] = [];
+    const fields = TEMPLATES[templateId].fields;
+
+    if (fields.includes('name') && !data.name.trim()) {
       errors.push('Student name is required');
     }
 
-    if (!data.courseName.trim()) {
+    if (fields.includes('courseName') && !data.courseName.trim()) {
       errors.push('Course name is required');
     }
 
-    if (!data.hours || data.hours === '') {
-      errors.push('Hours is required');
-    } else if (!/^\d{2,3}$/.test(data.hours)) {
-      errors.push('Hours must be 2-3 digits');
+    if (fields.includes('hours')) {
+      if (!data.hours || data.hours === '') {
+        errors.push('Hours is required');
+      } else if (!/^\d{2,3}$/.test(data.hours)) {
+        errors.push('Hours must be 2-3 digits');
+      }
     }
 
-    if (!data.minutes || data.minutes === '') {
-      errors.push('Minutes is required');
-    } else if (!/^\d{1,2}$/.test(data.minutes)) {
-      errors.push('Minutes must be 1-2 digits');
-    } else if (parseInt(data.minutes) > 60) {
-      errors.push('Minutes cannot exceed 60');
+    if (fields.includes('minutes')) {
+      if (!data.minutes || data.minutes === '') {
+        errors.push('Minutes is required');
+      } else if (!/^\d{1,2}$/.test(data.minutes)) {
+        errors.push('Minutes must be 1-2 digits');
+      } else if (parseInt(data.minutes) > 60) {
+        errors.push('Minutes cannot exceed 60');
+      }
     }
 
-    if (!data.centerName.trim()) {
+    if (fields.includes('centerName') && !data.centerName.trim()) {
       errors.push('Center name is required');
     }
 

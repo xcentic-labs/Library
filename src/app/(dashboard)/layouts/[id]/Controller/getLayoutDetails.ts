@@ -266,7 +266,7 @@ export function getLayoutDetails() {
             if (userid && months) {
                 try {
                     const response = await axios.patch('/api/seat/allotment', {
-                        userId: userid.toUpperCase().split('PC2025')[1],
+                        userId: userid.toUpperCase().split('PC2026')[1],
                         seatID: seatID,
                         timePeriod: months,
                     });

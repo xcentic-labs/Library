@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useIsLoggedIn } from "@/hooks/login";
+import { sanitizePhoneNumber, validatePhoneNumber } from "@/lib/validation";
 
 export default function Login(){
   const redirect = useRouter();
@@ -29,11 +30,19 @@ export default function Login(){
   });
 
   const [isLoading , setIsLoading] =  useState<boolean>(false)
+  const [phoneError , setPhoneError] = useState<string | null>(null)
 
   const handleSubmit = async ()=>{
-    
+
     if(!data.phoneNumber || !data.password){
       return toast.error("All Fields Are required");
+    }
+
+    const phoneValidationError = validatePhoneNumber(data.phoneNumber);
+    setPhoneError(phoneValidationError);
+
+    if (phoneValidationError) {
+      return toast.error(phoneValidationError);
     }
 
     try {
@@ -82,7 +91,13 @@ export default function Login(){
 
   const handleChange = (e : React.ChangeEvent<HTMLInputElement>)=>{
     const name = e.target.name;
-    const value = e.target.value
+    let value = e.target.value
+
+    // Digits only, max 10 - flag the error live
+    if(name === 'phoneNumber'){
+      value = sanitizePhoneNumber(value);
+      setPhoneError(value ? validatePhoneNumber(value) : null);
+    }
 
     setData((prev)=>{
       return {
@@ -104,27 +119,32 @@ export default function Login(){
         <p className="text-xl font-semibold mb-6 font-ubuntu">Welcome To Path Catalyst</p>
 
         <label className="mb-2 mx-1 font-medium block">Phone Number</label>
-        <div className='flex justify-between gap-3 items-center border border-gray-500 rounded-2xl px-3 mb-4'>
+        <div className={`flex justify-between gap-3 items-center border rounded-2xl px-3 ${phoneError ? 'border-red-500 mb-1' : 'border-gray-500 mb-4'}`}>
           <div className="flex items-center gap-3">
             <FaPhoneAlt size={20} />
-            <input 
-              type="text" 
-              name='phoneNumber' 
-              className='h-12 outline-none rounded-2xl w-full' 
-              placeholder='Phone Number'  
+            <input
+              type="text"
+              inputMode="numeric"
+              name='phoneNumber'
+              value={data.phoneNumber}
+              maxLength={10}
+              className='h-12 outline-none rounded-2xl w-full'
+              placeholder='Phone Number'
               onChange={handleChange}
             />
           </div>
         </div>
+        {phoneError && <p className="text-red-500 text-sm mx-1 mb-3">{phoneError}</p>}
 
         <label className="mb-2 mx-1 font-medium block ">Password</label>
         <div className='flex items-center gap-3 border border-gray-500 rounded-2xl px-3 mb-1'>
           <FaUnlock size={20} />
-          <input 
+          <input
             type="password"
-            name='password' 
-            className='h-12 outline-none rounded-2xl w-full' 
-            placeholder='Password' 
+            name='password'
+            value={data.password}
+            className='h-12 outline-none rounded-2xl w-full'
+            placeholder='Password'
             onChange={handleChange}
           />
         </div>
