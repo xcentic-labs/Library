@@ -62,30 +62,34 @@ export async function POST(req: NextRequest) {
 
         const response = await axios.post('https://api.ekqr.in/api/create_order', options);
 
-        if (!response || response.data?.status !== true) {
-            return NextResponse.json({ "error": "Unable to place Your Order" }, { status: 500 });
+        if (!response) return NextResponse.json({ "error": "Unable to place Your Order" }, { status: 500 });
+
+        if (response.data.status == true) {
+
+            await prisma.quickPayment.create({
+                data: {
+                    name: name.trim(),
+                    phoneNumber: phoneNumber.trim(),
+                    pcId: pcId?.trim() ? pcId.trim() : null,
+                    amount: totalAmount,
+                    floor: FLOORS[floor],
+                    tnx_id: tnx_id,
+                    txn_date: txn_date,
+                }
+            });
+
+            return NextResponse.json({
+                "message": "Order placed Sucessfully",
+                orderInfo: {
+                    client_txn_id: tnx_id,
+                    txn_date: txn_date,
+                    paymentUrl: response.data.data.payment_url
+                }
+            }, { status: 200 });
         }
 
-        await prisma.quickPayment.create({
-            data: {
-                name: name.trim(),
-                phoneNumber: phoneNumber.trim(),
-                pcId: pcId?.trim() ? pcId.trim() : null,
-                amount: totalAmount,
-                floor: FLOORS[floor],
-                tnx_id: tnx_id,
-                txn_date: txn_date,
-            }
-        });
-
-        return NextResponse.json({
-            "message": "Order placed Sucessfully",
-            orderInfo: {
-                client_txn_id: tnx_id,
-                txn_date: txn_date,
-                paymentUrl: response.data.data.payment_url
-            }
-        }, { status: 200 });
+        // gateway answered but did not accept the order
+        return NextResponse.json({ "error": response.data?.msg || "Unable to place Your Order" }, { status: 502 });
 
     } catch (error) {
         console.log(error);

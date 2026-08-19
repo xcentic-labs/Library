@@ -59,6 +59,9 @@ export async function POST(res: NextRequest) {
             }, { status: 200 })
         }
 
+        // gateway answered but did not accept the order
+        return NextResponse.json({ "error": response.data?.msg || "Unable to place Your Order" }, { status: 502 });
+
     } catch (error) {
         console.log(error);
         return NextResponse.json({ "error": "Unable to place Your Order Internal server error" }, { status: 500 });
