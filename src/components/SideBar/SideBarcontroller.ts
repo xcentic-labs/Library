@@ -167,6 +167,21 @@ export const SideBarController = () => {
           ],
         },
         {
+          id: 12,
+          title: "Payments",
+          permitTo: "Admin",
+          priority: "3.2",
+          item: [
+            {
+              id: 16,
+              name: "Payment Records",
+              icon: "fas fa-receipt",
+              route: "/payments",
+              parentId: 12,
+            },
+          ],
+        },
+        {
           id: 11,
           title: "Certificate",
           permitTo: "Admin",

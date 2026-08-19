@@ -150,3 +150,30 @@ enum Slot {
   AfterNoon
   Night
 }
+
+enum Floor {
+  GroundFloor
+  ThirdFloor
+}
+
+enum PaymentStatus {
+  Pending
+  Success
+  Failed
+}
+
+model quickPayment {
+  id           Int           @id @default(autoincrement())
+  name         String        @db.VarChar(100)
+  phoneNumber  String        @db.VarChar(10)
+  pcId         String?
+  amount       Int
+  floor        Floor
+  tnx_id       String        @unique
+  txn_date     String
+  status       PaymentStatus @default(Pending)
+  gatewayTxnId String?
+  paymentMode  String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
