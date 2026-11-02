@@ -65,7 +65,7 @@ model Seat {
   seatNumber       Int
   index            Int?
   slot             Slot?
-  isExpired       Boolean  @default(false)
+  isExpired        Boolean  @default(false)
   isBooked         Boolean  @default(false)
   bookingStartDate DateTime @default(now())
   bookingEndDate   DateTime @default(now())
@@ -176,4 +176,15 @@ model quickPayment {
   paymentMode  String?
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+}
+
+// Fee receipts issued manually by an admin from the dashboard
+model feeReceipt {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(100)
+  userId      String?  @db.VarChar(50)
+  phoneNumber String?  @db.VarChar(10)
+  amount      Int
+  paymentDate DateTime @db.Date
+  createdAt   DateTime @default(now())
 }

@@ -168,15 +168,15 @@ export const SideBarController = () => {
         },
         {
           id: 12,
-          title: "Payments",
+          title: "Pay Fee",
           permitTo: "Admin",
           priority: "3.2",
           item: [
             {
               id: 16,
-              name: "Payment Records",
+              name: "Pay Fee",
               icon: "fas fa-receipt",
-              route: "/payments",
+              route: "/payfee",
               parentId: 12,
             },
           ],
