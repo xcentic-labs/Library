@@ -6,12 +6,13 @@ import { validateName, validatePhoneNumber } from "@/lib/validation";
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        const { name, userId, phoneNumber, amount, paymentDate } = body as {
+        const { name, userId, phoneNumber, amount, paymentDate, comment } = body as {
             name: string,
             userId?: string,
             phoneNumber?: string,
             amount: string | number,
-            paymentDate: string
+            paymentDate: string,
+            comment?: string
         };
 
         const nameError = validateName(name ?? "");
@@ -25,6 +26,9 @@ export async function POST(req: NextRequest) {
 
         const uid = userId?.trim() ?? "";
         if (uid.length > 50) return NextResponse.json({ "error": "User Id cannot exceed 50 characters" }, { status: 400 });
+
+        const note = typeof comment === "string" ? comment.trim() : "";
+        if (note.length > 500) return NextResponse.json({ "error": "Comment cannot exceed 500 characters" }, { status: 400 });
 
         const totalAmount = Number(amount);
         if (!Number.isInteger(totalAmount) || totalAmount < 1) {
@@ -43,6 +47,7 @@ export async function POST(req: NextRequest) {
                 phoneNumber: phone || null,
                 amount: totalAmount,
                 paymentDate: new Date(`${paymentDate}T00:00:00.000Z`),
+                comment: note,
             }
         });
 

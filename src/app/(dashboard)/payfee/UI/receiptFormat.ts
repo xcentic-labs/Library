@@ -55,6 +55,7 @@ export const printReceipt = (receipt: FeeReceipt) => {
         ['Name', receipt.name],
         ['User ID', receipt.userId || '-'],
         ['Phone Number', receipt.phoneNumber || '-'],
+        ...(receipt.comment ? [['Comment', receipt.comment]] : []),
     ];
 
     win.document.write(`<!DOCTYPE html>

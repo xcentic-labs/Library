@@ -56,6 +56,7 @@ export const downloadReceipt = async (receipt: FeeReceipt) => {
         ["Name", receipt.name],
         ["User ID", receipt.userId || "-"],
         ["Phone Number", receipt.phoneNumber || "-"],
+        ...(receipt.comment ? [["Comment", receipt.comment]] : []),
     ];
     doc.setFontSize(12);
     for (const [label, value] of rows) {

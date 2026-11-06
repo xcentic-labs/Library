@@ -54,6 +54,12 @@ export default function PayFee() {
                         </label>
                     </div>
 
+                    <label className="flex flex-col gap-1 text-sm text-gray-600">
+                        <span>Comment <span className="text-gray-400">(optional)</span></span>
+                        <textarea value={form.comment} onChange={(e) => handleChange('comment', e.target.value)}
+                            placeholder="e.g. Fee for November" rows={2} className={`${inputClass} resize-none`} />
+                    </label>
+
                     <button type="submit" disabled={saving}
                         className="bg-greenleast hover:bg-greenleastshade text-white font-bold py-2.5 rounded-lg duration-200 disabled:opacity-60">
                         {saving ? "Saving..." : "Save & Generate Receipt"}
@@ -87,17 +93,18 @@ export default function PayFee() {
                             <th className="py-3 px-6">Phone Number</th>
                             <th className="py-3 px-6">Amount</th>
                             <th className="py-3 px-6">Date of Payment</th>
+                            <th className="py-3 px-6">Comment</th>
                             <th className="py-3 px-6">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {listLoading ? (
                             <tr className="h-40">
-                                <td colSpan={7}><div className="flex justify-center items-center"><Loader /></div></td>
+                                <td colSpan={8}><div className="flex justify-center items-center"><Loader /></div></td>
                             </tr>
                         ) : list.length === 0 ? (
                             <tr className="h-14">
-                                <td colSpan={7} className="text-center">No Receipt Found</td>
+                                <td colSpan={8} className="text-center">No Receipt Found</td>
                             </tr>
                         ) : (
                             list.map((item) => (
@@ -108,6 +115,7 @@ export default function PayFee() {
                                     <td className="py-3 px-6">{item.phoneNumber || "-"}</td>
                                     <td className="py-3 px-6">Rs. {formatAmount(item.amount)}</td>
                                     <td className="py-3 px-6">{formatDate(item.paymentDate)}</td>
+                                    <td className="py-3 px-6 max-w-[220px] truncate" title={item.comment || undefined}>{item.comment || "-"}</td>
                                     <td className="py-3 px-6">
                                         <div className="flex justify-center gap-2">
                                             <button onClick={() => printReceipt(item)}

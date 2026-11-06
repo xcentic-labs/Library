@@ -11,6 +11,7 @@ export interface FeeReceipt {
     phoneNumber: string | null,
     amount: number,
     paymentDate: string,
+    comment: string,
     createdAt: string
 }
 
@@ -26,6 +27,7 @@ const emptyForm = () => ({
     phoneNumber: '',
     amount: '',
     paymentDate: todayISO(),
+    comment: '',
 });
 
 export default function usePayFee() {
@@ -42,6 +44,7 @@ export default function usePayFee() {
         if (field === 'phoneNumber') value = sanitizePhoneNumber(value);
         if (field === 'amount') value = value.replace(/\D/g, '').slice(0, 7);
         if (field === 'userId') value = value.slice(0, 50);
+        if (field === 'comment') value = value.slice(0, 500);
         setForm((prev) => ({ ...prev, [field]: value }));
     }
 

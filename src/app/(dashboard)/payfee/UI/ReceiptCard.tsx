@@ -17,6 +17,7 @@ export default function ReceiptCard({ receipt, onClose }: ReceiptCardProps) {
         { label: "Name", value: receipt.name },
         { label: "User ID", value: receipt.userId || "-" },
         { label: "Phone Number", value: receipt.phoneNumber || "-" },
+        ...(receipt.comment ? [{ label: "Comment", value: receipt.comment }] : []),
     ];
 
     return (

@@ -186,5 +186,6 @@ model feeReceipt {
   phoneNumber String?  @db.VarChar(10)
   amount      Int
   paymentDate DateTime @db.Date
+  comment     String   @default("") @db.VarChar(500)
   createdAt   DateTime @default(now())
 }
