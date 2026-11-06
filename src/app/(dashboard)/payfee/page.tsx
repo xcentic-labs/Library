@@ -2,6 +2,7 @@
 import Loader from "@/components/UI/Loader";
 import usePayFee, { todayISO } from "./Controller/payfee";
 import ReceiptCard from "./UI/ReceiptCard";
+import { downloadReceipt } from "./UI/downloadReceipt";
 import { formatAmount, formatDate, printReceipt, receiptNo } from "./UI/receiptFormat";
 
 const inputClass = "w-full border border-gray-300 rounded-lg px-4 py-2 outline-none focus:border-greenleast duration-200 bg-white";
@@ -108,10 +109,16 @@ export default function PayFee() {
                                     <td className="py-3 px-6">Rs. {formatAmount(item.amount)}</td>
                                     <td className="py-3 px-6">{formatDate(item.paymentDate)}</td>
                                     <td className="py-3 px-6">
-                                        <button onClick={() => printReceipt(item)}
-                                            className="px-3 py-1 rounded-lg text-xs font-semibold text-white bg-greenleast hover:bg-greenleastshade duration-200">
-                                            <i className="fas fa-print mr-1" />Print
-                                        </button>
+                                        <div className="flex justify-center gap-2">
+                                            <button onClick={() => printReceipt(item)}
+                                                className="px-3 py-1 rounded-lg text-xs font-semibold text-white bg-greenleast hover:bg-greenleastshade duration-200">
+                                                <i className="fas fa-print mr-1" />Print
+                                            </button>
+                                            <button onClick={() => downloadReceipt(item)}
+                                                className="px-3 py-1 rounded-lg text-xs font-semibold text-greenleast border border-greenleast hover:bg-greenleast hover:text-white duration-200 whitespace-nowrap">
+                                                <i className="fas fa-download mr-1" />Download
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))

@@ -3,6 +3,7 @@ import Image from "next/image";
 import logo from "@/assets/logo.png";
 import { FeeReceipt } from "../Controller/payfee";
 import { amountInWords, formatAmount, formatDate, printReceipt, receiptNo } from "./receiptFormat";
+import { downloadReceipt } from "./downloadReceipt";
 
 interface ReceiptCardProps {
     receipt: FeeReceipt,
@@ -49,7 +50,13 @@ export default function ReceiptCard({ receipt, onClose }: ReceiptCardProps) {
                     onClick={() => printReceipt(receipt)}
                     className="flex-1 bg-greenleast hover:bg-greenleastshade text-white font-bold py-2.5 rounded-lg duration-200"
                 >
-                    <i className="fas fa-print mr-2" />Print Receipt
+                    <i className="fas fa-print mr-2" />Print
+                </button>
+                <button
+                    onClick={() => downloadReceipt(receipt)}
+                    className="flex-1 bg-greenleast hover:bg-greenleastshade text-white font-bold py-2.5 rounded-lg duration-200"
+                >
+                    <i className="fas fa-download mr-2" />Download
                 </button>
                 <button
                     onClick={onClose}
